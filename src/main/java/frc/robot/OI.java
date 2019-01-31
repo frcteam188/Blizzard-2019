@@ -15,6 +15,13 @@ public class OI {
 
   private int stickPort = 0;
 
+  // Axes
+
+  public static int fwdAxis = 1;
+  public static int turnAxis = 4;
+
+
+
   public OI() {
     stick = new Joystick(stickPort);
   }

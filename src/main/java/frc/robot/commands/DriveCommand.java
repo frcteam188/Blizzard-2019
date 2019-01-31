@@ -65,8 +65,8 @@ public class DriveCommand extends Command {
        motionProfile();
      } else {
      
-      double forward = OI.stick.getRawAxis(1);
-      double turn = OI.stick.getRawAxis(2);
+      double forward = OI.stick.getRawAxis(OI.fwdAxis);
+      double turn = OI.stick.getRawAxis(OI.turnAxis);
       double proposedTurn = 0.0;
 
       double goalAngle = (double)SmartDashboard.getNumber("goal:closest", 0.0);
