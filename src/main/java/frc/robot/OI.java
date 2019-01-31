@@ -8,22 +8,29 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
   public static Joystick stick;
-
-  private int stickPort = 0;
+  public static Joystick stick2;
 
   // Axes
 
   public static int fwdAxis = 1;
   public static int turnAxis = 4;
+  public static int elevatorAxis = 3;
 
+  // Buttons
 
+  public static JoystickButton[] elevatorButtons;
 
   public OI() {
-    stick = new Joystick(stickPort);
+    stick = new Joystick(0);
+    stick2 = new Joystick(1);
+    elevatorButtons = new JoystickButton[] {
+                      new JoystickButton(stick2, 1), new JoystickButton(stick2, 2),
+                      new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
   }
 
 

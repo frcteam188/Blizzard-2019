@@ -8,6 +8,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Elevator;
 import frc.robot.commands.DriveCommand;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -21,11 +22,13 @@ public class Robot extends TimedRobot {
   private static Command teleopCommand;
 
   public static Base base;
+  public static Elevator elevator;
   public static OI oi;
   NetworkTableEntry goalEntry;
   @Override
   public void robotInit() {
     base = new Base();
+    elevator = new Elevator();
     oi = new OI();
     teleopCommand = new DriveCommand();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();

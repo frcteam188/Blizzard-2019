@@ -12,7 +12,14 @@ package frc.robot;
  */
 public class Constants {
 
+    // PID Gains
     public static double[] basePIDF = {0, 0, 0, 0};
-    
+    public static double[] elevatorPID = {0, 0, 0};
+
+    // Tolerances
+    public static double elevatorPIDTolerance = 10;
+
+    // Presets
+    public static double[] elevatorPresets = {0, 0, 0, 0};
 
 }

@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -27,6 +26,7 @@ public class Base extends Subsystem {
   private double rightEncOffset;
 
   public Base() {
+
     frontLeft = new CANSparkMax(RobotMap.frontLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     midLeft = new CANSparkMax(RobotMap.midLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     backLeft = new CANSparkMax(RobotMap.backLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
