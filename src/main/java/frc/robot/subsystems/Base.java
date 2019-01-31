@@ -17,8 +17,10 @@ import com.revrobotics.ControlType;
 public class Base extends Subsystem {
 
   public CANSparkMax frontLeft;
+  public CANSparkMax midLeft;
   public CANSparkMax backLeft;
   public CANSparkMax frontRight;
+  public CANSparkMax midRight;
   public CANSparkMax backRight;
 
   private double leftEncOffset;
@@ -26,8 +28,10 @@ public class Base extends Subsystem {
 
   public Base() {
     frontLeft = new CANSparkMax(RobotMap.frontLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
+    midLeft = new CANSparkMax(RobotMap.midLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     backLeft = new CANSparkMax(RobotMap.backLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     frontRight = new CANSparkMax(RobotMap.frontRight, CANSparkMaxLowLevel.MotorType.kBrushless);
+    midRight = new CANSparkMax(RobotMap.midRight, CANSparkMaxLowLevel.MotorType.kBrushless);
     backRight = new CANSparkMax(RobotMap.backRight, CANSparkMaxLowLevel.MotorType.kBrushless);
     leftEncOffset = 0.;
     rightEncOffset = 0.;
@@ -35,16 +39,20 @@ public class Base extends Subsystem {
 
   public void driveArcade(double y, double x) {
     frontLeft.set(-y + x);
+    midLeft.set(-y + x);
     backLeft.set(-y + x);
     frontRight.set(y + x);
+    midRight.set(y + x);
     backRight.set(y + x);
   }
 
   public void driveTank(double left, double right) {
     frontLeft.set(left);
+    midLeft.set(left);
     backLeft.set(left);
     frontRight.set(-right);
-    backLeft.set(-right);
+    midRight.set(-right);
+    backRight.set(-right);
   }
 
   public void resetLeftEnc()
@@ -75,40 +83,50 @@ public class Base extends Subsystem {
   public void setSetpoint(double setpoint, ControlType type)
   {
     frontLeft.getPIDController().setReference(setpoint, type);
+    midLeft.getPIDController().setReference(setpoint, type);
     backLeft.getPIDController().setReference(setpoint, type);
     frontRight.getPIDController().setReference(setpoint, type);
+    midRight.getPIDController().setReference(setpoint, type);
     backRight.getPIDController().setReference(setpoint, type);
   }
 
   public void setP(double p)
   {
     frontLeft.getPIDController().setP(p);
+    midLeft.getPIDController().setP(p);
     backLeft.getPIDController().setP(p);
     frontRight.getPIDController().setP(p);
+    midRight.getPIDController().setP(p);
     backRight.getPIDController().setP(p);
   }
 
   public void setI(double i)
   {
     frontLeft.getPIDController().setI(i);
+    midLeft.getPIDController().setI(i);
     backLeft.getPIDController().setI(i);
     frontRight.getPIDController().setI(i);
+    midRight.getPIDController().setI(i);
     backRight.getPIDController().setI(i);
   }
 
   public void setD(double d)
   {
     frontLeft.getPIDController().setD(d);
+    midLeft.getPIDController().setD(d);
     backLeft.getPIDController().setD(d);
     frontRight.getPIDController().setD(d);
+    midRight.getPIDController().setD(d);
     backRight.getPIDController().setD(d);
   }
 
   public void setFF(double f)
   {
     frontLeft.getPIDController().setFF(f);
+    midLeft.getPIDController().setFF(f);
     backLeft.getPIDController().setFF(f);
     frontRight.getPIDController().setFF(f);
+    midRight.getPIDController().setFF(f);
     backRight.getPIDController().setFF(f);
   }
 
@@ -134,8 +152,10 @@ public class Base extends Subsystem {
 
   public void stop() {
     frontLeft.set(0);
+    midLeft.set(0);
     backLeft.set(0);
     frontRight.set(0);
+    midRight.set(0);
     backRight.set(0);    
   }
 

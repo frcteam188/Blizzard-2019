@@ -9,9 +9,11 @@ package frc.robot;
 
 public class RobotMap {
 
-  public static int frontLeft = 2;
-  public static int backLeft = 0;
+  public static int frontLeft = 7;
+  public static int midLeft = 6;
+  public static int backLeft = 5;
   public static int frontRight = 3;
-  public static int backRight = 4;
+  public static int midRight = 2;
+  public static int backRight = 1;
 }
 
