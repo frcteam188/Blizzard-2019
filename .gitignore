@@ -203,3 +203,5 @@ Thumbs.db
 junit/
 
 # End of https://github.com/Open-RIO/.gitignore/blob/master/.gitignore
+
+vendordeps/

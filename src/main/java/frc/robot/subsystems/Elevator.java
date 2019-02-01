@@ -62,6 +62,7 @@ public class Elevator extends Subsystem {
       elevatorPID.disable();
       drive(OI.stick2.getRawAxis(OI.elevatorAxis));
     }
+    report();
   }
 
   private void setPID(int preset)
@@ -81,6 +82,12 @@ public class Elevator extends Subsystem {
   {
     elevatorLeft.set(power);
     elevatorRight.set(power);
+  }
+
+  public void stop()
+  {
+    elevatorLeft.set(0);
+    elevatorRight.set(0);
   }
 
   public double getElevatorEnc()
