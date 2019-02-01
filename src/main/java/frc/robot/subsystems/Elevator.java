@@ -11,45 +11,49 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 
-/**
- * Add your docs here.
- */
+
 public class Elevator extends Subsystem {
   
   private CANSparkMax elevatorLeft;
   private CANSparkMax elevatorRight;
 
   private ElevatorPID elevatorPID;
+  private ElevatorPID upPID;
+  private ElevatorPID downPID;
 
   private double encOffset;
-  private boolean presetActive;
+  private int activePreset;
 
   public Elevator()
   {
     elevatorLeft = new CANSparkMax(RobotMap.elevatorLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     elevatorRight = new CANSparkMax(RobotMap.elevatorRight, CANSparkMaxLowLevel.MotorType.kBrushless);
-    elevatorPID = new ElevatorPID(0);
+    upPID = new ElevatorPID(Constants.elevatorUpPID[0], Constants.elevatorUpPID[1], Constants.elevatorUpPID[2], 0);
+    downPID = new ElevatorPID(Constants.elevatorDownPID[0], Constants.elevatorDownPID[1], Constants.elevatorDownPID[2], 0);
+    elevatorPID = upPID;
     encOffset = 0;
-    presetActive = false;
+    activePreset = -1;
     elevatorPID.disable();
   }
 
   public void execute()
   {
-    presetActive = false;
+    activePreset = -1;
     for (int i = 0; i < OI.elevatorButtons.length; ++i)
     {
       if (OI.elevatorButtons[i].get())
       {
-        elevatorPID.setSetpoint(Constants.elevatorPresets[i]);
-        presetActive = true;
+        activePreset = i;
+        setPID(activePreset);
+        break;
       }
     }
-    if (presetActive)
+    if (activePreset != -1)
     {
       elevatorPID.enable();
     }
@@ -58,6 +62,19 @@ public class Elevator extends Subsystem {
       elevatorPID.disable();
       drive(OI.stick2.getRawAxis(OI.elevatorAxis));
     }
+  }
+
+  private void setPID(int preset)
+  {
+    if (getElevatorEnc() < Constants.elevatorPresets[preset]) elevatorPID = upPID;
+    else elevatorPID = downPID;
+    elevatorPID.setSetpoint(Constants.elevatorPresets[preset]);
+  }
+
+  public void report()
+  {
+    SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
+    SmartDashboard.putNumber("Elevator PID Setpoint", elevatorPID.getSetpoint());
   }
 
   public void drive(double power)

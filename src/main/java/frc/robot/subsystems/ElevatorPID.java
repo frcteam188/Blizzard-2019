@@ -11,16 +11,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-/**
- * Add your docs here.
- */
+
 public class ElevatorPID extends PIDSubsystem {
 
   double power;
-
-  /**
-   * Add your docs here.
-   */
 
   public ElevatorPID(double setpoint)
   {

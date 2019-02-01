@@ -15,22 +15,27 @@ public class OI {
   public static Joystick stick;
   public static Joystick stick2;
 
+  // Buttons
+  public static JoystickButton[] elevatorButtons;
+  public static JoystickButton resetElevatorEnc;
+  public static JoystickButton resetBaseEnc;
+  
   // Axes
-
   public static int fwdAxis = 1;
   public static int turnAxis = 4;
   public static int elevatorAxis = 3;
 
-  // Buttons
-
-  public static JoystickButton[] elevatorButtons;
 
   public OI() {
     stick = new Joystick(0);
     stick2 = new Joystick(1);
+
+    resetElevatorEnc = new JoystickButton(stick, 2);
+    resetBaseEnc = resetElevatorEnc;
     elevatorButtons = new JoystickButton[] {
                       new JoystickButton(stick2, 1), new JoystickButton(stick2, 2),
                       new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
+
   }
 
 

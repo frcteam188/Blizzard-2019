@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
@@ -53,6 +55,12 @@ public class Base extends Subsystem {
     frontRight.set(-right);
     midRight.set(-right);
     backRight.set(-right);
+  }
+
+  public void report()
+  {
+    SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
+    SmartDashboard.putNumber("Base Right Enc", getRightEnc());
   }
 
   public void resetLeftEnc()
