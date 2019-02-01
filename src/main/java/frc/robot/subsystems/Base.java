@@ -11,6 +11,7 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
@@ -24,11 +25,13 @@ public class Base extends Subsystem {
   public CANSparkMax midRight;
   public CANSparkMax backRight;
 
+  AHRS navx;
+
   private double leftEncOffset;
   private double rightEncOffset;
 
   public Base() {
-
+    navx = new AHRS(RobotMap.navxPort);
     frontLeft = new CANSparkMax(RobotMap.frontLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     midLeft = new CANSparkMax(RobotMap.midLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
     backLeft = new CANSparkMax(RobotMap.backLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -61,6 +64,32 @@ public class Base extends Subsystem {
   {
     SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
     SmartDashboard.putNumber("Base Right Enc", getRightEnc());
+    SmartDashboard.putNumber("Base Gyro", getAngle());
+  }
+
+  public double getAngle()
+  {
+    return navx.getAngle();
+  }
+
+  public double getPitch()
+  {
+    return navx.getPitch();
+  }
+
+  public double getRoll()
+  {
+    return navx.getRoll();
+  }
+
+  public double getYaw()
+  {
+    return navx.getYaw();
+  }
+
+  public void resetGyro()
+  {
+    navx.reset();
   }
 
   public void resetLeftEnc()

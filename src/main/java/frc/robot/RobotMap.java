@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C.Port;
+
 public class RobotMap {
 
   public static int frontLeft = 7; // 7
@@ -18,6 +20,8 @@ public class RobotMap {
 
   public static int elevatorLeft = 8;
   public static int elevatorRight = 4;
+
+  public static Port navxPort = Port.kMXP;
 
 }
 
