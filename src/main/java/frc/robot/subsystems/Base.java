@@ -65,6 +65,8 @@ public class Base extends Subsystem {
     SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
     SmartDashboard.putNumber("Base Right Enc", getRightEnc());
     SmartDashboard.putNumber("Base Gyro", getAngle());
+    SmartDashboard.putNumber("Base Left Raw Enc", frontLeft.getEncoder().getPosition());
+    SmartDashboard.putNumber("Base Right Raw Enc", frontRight.getEncoder().getPosition());
   }
 
   public double getAngle()
@@ -109,7 +111,7 @@ public class Base extends Subsystem {
 
   public double getRightEnc()
   {
-    return frontRight.getEncoder().getPosition() - rightEncOffset;
+    return -frontRight.getEncoder().getPosition() - rightEncOffset;
   }
 
   public void setSetpoint(double setpoint)

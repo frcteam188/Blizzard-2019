@@ -38,7 +38,6 @@ public class Elevator extends Subsystem {
     elevatorPID = upPID;
     encOffset = 0;
     activePreset = -1;
-    elevatorPID.disable();
   }
 
   public void execute()
@@ -62,13 +61,12 @@ public class Elevator extends Subsystem {
       elevatorPID.disable();
       drive(OI.stick2.getRawAxis(OI.elevatorAxis));
     }
-    report();
   }
 
   private void setPID(int preset)
   {
-    if (getElevatorEnc() < Constants.elevatorPresets[preset]) elevatorPID = upPID;
-    else elevatorPID = downPID;
+    if (getElevatorEnc() > Constants.elevatorPresets[preset]) elevatorPID = downPID;
+    else elevatorPID = upPID;
     elevatorPID.setSetpoint(Constants.elevatorPresets[preset]);
   }
 
@@ -76,12 +74,14 @@ public class Elevator extends Subsystem {
   {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
     SmartDashboard.putNumber("Elevator PID Setpoint", elevatorPID.getSetpoint());
+    SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
   }
 
   public void drive(double power)
   {
+    power *= Constants.kElevatorPower;
     elevatorLeft.set(power);
-    elevatorRight.set(power);
+    elevatorRight.set(-power);
   }
 
   public void stop()
@@ -92,7 +92,7 @@ public class Elevator extends Subsystem {
 
   public double getElevatorEnc()
   {
-    return elevatorLeft.getEncoder().getPosition() - encOffset;
+    return elevatorRight.getEncoder().getPosition() - encOffset;
   }
 
   public void resetElevatorEnc()

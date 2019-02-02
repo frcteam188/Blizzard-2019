@@ -21,9 +21,9 @@ public class OI {
   public static JoystickButton resetBaseEnc;
   
   // Axes
-  public static int fwdAxis = 1;
-  public static int turnAxis = 4;
-  public static int elevatorAxis = 3;
+  public static final int fwdAxis = 1;
+  public static final int turnAxis = 4;
+  public static final int elevatorAxis = 3;
 
 
   public OI() {

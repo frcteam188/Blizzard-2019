@@ -11,15 +11,18 @@ package frc.robot;
 public class Constants {
 
     // PID Gains
-    public static double[] basePIDF = {0, 0, 0, 0};
-    public static double[] elevatorPID = {0, 0, 0};
-    public static double[] elevatorUpPID = {0, 0, 0};
-    public static double[] elevatorDownPID = {0, 0, 0};
+    public static final double[] basePIDF = {0, 0, 0, 0};
+    public static final double[] elevatorPID = {0, 0, 0};
+    public static final double[] elevatorUpPID = {0, 0, 0};
+    public static final double[] elevatorDownPID = {0, 0, 0};
+
+    // Power Scalars
+    public static final double kElevatorPower = 1.0;
 
     // Tolerances
-    public static double elevatorPIDTolerance = 10;
+    public static final double kElevatorPIDTolerance = 10;
 
     // Presets
-    public static double[] elevatorPresets = {0, 0, 0, 0};
+    public static final double[] elevatorPresets = {0, 0, 0, 0};
 
 }

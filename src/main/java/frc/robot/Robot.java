@@ -27,20 +27,20 @@ public class Robot extends TimedRobot {
   NetworkTableEntry goalEntry;
   @Override
   public void robotInit() {
+    oi = new OI();
     base = new Base();
     elevator = new Elevator();
-    oi = new OI();
-    teleopCommand = new DriveCommand();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("SmartDashboard");
     goalEntry = table.getEntry("goal:closest");
-
+    
+    teleopCommand = new DriveCommand();
   }
 
   @Override
   public void robotPeriodic() {
     double goalAngle = (double)goalEntry.getNumber(0);
-    System.out.println(goalAngle);
+    // System.out.println(goalAngle);
     if(goalAngle != 0){
     }
   }
@@ -61,13 +61,15 @@ public class Robot extends TimedRobot {
     {
       Robot.base.resetLeftEnc();
       Robot.base.resetRightEnc();
-      System.out.print("Base encoders reset.");
+      System.out.println("Base encoders reset.");
     }
     if (OI.resetElevatorEnc.get())
     {
       Robot.elevator.resetElevatorEnc();
       System.out.println("Elevator encoder reset.");
     }
+    Robot.base.report();
+    Robot.elevator.report();
   }
 
   @Override

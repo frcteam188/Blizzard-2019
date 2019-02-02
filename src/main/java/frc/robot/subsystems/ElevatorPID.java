@@ -30,7 +30,7 @@ public class ElevatorPID extends PIDSubsystem {
   {
     super("ElevatorPID", p, i, d);
     this.power = power;
-    setAbsoluteTolerance(Constants.elevatorPIDTolerance);
+    setAbsoluteTolerance(Constants.kElevatorPIDTolerance);
     setSetpoint(setpoint);
   }
 
