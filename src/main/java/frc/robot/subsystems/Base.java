@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,12 +44,14 @@ public class Base extends Subsystem {
   }
 
   public void driveArcade(double y, double x) {
-    frontLeft.set(-y + x);
-    midLeft.set(-y + x);
-    backLeft.set(-y + x);
-    frontRight.set(y + x);
-    midRight.set(y + x);
-    backRight.set(y + x);
+    double leftPower = (-y + x) * Constants.kBasePower;
+    double rightPower = (y + x) * Constants.kBasePower;
+    frontLeft.set(leftPower);
+    midLeft.set(leftPower);
+    backLeft.set(leftPower);
+    frontRight.set(rightPower);
+    midRight.set(rightPower);
+    backRight.set(rightPower);
   }
 
   public void driveTank(double left, double right) {

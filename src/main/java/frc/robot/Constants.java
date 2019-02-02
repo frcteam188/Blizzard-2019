@@ -18,6 +18,7 @@ public class Constants {
 
     // Power Scalars
     public static final double kElevatorPower = 1.0;
+    public static final double kBasePower = 1.0;
 
     // Tolerances
     public static final double kElevatorPIDTolerance = 10;

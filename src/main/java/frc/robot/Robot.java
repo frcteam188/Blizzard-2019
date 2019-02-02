@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
 
-    // Reset encoders
+    // Reset sensors
     if (OI.resetBaseEnc.get())
     {
       Robot.base.resetLeftEnc();
@@ -68,6 +68,12 @@ public class Robot extends TimedRobot {
       Robot.elevator.resetElevatorEnc();
       System.out.println("Elevator encoder reset.");
     }
+    if (OI.resetGyro.get())
+    {
+      Robot.base.resetGyro();
+      System.out.println("Gyro reset.");
+    }
+
     Robot.base.report();
     Robot.elevator.report();
   }

@@ -19,6 +19,7 @@ public class OI {
   public static JoystickButton[] elevatorButtons;
   public static JoystickButton resetElevatorEnc;
   public static JoystickButton resetBaseEnc;
+  public static JoystickButton resetGyro;
   
   // Axes
   public static final int fwdAxis = 1;
@@ -30,7 +31,8 @@ public class OI {
     stick = new Joystick(0);
     stick2 = new Joystick(1);
 
-    resetElevatorEnc = new JoystickButton(stick, 2);
+    resetGyro = new JoystickButton(stick, 2);
+    resetElevatorEnc = new JoystickButton(stick, 1);
     resetBaseEnc = resetElevatorEnc;
     elevatorButtons = new JoystickButton[] {
                       new JoystickButton(stick2, 1), new JoystickButton(stick2, 2),
