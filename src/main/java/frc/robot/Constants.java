@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.revrobotics.ControlType;
 
 public class Constants {
 
@@ -22,6 +23,13 @@ public class Constants {
 
     // Tolerances
     public static final double kElevatorPIDTolerance = 10;
+
+    // Default Values
+    public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
+
+    // Limits
+    public static final double kElevatorUpperLimit = 55.;
+    public static final double kElevatorLowerLimit = Double.NEGATIVE_INFINITY;
 
     // Presets
     public static final double[] elevatorPresets = {0, 0, 0, 0};

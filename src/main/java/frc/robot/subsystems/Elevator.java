@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +29,14 @@ public class Elevator extends Subsystem {
 
   private double encOffset;
   private int activePreset;
+  private Direction direction;
+  private double deadband;
+
+  enum Direction
+  {
+    DOWN,
+    UP
+  }
 
   public Elevator()
   {
@@ -38,6 +47,9 @@ public class Elevator extends Subsystem {
     elevatorPID = upPID;
     encOffset = 0;
     activePreset = -1;
+    direction = Direction.UP;
+    // deadband = (double)(elevatorLeft.getParameterDouble(ConfigParameter.kInputDeadband).get());
+    deadband = 0.05;
   }
 
   public void execute()
@@ -59,14 +71,31 @@ public class Elevator extends Subsystem {
     else
     {
       elevatorPID.disable();
-      drive(OI.stick2.getRawAxis(OI.elevatorAxis));
+      double power = OI.stick2.getRawAxis(OI.elevatorAxis);
+      if (power >= deadband) direction = Direction.UP;
+      else if (power <= -deadband) direction = Direction.DOWN;
+      if (withinLimits()) drive(power);
     }
+  }
+
+  private boolean withinLimits()
+  {
+    return !(direction == Direction.UP && getElevatorEnc() >= Constants.kElevatorUpperLimit
+            || direction == Direction.DOWN && getElevatorEnc() <= Constants.kElevatorLowerLimit);
   }
 
   private void setPID(int preset)
   {
-    if (getElevatorEnc() > Constants.elevatorPresets[preset]) elevatorPID = downPID;
-    else elevatorPID = upPID;
+    if (getElevatorEnc() > Constants.elevatorPresets[preset])
+    {
+      elevatorPID = downPID;
+      direction = Direction.DOWN;
+    }
+    else
+    {
+      elevatorPID = upPID;
+      direction = Direction.UP;
+    }
     elevatorPID.setSetpoint(Constants.elevatorPresets[preset]);
   }
 

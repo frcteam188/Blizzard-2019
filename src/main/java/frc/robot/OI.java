@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
+  // Controllers
   public static Joystick stick;
   public static Joystick stick2;
 
@@ -21,7 +22,7 @@ public class OI {
   public static JoystickButton resetBaseEnc;
   public static JoystickButton resetGyro;
   
-  // Axes
+  // Axis Numbers
   public static final int fwdAxis = 1;
   public static final int turnAxis = 4;
   public static final int elevatorAxis = 3;

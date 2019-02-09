@@ -119,7 +119,7 @@ public class Base extends Subsystem {
 
   public void setSetpoint(double setpoint)
   {
-    setSetpoint(setpoint, ControlType.kPosition);
+    setSetpoint(setpoint, Constants.kBasePIDDefaultType);
   }
 
   public void setSetpoint(double setpoint, ControlType type)

@@ -93,8 +93,7 @@ public class DriveCommand extends Command {
       Robot.elevator.execute();
      }
    
-    Robot.base.report();
-    Robot.elevator.report();
+    Robot.report();
     
     SmartDashboard.putNumber("Left enc", Robot.base.getLeftEnc());
     SmartDashboard.putNumber("Right enc", Robot.base.getRightEnc());

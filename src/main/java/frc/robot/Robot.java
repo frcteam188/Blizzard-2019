@@ -74,8 +74,7 @@ public class Robot extends TimedRobot {
       System.out.println("Gyro reset.");
     }
 
-    Robot.base.report();
-    Robot.elevator.report();
+    report();
   }
 
   @Override
@@ -102,4 +101,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  public static void report()
+  {
+    base.report();
+    elevator.report();
+  }
+
 }
