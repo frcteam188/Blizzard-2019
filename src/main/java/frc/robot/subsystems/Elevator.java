@@ -104,6 +104,7 @@ public class Elevator extends Subsystem {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
     SmartDashboard.putNumber("Elevator PID Setpoint", elevatorPID.getSetpoint());
     SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
+    SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
   }
 
   public void drive(double power)
