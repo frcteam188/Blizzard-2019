@@ -10,37 +10,44 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.ElevatorPID;
 
 public class TuneElevatorPID extends Command {
 
-  ElevatorPID elevatorPID;
+  double setpoint;
 
   public TuneElevatorPID() {
     requires(Robot.elevator);
+    setpoint = 0;
+  }
+
+  private void refreshValues()
+  {
+    Robot.elevator.setP(SmartDashboard.getNumber("Elevator Enc P", 0.0));
+    Robot.elevator.setI(SmartDashboard.getNumber("Elevator Enc I", 0.0));
+    Robot.elevator.setD(SmartDashboard.getNumber("Elevator Enc D", 0.0));
+    Robot.elevator.setFF(SmartDashboard.getNumber("Elevator Enc FF", 0.0));
+
+    setpoint = SmartDashboard.getNumber("Elevator Enc Setpoint", 0.0);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    elevatorPID = new ElevatorPID(SmartDashboard.getNumber("Elevator P", 0.0), 
-                                  SmartDashboard.getNumber("Elevator I", 0.0), 
-                                  SmartDashboard.getNumber("Elevator D", 0.0),
-                                  SmartDashboard.getNumber("Elevator Setpoint", 0.0));
-    elevatorPID.enable();
+    refreshValues();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (SmartDashboard.getNumber("Elevator P", 0.0) != elevatorPID.getPIDController().getP() ||
-        SmartDashboard.getNumber("Elevator I", 0.0) != elevatorPID.getPIDController().getI() ||
-        SmartDashboard.getNumber("Elevator D", 0.0) != elevatorPID.getPIDController().getD() ||
-        SmartDashboard.getNumber("Elevator Setpoint", 0.0) != elevatorPID.getPIDController().getSetpoint())
+    if (SmartDashboard.getNumber("Elevator Enc P", 0.0) != Robot.elevator.getP() ||
+        SmartDashboard.getNumber("Elevator Enc I", 0.0) != Robot.elevator.getI() ||
+        SmartDashboard.getNumber("Elevator Enc D", 0.0) != Robot.elevator.getD() ||
+        SmartDashboard.getNumber("Elevator Enc FF", 0.0) != Robot.elevator.getFF() ||
+        SmartDashboard.getNumber("Elevator Enc Setpoint", 0.0) != setpoint)
     {
-      elevatorPID.disable();
-      initialize();
+      refreshValues();
     }
+    Robot.elevator.setSetpoint(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -52,7 +59,6 @@ public class TuneElevatorPID extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    elevatorPID.disable();
     Robot.elevator.stop();
   }
 
