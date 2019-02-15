@@ -69,8 +69,8 @@ public class Elevator extends Subsystem {
     else
     {
       double power = OI.stick2.getRawAxis(OI.elevatorAxis);
-      if (power >= deadband) direction = Direction.UP;
-      else if (power <= -deadband) direction = Direction.DOWN;
+      if (-power >= deadband) direction = Direction.UP;
+      else if (-power <= -deadband) direction = Direction.DOWN;
       if (withinLimits()) drive(power);
     }
   }
@@ -118,6 +118,7 @@ public class Elevator extends Subsystem {
     SmartDashboard.putNumber("Elevator PID Setpoint", Constants.elevatorPresets[activePreset]);
     SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
     SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
+    SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
   }
 
   public void drive(double power)
@@ -151,7 +152,7 @@ public class Elevator extends Subsystem {
   public void setSetpoint(double setpoint, ControlType type)
   {
     elevatorLeft.getPIDController().setReference(setpoint, type, activePID);
-    elevatorRight.getPIDController().setReference(setpoint, type, activePID);
+    elevatorRight.getPIDController().setReference(-setpoint, type, activePID);
   }
 
   public void setP(double p)
