@@ -19,6 +19,10 @@ public class Constants {
     public static final double[] elevatorUpPID = {0, 0, 0};
     public static final double[] elevatorDownPID = {0, 0, 0};
 
+    // PID Slots
+    public static final int kElevatorUpPID = 0;
+    public static final int kElevatorDownPID = 1;
+
     // Power Scalars
     public static final double kBasePower = 0.75;
     public static final double kElevatorPower = 0.6;
@@ -42,6 +46,7 @@ public class Constants {
 
     // Default Values
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
+    public static final ControlType kElevatorPIDDefaultType = ControlType.kPosition;
 
     // Limits
     public static final double kElevatorUpperLimit = 55.;
