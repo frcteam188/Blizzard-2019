@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,7 +32,7 @@ public class Elevator extends Subsystem {
   private Direction direction;
   private double deadband;
 
-  enum Direction
+  private enum Direction
   {
     DOWN,
     UP
@@ -40,8 +40,8 @@ public class Elevator extends Subsystem {
 
   public Elevator()
   {
-    elevatorLeft = new CANSparkMax(RobotMap.elevatorLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
-    elevatorRight = new CANSparkMax(RobotMap.elevatorRight, CANSparkMaxLowLevel.MotorType.kBrushless);
+    elevatorLeft = new CANSparkMax(RobotMap.elevatorLeft, MotorType.kBrushless);
+    elevatorRight = new CANSparkMax(RobotMap.elevatorRight, MotorType.kBrushless);
     upPID = new ElevatorPID(Constants.elevatorUpPID[0], Constants.elevatorUpPID[1], Constants.elevatorUpPID[2], 0);
     downPID = new ElevatorPID(Constants.elevatorDownPID[0], Constants.elevatorDownPID[1], Constants.elevatorDownPID[2], 0);
     elevatorPID = upPID;
@@ -49,21 +49,23 @@ public class Elevator extends Subsystem {
     activePreset = -1;
     direction = Direction.UP;
     // deadband = (double)(elevatorLeft.getParameterDouble(ConfigParameter.kInputDeadband).get());
+    // System.out.println("DEADBAND: " + elevatorLeft.getParameterDouble(ConfigParameter.kInputDeadband).get());
     deadband = 0.05;
   }
 
   public void execute()
   {
     activePreset = -1;
-    for (int i = 0; i < OI.elevatorButtons.length; ++i)
-    {
-      if (OI.elevatorButtons[i].get())
-      {
-        activePreset = i;
-        setPID(activePreset);
-        break;
-      }
-    }
+    // RUN THROUGH PRESET BUTTONS
+    // for (int i = 0; i < OI.elevatorButtons.length; ++i)
+    // {
+    //   if (OI.elevatorButtons[i].get())
+    //   {
+    //     activePreset = i;
+    //     setPID(activePreset);
+    //     break;
+    //   }
+    // }
     if (activePreset != -1)
     {
       elevatorPID.enable();

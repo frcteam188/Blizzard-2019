@@ -21,6 +21,18 @@ public class RobotMap {
   public static int elevatorLeft = 8;
   public static int elevatorRight = 4;
 
+  public static int intakeMotor = 1;
+
+  public static int[] hangPiston = {0, 4};
+  public static int[] pivotPiston = {3, 7};
+  public static int[] innerPushPiston = {5, 2};
+  public static int[] outerPushPiston = {6, 1};
+
+  public static int intakeSensor = 0;
+
+  public static int hangLeft = 9;
+  public static int hangRight = 10;
+
   public static Port navxPort = Port.kMXP;
 
 }

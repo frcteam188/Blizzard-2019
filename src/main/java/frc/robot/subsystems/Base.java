@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Base extends Subsystem {
 
@@ -33,12 +33,12 @@ public class Base extends Subsystem {
 
   public Base() {
     navx = new AHRS(RobotMap.navxPort);
-    frontLeft = new CANSparkMax(RobotMap.frontLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
-    midLeft = new CANSparkMax(RobotMap.midLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
-    backLeft = new CANSparkMax(RobotMap.backLeft, CANSparkMaxLowLevel.MotorType.kBrushless);
-    frontRight = new CANSparkMax(RobotMap.frontRight, CANSparkMaxLowLevel.MotorType.kBrushless);
-    midRight = new CANSparkMax(RobotMap.midRight, CANSparkMaxLowLevel.MotorType.kBrushless);
-    backRight = new CANSparkMax(RobotMap.backRight, CANSparkMaxLowLevel.MotorType.kBrushless);
+    frontLeft = new CANSparkMax(RobotMap.frontLeft, MotorType.kBrushless);
+    midLeft = new CANSparkMax(RobotMap.midLeft, MotorType.kBrushless);
+    backLeft = new CANSparkMax(RobotMap.backLeft, MotorType.kBrushless);
+    frontRight = new CANSparkMax(RobotMap.frontRight, MotorType.kBrushless);
+    midRight = new CANSparkMax(RobotMap.midRight, MotorType.kBrushless);
+    backRight = new CANSparkMax(RobotMap.backRight, MotorType.kBrushless);
     leftEncOffset = 0.;
     rightEncOffset = 0.;
   }
@@ -134,11 +134,32 @@ public class Base extends Subsystem {
     setSetpoint(setpoint, Constants.kBasePIDDefaultType);
   }
 
+  public void setLeftSetpoint(double setpoint)
+  {
+    setLeftSetpoint(setpoint, Constants.kBasePIDDefaultType);
+  }
+
+  public void setRightSetpoint(double setpoint)
+  {
+    setRightSetpoint(setpoint, Constants.kBasePIDDefaultType);
+  }
+  
   public void setSetpoint(double setpoint, ControlType type)
+  {
+    setLeftSetpoint(setpoint, type);
+    setRightSetpoint(setpoint, type);
+  }
+
+  public void setLeftSetpoint(double setpoint, ControlType type)
   {
     frontLeft.getPIDController().setReference(setpoint, type);
     midLeft.getPIDController().setReference(setpoint, type);
     backLeft.getPIDController().setReference(setpoint, type);
+  }
+
+  public void setRightSetpoint(double setpoint, ControlType type)
+  {
+    setpoint = -setpoint;
     frontRight.getPIDController().setReference(setpoint, type);
     midRight.getPIDController().setReference(setpoint, type);
     backRight.getPIDController().setReference(setpoint, type);

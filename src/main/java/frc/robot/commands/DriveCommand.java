@@ -91,6 +91,8 @@ public class DriveCommand extends Command {
 
       Robot.base.driveArcade(forward, turn);
       Robot.elevator.execute();
+      Robot.intake.execute();
+      Robot.hang.execute();
      }
    
     Robot.report();

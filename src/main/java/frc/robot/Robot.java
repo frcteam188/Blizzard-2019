@@ -9,6 +9,8 @@ package frc.robot;
 
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Hang;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.DriveCommand;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -23,13 +25,17 @@ public class Robot extends TimedRobot {
 
   public static Base base;
   public static Elevator elevator;
+  public static Intake intake;
+  public static Hang hang;
   public static OI oi;
   NetworkTableEntry goalEntry;
   @Override
   public void robotInit() {
     oi = new OI();
     base = new Base();
+    intake = new Intake();
     elevator = new Elevator();
+    hang = new Hang();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("SmartDashboard");
     goalEntry = table.getEntry("goal:closest");
@@ -106,6 +112,7 @@ public class Robot extends TimedRobot {
   {
     base.report();
     elevator.report();
+    intake.report();
   }
 
 }

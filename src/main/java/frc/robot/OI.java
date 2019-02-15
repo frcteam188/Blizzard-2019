@@ -16,16 +16,30 @@ public class OI {
   public static Joystick stick;
   public static Joystick stick2;
 
-  // Buttons
-  public static JoystickButton[] elevatorButtons;
+  // Buttons (Driver)
   public static JoystickButton resetElevatorEnc;
   public static JoystickButton resetBaseEnc;
   public static JoystickButton resetGyro;
+  public static JoystickButton hangArmIn;
+  public static JoystickButton hangArmOut;
+
+  // Buttons (Operator)
+  public static JoystickButton[] elevatorButtons;
+  public static JoystickButton pivotIntakeOut;
+  public static JoystickButton pivotIntakeIn;
+  public static JoystickButton pushInnerOut;
+  public static JoystickButton pushInnerIn;
+  public static JoystickButton pushOuterOut;
+  public static JoystickButton pushOuterIn;
   
-  // Axis Numbers
+  // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
   public static final int turnAxis = 4;
+
+  // Axis Numbers (Operator)
   public static final int elevatorAxis = 3;
+  public static final int hangArmAxis = 1;
+  public static final int intakeAxis = 1;
 
 
   public OI() {
@@ -35,10 +49,19 @@ public class OI {
     resetGyro = new JoystickButton(stick, 2);
     resetElevatorEnc = new JoystickButton(stick, 1);
     resetBaseEnc = resetElevatorEnc;
+    hangArmIn = new JoystickButton(stick, 5);
+    hangArmOut = new JoystickButton(stick, 6);
+
     elevatorButtons = new JoystickButton[] {
                       new JoystickButton(stick2, 1), new JoystickButton(stick2, 2),
                       new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
-
+    pivotIntakeIn = new JoystickButton(stick2, 7);
+    pivotIntakeOut = new JoystickButton(stick2, 8);
+    pushOuterIn = new JoystickButton(stick2, 5);
+    pushOuterOut = new JoystickButton(stick2, 6);
+    pushInnerIn = new JoystickButton(stick2, 2);
+    pushInnerOut = new JoystickButton(stick2, 4);
+    
   }
 
 
