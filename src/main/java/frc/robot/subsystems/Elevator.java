@@ -40,6 +40,8 @@ public class Elevator extends Subsystem {
   {
     elevatorLeft = new CANSparkMax(RobotMap.elevatorLeft, MotorType.kBrushless);
     elevatorRight = new CANSparkMax(RobotMap.elevatorRight, MotorType.kBrushless);
+    elevatorLeft.setInverted(false);
+    elevatorRight.setInverted(true);
     encOffset = 0;
     activePreset = -1;
     activePID = Constants.kElevatorUpPID;
@@ -115,7 +117,7 @@ public class Elevator extends Subsystem {
   public void report()
   {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
-    SmartDashboard.putNumber("Elevator PID Setpoint", Constants.elevatorPresets[activePreset]);
+    if (activePreset != -1) SmartDashboard.putNumber("Elevator PID Setpoint", Constants.elevatorPresets[activePreset]);
     SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
     SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
     SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
@@ -125,7 +127,7 @@ public class Elevator extends Subsystem {
   {
     power *= Constants.kElevatorPower;
     elevatorLeft.set(power);
-    elevatorRight.set(-power);
+    elevatorRight.set(power);
   }
 
   public void stop()
@@ -136,7 +138,7 @@ public class Elevator extends Subsystem {
 
   public double getElevatorEnc()
   {
-    return elevatorRight.getEncoder().getPosition() - encOffset;
+    return elevatorLeft.getEncoder().getPosition() - encOffset;
   }
 
   public void resetElevatorEnc()
@@ -152,7 +154,7 @@ public class Elevator extends Subsystem {
   public void setSetpoint(double setpoint, ControlType type)
   {
     elevatorLeft.getPIDController().setReference(setpoint, type, activePID);
-    elevatorRight.getPIDController().setReference(-setpoint, type, activePID);
+    elevatorRight.getPIDController().setReference(setpoint, type, activePID);
   }
 
   public void setP(double p)
