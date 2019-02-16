@@ -26,6 +26,8 @@ public class Hang extends Subsystem {
   {
     hangLeft = new CANSparkMax(RobotMap.hangLeft, MotorType.kBrushless);
     hangRight = new CANSparkMax(RobotMap.hangRight, MotorType.kBrushless);
+    hangLeft.setInverted(false);
+    hangRight.setInverted(false);
   }
 
   public void drive(double power)

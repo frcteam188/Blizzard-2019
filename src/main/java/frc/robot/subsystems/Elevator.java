@@ -46,6 +46,8 @@ public class Elevator extends Subsystem {
     elevatorRight = new CANSparkMax(RobotMap.elevatorRight, MotorType.kBrushless);
     elevatorRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
     elevatorEncoder = elevatorRight.getEncoder();
+    elevatorLeft.setInverted(false);
+    elevatorRight.setInverted(true);
     encOffset = 0;
     activePreset = -1;
     activePID = Constants.kElevatorUpPID;
@@ -131,7 +133,7 @@ public class Elevator extends Subsystem {
   {
     power *= Constants.kElevatorPower;
     elevatorLeft.set(power);
-    elevatorRight.set(-power);
+    elevatorRight.set(power);
   }
 
   public void stop()
@@ -142,7 +144,7 @@ public class Elevator extends Subsystem {
 
   public double getElevatorEnc()
   {
-    return elevatorEncoder.getPosition() - encOffset;
+    return -elevatorEncoder.getPosition() - encOffset;
   }
 
   public void resetElevatorEnc()
@@ -158,7 +160,7 @@ public class Elevator extends Subsystem {
   public void setSetpoint(double setpoint, ControlType type)
   {
     elevatorLeft.getPIDController().setReference(setpoint, type, activePID);
-    elevatorRight.getPIDController().setReference(-setpoint, type, activePID);
+    elevatorRight.getPIDController().setReference(setpoint, type, activePID);
   }
 
   public void setP(double p)

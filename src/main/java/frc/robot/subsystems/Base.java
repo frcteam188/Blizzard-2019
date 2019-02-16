@@ -49,28 +49,31 @@ public class Base extends Subsystem {
 
     leftEncoder = frontLeft.getEncoder();
     rightEncoder = frontRight.getEncoder();
+    frontLeft.setInverted(false);
+    midLeft.setInverted(false);
+    backLeft.setInverted(false);
+    frontRight.setInverted(true);
+    midRight.setInverted(true);
+    backRight.setInverted(true);
     leftEncOffset = 0.;
     rightEncOffset = 0.;
   }
 
   public void driveArcade(double y, double x) {
-    double leftPower = (-y + x) * Constants.kBasePower;
-    double rightPower = (y + x) * Constants.kBasePower;
-    frontLeft.set(leftPower);
-    midLeft.set(leftPower);
-    backLeft.set(leftPower);
-    frontRight.set(rightPower);
-    midRight.set(rightPower);
-    backRight.set(rightPower);
+    double leftPower = -y + x;
+    double rightPower = -y - x;
+    driveTank(leftPower, rightPower);
   }
 
   public void driveTank(double left, double right) {
+    left *= Constants.kBasePower;
+    right *= Constants.kBasePower;
     frontLeft.set(left);
     midLeft.set(left);
     backLeft.set(left);
-    frontRight.set(-right);
-    midRight.set(-right);
-    backRight.set(-right);
+    frontRight.set(right);
+    midRight.set(right);
+    backRight.set(right);
   }
 
   public void report()
@@ -126,7 +129,7 @@ public class Base extends Subsystem {
 
   public double getRightEnc()
   {
-    return -rightEncoder.getPosition() - rightEncOffset;
+    return rightEncoder.getPosition() - rightEncOffset;
   }
 
   public double getLeftVel()
@@ -169,7 +172,6 @@ public class Base extends Subsystem {
 
   public void setRightSetpoint(double setpoint, ControlType type)
   {
-    setpoint = -setpoint;
     frontRight.getPIDController().setReference(setpoint, type);
     midRight.getPIDController().setReference(setpoint, type);
     backRight.getPIDController().setReference(setpoint, type);
