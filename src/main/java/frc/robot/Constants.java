@@ -26,14 +26,14 @@ public class Constants {
     // Power Scalars
     public static final double kBasePower = 0.75;
     public static final double kElevatorPower = 0.6;
-    public static final double kHangArmPower = 0.5;
+    public static final double kHangArmPower = 0.4;
 
     // Pneumatics Directions
     public static final Value kIntakePivotOut = Value.kForward;
     public static final Value kIntakePivotIn = (kIntakePivotOut == Value.kForward ? Value.kReverse : Value.kForward);
-    public static final Value kInnerPushOut = Value.kReverse;
+    public static final Value kInnerPushOut = Value.kForward;
     public static final Value kInnerPushIn = (kInnerPushOut == Value.kForward ? Value.kReverse : Value.kForward);
-    public static final Value kOuterPushOut = Value.kForward;
+    public static final Value kOuterPushOut = Value.kReverse;
     public static final Value kOuterPushIn = (kOuterPushOut == Value.kForward ? Value.kReverse : Value.kForward);
     public static final Value kHangOut = Value.kForward;
     public static final Value kHangIn = (kHangOut == Value.kForward ? Value.kReverse : Value.kForward);

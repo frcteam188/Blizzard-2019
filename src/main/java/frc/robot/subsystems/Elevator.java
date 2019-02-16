@@ -7,10 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +25,8 @@ public class Elevator extends Subsystem {
   
   private CANSparkMax elevatorLeft;
   private CANSparkMax elevatorRight;
+
+  private CANEncoder elevatorEncoder;
 
   private double encOffset;
   private int activePreset;
@@ -40,6 +44,8 @@ public class Elevator extends Subsystem {
   {
     elevatorLeft = new CANSparkMax(RobotMap.elevatorLeft, MotorType.kBrushless);
     elevatorRight = new CANSparkMax(RobotMap.elevatorRight, MotorType.kBrushless);
+    elevatorRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
+    elevatorEncoder = elevatorRight.getEncoder();
     encOffset = 0;
     activePreset = -1;
     activePID = Constants.kElevatorUpPID;
@@ -115,10 +121,10 @@ public class Elevator extends Subsystem {
   public void report()
   {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
-    SmartDashboard.putNumber("Elevator PID Setpoint", Constants.elevatorPresets[activePreset]);
-    SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
-    SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
-    SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
+    if (activePreset != -1) SmartDashboard.putNumber("Elevator PID Setpoint", Constants.elevatorPresets[activePreset]);
+    // SmartDashboard.putNumber("Elevator Raw Enc", elevatorLeft.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
+    // SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
   }
 
   public void drive(double power)
@@ -136,7 +142,7 @@ public class Elevator extends Subsystem {
 
   public double getElevatorEnc()
   {
-    return elevatorRight.getEncoder().getPosition() - encOffset;
+    return elevatorEncoder.getPosition() - encOffset;
   }
 
   public void resetElevatorEnc()

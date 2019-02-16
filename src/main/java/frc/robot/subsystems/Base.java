@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 public class Base extends Subsystem {
 
@@ -25,6 +27,9 @@ public class Base extends Subsystem {
   public CANSparkMax frontRight;
   public CANSparkMax midRight;
   public CANSparkMax backRight;
+  
+  private CANEncoder leftEncoder;
+  private CANEncoder rightEncoder;
 
   AHRS navx;
 
@@ -39,6 +44,11 @@ public class Base extends Subsystem {
     frontRight = new CANSparkMax(RobotMap.frontRight, MotorType.kBrushless);
     midRight = new CANSparkMax(RobotMap.midRight, MotorType.kBrushless);
     backRight = new CANSparkMax(RobotMap.backRight, MotorType.kBrushless);
+    frontLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
+    frontRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
+
+    leftEncoder = frontLeft.getEncoder();
+    rightEncoder = frontRight.getEncoder();
     leftEncOffset = 0.;
     rightEncOffset = 0.;
   }
@@ -68,10 +78,10 @@ public class Base extends Subsystem {
     SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
     SmartDashboard.putNumber("Base Right Enc", getRightEnc());
     SmartDashboard.putNumber("Base Gyro", getAngle());
-    SmartDashboard.putNumber("Base Left Raw Enc", frontLeft.getEncoder().getPosition());
-    SmartDashboard.putNumber("Base Right Raw Enc", frontRight.getEncoder().getPosition());
-    SmartDashboard.putNumber("Base Left Velocity", getLeftVel());
-    SmartDashboard.putNumber("Base Right Velocity", getRightVel());
+    // SmartDashboard.putNumber("Base Left Raw Enc", frontLeft.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Base Right Raw Enc", frontRight.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Base Left Velocity", getLeftVel());
+    // SmartDashboard.putNumber("Base Right Velocity", getRightVel());
   }
 
   public double getAngle()
@@ -111,12 +121,12 @@ public class Base extends Subsystem {
 
   public double getLeftEnc()
   {
-    return frontLeft.getEncoder().getPosition() - leftEncOffset;
+    return leftEncoder.getPosition() - leftEncOffset;
   }
 
   public double getRightEnc()
   {
-    return -frontRight.getEncoder().getPosition() - rightEncOffset;
+    return -rightEncoder.getPosition() - rightEncOffset;
   }
 
   public double getLeftVel()

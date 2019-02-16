@@ -12,6 +12,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.TuneElevatorPID;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends TimedRobot {
 
   private static Command teleopCommand;
+  private static Command testCommand;
 
   public static Base base;
   public static Elevator elevator;
@@ -29,6 +31,7 @@ public class Robot extends TimedRobot {
   public static Hang hang;
   public static OI oi;
   NetworkTableEntry goalEntry;
+
   @Override
   public void robotInit() {
     oi = new OI();
@@ -36,19 +39,21 @@ public class Robot extends TimedRobot {
     intake = new Intake();
     elevator = new Elevator();
     hang = new Hang();
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable("SmartDashboard");
-    goalEntry = table.getEntry("goal:closest");
+    // NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    // NetworkTable table = inst.getTable("SmartDashboard");
+    // goalEntry = table.getEntry("goal:closest");
     
     teleopCommand = new DriveCommand();
+    testCommand = new TuneElevatorPID();
+    report();
   }
 
   @Override
   public void robotPeriodic() {
-    double goalAngle = (double)goalEntry.getNumber(0);
+    // double goalAngle = (double)goalEntry.getNumber(0);
     // System.out.println(goalAngle);
-    if(goalAngle != 0){
-    }
+    // if(goalAngle != 0){
+    // }
   }
 
   @Override
@@ -56,6 +61,9 @@ public class Robot extends TimedRobot {
     if(teleopCommand != null) {
       teleopCommand.cancel();
     }
+    if (testCommand != null)
+      testCommand.cancel();
+    
   }
 
   @Override
@@ -106,6 +114,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    if (testCommand != null)
+      testCommand.start();
   }
 
   public static void report()

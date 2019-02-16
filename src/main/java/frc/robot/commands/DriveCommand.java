@@ -69,7 +69,8 @@ public class DriveCommand extends Command {
       double turn = OI.stick.getRawAxis(OI.turnAxis);
       double proposedTurn = 0.0;
 
-      double goalAngle = (double)SmartDashboard.getNumber("goal:closest", 0.0);
+      // double goalAngle = (double)SmartDashboard.getNumber("goal:closest", 0.0);
+      double goalAngle = 0;
       if(Math.abs(goalAngle) > 0){
         double error = goalAngle/25.0;
         double P =.125, I=0.0, D=0.02;
@@ -85,9 +86,9 @@ public class DriveCommand extends Command {
         }
       }
 
-      SmartDashboard.putNumber("Forward", forward);
-      SmartDashboard.putNumber("Turn", turn);
-      SmartDashboard.putNumber("Proposed Turn", proposedTurn);
+      // SmartDashboard.putNumber("Forward", forward);
+      // SmartDashboard.putNumber("Turn", turn);
+      // SmartDashboard.putNumber("Proposed Turn", proposedTurn);
 
       Robot.base.driveArcade(forward, turn);
       Robot.elevator.execute();
@@ -97,12 +98,12 @@ public class DriveCommand extends Command {
    
     Robot.report();
     
-    SmartDashboard.putNumber("Left enc", Robot.base.getLeftEnc());
-    SmartDashboard.putNumber("Right enc", Robot.base.getRightEnc());
-    SmartDashboard.putNumber("Front Left Pwr", Robot.base.frontLeft.getOutputCurrent());
-    SmartDashboard.putNumber("Back Left Pwr", Robot.base.backLeft.getOutputCurrent());
-    SmartDashboard.putNumber("Front Right Pwr", Robot.base.frontRight.getOutputCurrent());
-    SmartDashboard.putNumber("Back Right Pwr", Robot.base.backRight.getOutputCurrent());
+    // SmartDashboard.putNumber("Left enc", Robot.base.getLeftEnc());
+    // SmartDashboard.putNumber("Right enc", Robot.base.getRightEnc());
+    // SmartDashboard.putNumber("Front Left Pwr", Robot.base.frontLeft.getOutputCurrent());
+    // SmartDashboard.putNumber("Back Left Pwr", Robot.base.backLeft.getOutputCurrent());
+    // SmartDashboard.putNumber("Front Right Pwr", Robot.base.frontRight.getOutputCurrent());
+    // SmartDashboard.putNumber("Back Right Pwr", Robot.base.backRight.getOutputCurrent());
   }
 
   public void motionProfile(){
