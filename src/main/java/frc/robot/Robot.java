@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     }
     if (testCommand != null)
       testCommand.cancel();
-    
+    Robot.elevator.stopPID();
   }
 
   @Override
@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
     if(teleopCommand != null) {
       teleopCommand.start();
     }
+    Robot.elevator.stopPID();
   }
 
   @Override

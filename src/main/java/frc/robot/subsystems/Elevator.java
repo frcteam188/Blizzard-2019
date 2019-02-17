@@ -30,10 +30,18 @@ public class Elevator extends Subsystem {
   private CANEncoder elevatorLeftEncoder;
   private CANEncoder elevatorRightEncoder;
 
-  private int activePreset;
+  private double activeSetpoint;
   private int activePID;
   private Direction direction;
   private double deadband;
+
+
+  public enum GamePiece
+  {
+    BALL,
+    HATCH,
+    NONE
+  }
 
   private enum Direction
   {
@@ -63,7 +71,7 @@ public class Elevator extends Subsystem {
     elevatorRight.setInverted(false);
     elevatorLeftEncoder = elevatorLeft.getEncoder();
     elevatorRightEncoder = elevatorRight.getEncoder();
-    activePreset = -1;
+    activeSetpoint = -1;
     activePID = Constants.kElevatorUpPID;
     direction = Direction.UP;
     // deadband = (double)(elevatorLeft.getParameterDouble(ConfigParameter.kInputDeadband).get());
@@ -139,6 +147,7 @@ public class Elevator extends Subsystem {
       activePID = Constants.kElevatorUpPID;
     }
     setDirection();
+    activeSetpoint = setpoint;
   }
 
   private void setDirection()
@@ -159,6 +168,12 @@ public class Elevator extends Subsystem {
     if (activePID == Constants.kElevatorUpPID && getElevatorEnc() > setpoint && getIAccum() > 0)
       setIAccum(0);
     setSetpoint(setpoint);
+    activeSetpoint = setpoint;
+  }
+
+  public double getActiveSetpoint()
+  {
+    return activeSetpoint;
   }
 
   public void report()
@@ -200,6 +215,7 @@ public class Elevator extends Subsystem {
     setD(0);
     setFF(0);
     setSetpoint(0);
+    activeSetpoint = -1;
   }
 
   public double getElevatorEnc()

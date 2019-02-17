@@ -11,16 +11,21 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveHatch;
+import frc.robot.commands.WaitOnTarget;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
 public class IntakeHatch extends CommandGroup {
   
   public IntakeHatch() {
+    addParallel(new MoveElevator(3, Elevator.GamePiece.HATCH));
+    addSequential(new WaitOnTarget(4));
     addSequential(new MoveHatch(Intake.Direction.OUT));
-    addSequential(new WaitCommand(1.0));
-    addParallel(new MoveElevator(1));
+    addSequential(new WaitCommand(0.4));
+    addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     addSequential(new WaitCommand(1.0));
     addSequential(new MoveHatch(Intake.Direction.IN));
+    addSequential(new WaitCommand(0.5));
     addSequential(new MoveElevator(-1));
   }
 }

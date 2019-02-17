@@ -47,7 +47,7 @@ public class Constants {
     public static final double kIntakeTrim = 0.2;
 
     // Tolerances
-    public static final double kElevatorPIDTolerance = 10;
+    public static final double kElevatorPIDTolerance = 1;
 
     // Default Values
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
@@ -58,7 +58,7 @@ public class Constants {
     public static final double kElevatorLowerLimit = Double.NEGATIVE_INFINITY;
 
     // Presets
-    public static final double[] hatchPresets = {1, 23.5, 43.5};
+    public static final double[] hatchPresets = {1, 23.5, 43.5, 3, 10}; // Last one is hatch pickup
     public static final double[] ballPresets = {14, 35, 53};
     public static final double bottomPreset = 1.0;
 
