@@ -83,7 +83,7 @@ public class Intake extends Subsystem {
     hangPiston = new DoubleSolenoid(RobotMap.hangPiston[0], RobotMap.hangPiston[1]);
     
     sensor = new DigitalInput(RobotMap.intakeSensor);
-    trim = false;
+    trim = true;
     pivotIntake(Direction.IN);
     innerPush(Direction.IN);
     outerPush(Direction.IN);
@@ -99,35 +99,47 @@ public class Intake extends Subsystem {
 
   public void execute()
   {
+    // if (trim && Math.abs(power) <= 0.05)
+    //   drive(Constants.kIntakeTrim);
+    
     double power = OI.stick2.getRawAxis(OI.intakeAxis);
-    if (trim && Math.abs(power) <= 0.05)
-      drive(Constants.kIntakeTrim);
-    else
+    if (OI.intakeBall.get())
+    {
+      pivotIntake(Direction.OUT);
+      drive(-1.0);
+    }
+    else if (Math.abs(power) > 0.05)
+    {
       drive(power);
+    }
+    else
+    {
+      pivotIntake(Direction.IN);
+      if (trim) drive(-Constants.kIntakeTrim);
+    }
 
     // if (getSensor() && power >= 0) stop();
     // else drive(power);
 
-    if (OI.pivotIntakeOut.get())
-      pivotIntake(Direction.OUT);
-    else if (OI.pivotIntakeIn.get())
-      pivotIntake(Direction.IN);
+    // if (OI.pivotIntakeOut.get())
+    //   pivotIntake(Direction.OUT);
+    // else if (OI.pivotIntakeIn.get())
+    //   pivotIntake(Direction.IN);
 
-    if (OI.pushInnerOut.get())
-      innerPush(Direction.OUT);
-    else if (OI.pushInnerIn.get())
-      innerPush(Direction.IN);
+    // if (OI.pushInnerOut.get())
+    //   innerPush(Direction.OUT);
+    // else if (OI.pushInnerIn.get())
+    //   innerPush(Direction.IN);
 
-    if (OI.pushOuterOut.get())
-    {
-      outerPush(Direction.OUT);
-      System.out.println("Pushing out.");
-    }
-    else if (OI.pushOuterIn.get())
-    {
-      outerPush(Direction.IN);
-      System.out.println("Pushing in.");
-    }
+    // if (OI.pushInner.get())
+    //   innerPush(Direction.OUT);
+    // else
+    //   innerPush(Direction.IN);
+
+    // if (OI.pushOuterOut.get())
+    //   outerPush(Direction.OUT);
+    // else if (OI.pushOuterIn.get())
+    //   outerPush(Direction.IN);
 
     // fire(solenoids[0], OI.stick.getRawButton(4));
     // fire(solenoids[1], OI.stick.getRawButton(3));
@@ -141,7 +153,6 @@ public class Intake extends Subsystem {
 
   public void drive(double power)
   {
-    power = -power;
     intakeMotor.set(ControlMode.PercentOutput, power);
   }
 

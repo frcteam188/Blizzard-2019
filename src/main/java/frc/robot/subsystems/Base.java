@@ -33,9 +33,6 @@ public class Base extends Subsystem {
 
   AHRS navx;
 
-  private double leftEncOffset;
-  private double rightEncOffset;
-
   public Base() {
     navx = new AHRS(RobotMap.navxPort);
     frontLeft = new CANSparkMax(RobotMap.frontLeft, MotorType.kBrushless);
@@ -47,16 +44,14 @@ public class Base extends Subsystem {
     frontLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
     frontRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
 
-    leftEncoder = frontLeft.getEncoder();
-    rightEncoder = frontRight.getEncoder();
     frontLeft.setInverted(false);
     midLeft.setInverted(false);
     backLeft.setInverted(false);
     frontRight.setInverted(true);
     midRight.setInverted(true);
     backRight.setInverted(true);
-    leftEncOffset = 0.;
-    rightEncOffset = 0.;
+    leftEncoder = frontLeft.getEncoder();
+    rightEncoder = frontRight.getEncoder();
   }
 
   public void driveArcade(double y, double x) {
@@ -76,13 +71,21 @@ public class Base extends Subsystem {
     backRight.set(right);
   }
 
+  public void setClosedLoopRampRate(double rate)
+  {
+    frontLeft.setClosedLoopRampRate(rate);
+    midLeft.setClosedLoopRampRate(rate);
+    backLeft.setClosedLoopRampRate(rate);
+    frontRight.setClosedLoopRampRate(rate);
+    midRight.setClosedLoopRampRate(rate);
+    backRight.setClosedLoopRampRate(rate);
+  }
+
   public void report()
   {
     SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
     SmartDashboard.putNumber("Base Right Enc", getRightEnc());
     SmartDashboard.putNumber("Base Gyro", getAngle());
-    // SmartDashboard.putNumber("Base Left Raw Enc", frontLeft.getEncoder().getPosition());
-    // SmartDashboard.putNumber("Base Right Raw Enc", frontRight.getEncoder().getPosition());
     // SmartDashboard.putNumber("Base Left Velocity", getLeftVel());
     // SmartDashboard.putNumber("Base Right Velocity", getRightVel());
   }
@@ -112,24 +115,30 @@ public class Base extends Subsystem {
     navx.reset();
   }
 
+  public void resetEnc()
+  {
+    resetLeftEnc();
+    resetRightEnc();
+  }
+
   public void resetLeftEnc()
   {
-    leftEncOffset += getLeftEnc();
+    leftEncoder.setPosition(0);
   }
 
   public void resetRightEnc()
   {
-    rightEncOffset += getRightEnc();
+    rightEncoder.setPosition(0);
   }
 
   public double getLeftEnc()
   {
-    return leftEncoder.getPosition() - leftEncOffset;
+    return leftEncoder.getPosition();
   }
 
   public double getRightEnc()
   {
-    return rightEncoder.getPosition() - rightEncOffset;
+    return rightEncoder.getPosition();
   }
 
   public double getLeftVel()

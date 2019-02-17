@@ -91,10 +91,10 @@ public class DriveCommand extends Command {
       // SmartDashboard.putNumber("Proposed Turn", proposedTurn);
 
       Robot.base.driveArcade(forward, turn);
-      Robot.elevator.execute();
       Robot.intake.execute();
       Robot.hang.execute();
-     }
+      // Robot.elevator.execute();
+    }
    
     Robot.report();
     

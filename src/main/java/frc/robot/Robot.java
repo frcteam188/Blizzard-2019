@@ -19,6 +19,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
@@ -34,11 +35,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    oi = new OI();
     base = new Base();
     intake = new Intake();
     elevator = new Elevator();
     hang = new Hang();
+    oi = new OI();
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // NetworkTable table = inst.getTable("SmartDashboard");
     // goalEntry = table.getEntry("goal:closest");
@@ -93,6 +94,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    if (testCommand != null)
+      testCommand.start();
   }
 
   @Override

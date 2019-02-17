@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Score;
+import frc.robot.commandgroups.IntakeHatch;
+import frc.robot.commands.MoveElevator;
 
 public class OI {
 
@@ -31,6 +34,9 @@ public class OI {
   public static JoystickButton pushInnerIn;
   public static JoystickButton pushOuterOut;
   public static JoystickButton pushOuterIn;
+  public static JoystickButton intakeHatch;
+  public static JoystickButton intakeBall;
+  public static JoystickButton ballToggle;
   
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
@@ -49,19 +55,29 @@ public class OI {
     resetGyro = new JoystickButton(stick, 2);
     resetElevatorEnc = new JoystickButton(stick, 1);
     resetBaseEnc = resetElevatorEnc;
-    hangArmIn = new JoystickButton(stick, 5);
-    hangArmOut = new JoystickButton(stick, 6);
+    // hangArmIn = new JoystickButton(stick, 5);
+    // hangArmOut = new JoystickButton(stick, 6);
 
-    elevatorButtons = new JoystickButton[] {
-                      new JoystickButton(stick2, 1), new JoystickButton(stick2, 2),
-                      new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
-    pivotIntakeIn = new JoystickButton(stick2, 7);
-    pivotIntakeOut = new JoystickButton(stick2, 8);
-    pushOuterIn = new JoystickButton(stick2, 5);
-    pushOuterOut = new JoystickButton(stick2, 6);
-    pushInnerIn = new JoystickButton(stick2, 2);
-    pushInnerOut = new JoystickButton(stick2, 4);
+    // pivotIntakeIn = new JoystickButton(stick2, 7);
+    // pivotIntakeOut = new JoystickButton(stick2, 8);
+    // pushOuterIn = new JoystickButton(stick2, 5);
+    // pushOuterOut = new JoystickButton(stick2, 6);
+    // pushInnerIn = new JoystickButton(stick2, 2);
+    // pushInnerOut = new JoystickButton(stick2, 4);
     
+    elevatorButtons = new JoystickButton[] {new JoystickButton(stick2, 2), 
+      new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
+    intakeBall = new JoystickButton(stick2, 8);
+    intakeHatch = new JoystickButton(stick2, 7);
+    ballToggle = new JoystickButton(stick2, 6);
+
+    for (int i = 0; i < OI.elevatorButtons.length; ++i)
+    {
+      elevatorButtons[i].whenPressed(new MoveElevator(i));
+      elevatorButtons[i].whenReleased(new Score());
+    }
+
+    intakeHatch.whenPressed(new IntakeHatch());
   }
 
 

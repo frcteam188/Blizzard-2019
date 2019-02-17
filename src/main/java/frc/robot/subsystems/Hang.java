@@ -39,9 +39,9 @@ public class Hang extends Subsystem {
 
   public void execute()
   {
-    if (OI.hangArmOut.get()) drive(1.0);
-    else if (OI.hangArmIn.get()) drive(-1.0);
-    else stop();
+    // if (OI.hangArmOut.get()) drive(1.0);
+    // else if (OI.hangArmIn.get()) drive(-1.0);
+    // else stop();
     // drive(OI.stick.getRawAxis(5));
   }
 

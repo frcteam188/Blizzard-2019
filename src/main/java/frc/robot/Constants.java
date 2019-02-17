@@ -15,17 +15,22 @@ public class Constants {
 
     // PID Gains
     public static final double[] basePIDF = {0, 0, 0, 0};
-    public static final double[] elevatorPID = {0, 0, 0};
-    public static final double[] elevatorUpPID = {0, 0, 0};
-    public static final double[] elevatorDownPID = {0, 0, 0};
+    // public static final double elevatorPIDRamp = 0.2;
+    public static final double[] elevatorUpPID = {0.07, 0.0005, 0};
+    public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
+    public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
+    public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
+
+    // Ramp Rates
+    public static final double kClosedLoopRampRate = 0.2;
 
     // PID Slots
     public static final int kElevatorUpPID = 0;
     public static final int kElevatorDownPID = 1;
 
-    // Power Scalars
+    // Power Scalars (Do not affect PID)
     public static final double kBasePower = 0.75;
-    public static final double kElevatorPower = 0.6;
+    public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
 
     // Pneumatics Directions
@@ -39,7 +44,7 @@ public class Constants {
     public static final Value kHangIn = (kHangOut == Value.kForward ? Value.kReverse : Value.kForward);
 
     // Trim
-    public static final double kIntakeTrim = 0.15;
+    public static final double kIntakeTrim = 0.2;
 
     // Tolerances
     public static final double kElevatorPIDTolerance = 10;
@@ -53,6 +58,8 @@ public class Constants {
     public static final double kElevatorLowerLimit = Double.NEGATIVE_INFINITY;
 
     // Presets
-    public static final double[] elevatorPresets = {0, 0, 0, 0};
+    public static final double[] hatchPresets = {1, 23.5, 43.5};
+    public static final double[] ballPresets = {14, 35, 53};
+    public static final double bottomPreset = 1.0;
 
 }
