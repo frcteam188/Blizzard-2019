@@ -13,7 +13,7 @@
           "1,0": {
             "size": [
               2,
-              4
+              2
             ],
             "content": {
               "_type": "Subsystem Layout",
@@ -34,26 +34,6 @@
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Base Right Enc",
                   "_title": "Base Right Enc"
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Base Left Raw Enc",
-                  "_title": "Base Left Raw Enc"
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Base Right Raw Enc",
-                  "_title": "Base Right Raw Enc"
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Base Left Velocity",
-                  "_title": "Base Left Velocity"
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Base Right Velocity",
-                  "_title": "Base Right Velocity"
                 }
               ]
             }
@@ -511,7 +491,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Elevator Enc",
               "_title": "SmartDashboard/Elevator Enc",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Elevator Enc": true
             }
           }
         }
@@ -701,7 +682,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Gyro": true
             }
           }
         }
@@ -774,7 +756,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Left Enc",
               "_title": "SmartDashboard/Base Left Enc",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Left Enc": true
             }
           },
           "7,0": {
@@ -786,7 +769,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Gyro": true
             }
           }
         }

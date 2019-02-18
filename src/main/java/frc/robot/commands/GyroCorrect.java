@@ -27,7 +27,7 @@ public class GyroCorrect extends Command {
 
   public GyroCorrect(double setpoint, int onTargetThreshold) {
     requires(Robot.base);
-    this.setpoint = setpoint + Robot.base.getAngle();
+    this.setpoint = setpoint;
     this.onTargetThreshold = onTargetThreshold;
   }
 
@@ -35,8 +35,9 @@ public class GyroCorrect extends Command {
   @Override
   protected void initialize() {
     onTargetCount = 0;
+    double relativeSetpoint = setpoint + Robot.base.getAngle();
     pid = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1], Constants.baseGyroCorrectionPID[2],
-                          setpoint, Constants.kGyroCorrectionPower, Constants.kGyroCorrectionForwardPower);
+                          relativeSetpoint, Constants.kGyroCorrectionPower, Constants.kGyroCorrectionForwardPower);
     pid.enable();
   }
 
@@ -64,7 +65,7 @@ public class GyroCorrect extends Command {
   protected void end() {
     pid.disable();
     Robot.base.stop();
-    System.out.println("STOPPED PID");
+    System.out.println("GyroCorrect ended.");
   }
 
   // Called when another command which requires one or more of the same

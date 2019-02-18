@@ -8,48 +8,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.Robot;
 
-
-public class WaitOnTarget extends Command {
-
-  int iterationTheshold;
-  int iterations;
-
-  public WaitOnTarget()
-  {
-    this(5);
-  }
-
-  public WaitOnTarget(int iterationTheshold) {
-    this.iterationTheshold = iterationTheshold;    
+public class JoystickElevator extends Command {
+  public JoystickElevator() {
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    iterations = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Math.abs(Robot.elevator.getActiveSetpoint() - Robot.elevator.getElevatorEnc()) <= Constants.kElevatorPIDTolerance)
-      ++iterations;
-    else
-      iterations = 0;
+    Robot.elevator.drive(-OI.stick2.getRawAxis(OI.elevatorAxis));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return iterations >= iterationTheshold;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.elevator.stop();
   }
 
   // Called when another command which requires one or more of the same

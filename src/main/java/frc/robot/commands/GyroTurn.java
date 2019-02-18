@@ -20,13 +20,13 @@ public class GyroTurn extends Command {
   BaseGyroPID pid;
 
   public GyroTurn(double setpoint) {
-    this(setpoint, 7);
+    this(setpoint, 4);
   }
 
   public GyroTurn(double setpoint, int onTargetThreshold)
   {
     requires(Robot.base);
-    this.setpoint = setpoint + Robot.base.getAngle();
+    this.setpoint = setpoint;
     this.onTargetThreshold = onTargetThreshold;
   }
 
@@ -34,7 +34,8 @@ public class GyroTurn extends Command {
   @Override
   protected void initialize() {
     onTargetCount = 0;
-    pid = new BaseGyroPID(Constants.baseGyroTurnPID[0], Constants.baseGyroTurnPID[1], Constants.baseGyroTurnPID[2], setpoint, Constants.kGyroTurnPower);
+    double relativeSetpoint = setpoint + Robot.base.getAngle();
+    pid = new BaseGyroPID(Constants.baseGyroTurnPID[0], Constants.baseGyroTurnPID[1], Constants.baseGyroTurnPID[2], relativeSetpoint, Constants.kGyroTurnPower);
     pid.enable();
   }
 
@@ -56,6 +57,7 @@ public class GyroTurn extends Command {
   protected void end() {
     pid.disable();
     Robot.base.stop();
+    System.out.println("GyroTurn ended.");
   }
 
   // Called when another command which requires one or more of the same

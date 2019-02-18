@@ -25,8 +25,8 @@ public class DriveSlow extends Command {
 
   public DriveSlow(double setpoint, double angle) {
     requires(Robot.base);
-    this.setpoint = setpoint + Robot.base.getLeftEnc();
-    this.angle = angle + Robot.base.getAngle();
+    this.setpoint = setpoint;
+    this.angle = angle;
     this.onTargetThreshold = 5;
   }
 
@@ -34,11 +34,13 @@ public class DriveSlow extends Command {
   @Override
   protected void initialize() {
     onTargetCount = 0;
+    double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
+    double relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
     encPID = new BaseEncPID(Constants.baseEncLowPID[0], Constants.baseEncLowPID[1], Constants.baseEncLowPID[2],
-                            setpoint, Constants.kBaseEncLowPIDPower, true);
+                            relativeSetpoint, Constants.kBaseEncLowPIDPower, true);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
-                              Constants.baseGyroCorrectionPID[2], angle, Constants.kGyroCorrectionPower, true);
+                              Constants.baseGyroCorrectionPID[2], relativeAngle, Constants.kGyroCorrectionPower, true);
     encPID.enable();
     gyroPID.enable();
   }
@@ -63,6 +65,7 @@ public class DriveSlow extends Command {
     encPID.disable();
     gyroPID.disable();
     Robot.base.stop();
+    System.out.println("DriveSlow ended.");
   }
 
   // Called when another command which requires one or more of the same

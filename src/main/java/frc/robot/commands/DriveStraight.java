@@ -24,8 +24,8 @@ public class DriveStraight extends Command {
 
   public DriveStraight(double setpoint, double angle) {
     requires(Robot.base);
-    this.setpoint = setpoint + Robot.base.getLeftEnc();
-    this.angle = angle + Robot.base.getAngle();
+    this.setpoint = setpoint;
+    this.angle = angle;
     this.onTargetThreshold = 5;
   }
 
@@ -33,11 +33,13 @@ public class DriveStraight extends Command {
   @Override
   protected void initialize() {
     onTargetCount = 0;
+    double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
+    double relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
     encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
-                            setpoint, Constants.kBaseEncHighPIDPower, true);
+                            relativeSetpoint, Constants.kBaseEncHighPIDPower, true);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
-                              Constants.baseGyroCorrectionPID[2], angle, Constants.kGyroCorrectionPower, true);
+                              Constants.baseGyroCorrectionPID[2], relativeAngle, Constants.kGyroCorrectionPower, true);
     encPID.enable();
     gyroPID.enable();
   }
@@ -62,6 +64,7 @@ public class DriveStraight extends Command {
     encPID.disable();
     gyroPID.disable();
     Robot.base.stop();
+    System.out.println("DriveStraight ended.");
   }
 
   // Called when another command which requires one or more of the same

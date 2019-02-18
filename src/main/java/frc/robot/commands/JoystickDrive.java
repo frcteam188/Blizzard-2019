@@ -16,11 +16,12 @@ public class JoystickDrive extends Command {
   public JoystickDrive() {
     requires(Robot.base);
   }
-
+  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.base.setOpenLoopRampRate(0);
+    System.out.println("Joystick Driving");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,7 +35,6 @@ public class JoystickDrive extends Command {
       turn *= Constants.kBaseSlowPower;
     }
     Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
-    System.out.println("Joystick Driving");
   }
 
   // Make this return true when this Command no longer needs to run execute()

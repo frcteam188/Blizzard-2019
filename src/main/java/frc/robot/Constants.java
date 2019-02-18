@@ -18,9 +18,9 @@ public class Constants {
 
     // PID Gains
     public static final double[] basePIDF = {0, 0, 0, 0};
-    public static final double[] baseEncHighPID = {0.05, 0, 0}; // 70 percent power
+    public static final double[] baseEncHighPID = {0.035, 0, 0.013}; // 70 percent power (0.05, 0, 0)
     public static final double[] baseEncLowPID = {0.08, 0, 0}; // 30 percent power
-    public static final double[] baseGyroTurnPID = {0.014, 0, 0.0085}; // 75 percent power
+    public static final double[] baseGyroTurnPID = {0.014, 0, 0.01}; // 75 percent power (0.014, 0, 0.0085)
     public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
     public static final double[] elevatorUpPID = {0.07, 0.0005, 0};
@@ -63,8 +63,8 @@ public class Constants {
 
     // Tolerances
     public static final double kElevatorPIDTolerance = 1.0;
-    public static final double kBaseEncPIDTolerance = 0.5;
-    public static final double kBaseGyroPIDTolerance = 1.0;
+    public static final double kBaseEncPIDTolerance = 1.0;
+    public static final double kBaseGyroPIDTolerance = 2.0;
 
     // Default PID Control Types
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;

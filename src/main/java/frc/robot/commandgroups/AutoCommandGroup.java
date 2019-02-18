@@ -18,10 +18,20 @@ import frc.robot.subsystems.Elevator;
 public class AutoCommandGroup extends CommandGroup {
 
   public AutoCommandGroup() {
-    addSequential(new DriveSlow(60, 0));
-    // addSequential(new GyroTurn(90));
-    // addSequential(new DriveStraight(90, 0));
-    // addSequential(new GyroCorrect(-45));
-    // addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
+    addSequential(new DriveSlow(80, 0));
+    addSequential(new GyroTurn(90));
+    addSequential(new DriveStraight(90, 0));
+    addSequential(new GyroTurn(-25));
+    addSequential(new DriveSlow(14, 0));
+    addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
+    addSequential(new DriveSlow(-16, 0));
+    addSequential(new GyroTurn(205));
+    addSequential(new DriveStraight(139, 0));
+    addSequential(new IntakeHatch());
+    addSequential(new DriveStraight(-139, 0));
+    addSequential(new GyroTurn(-100), 0.2);
+    addSequential(new GyroTurn(-105));
+    addSequential(new DriveSlow(16, 0));
+    addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
   }
 }

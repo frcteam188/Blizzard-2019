@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
+import frc.robot.commands.JoystickElevator;
 import frc.robot.commands.MoveElevator;
 
 
@@ -399,7 +400,6 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    // setDefaultCommand(new JoystickElevator());
   }
 }
