@@ -97,35 +97,16 @@ public class Elevator extends Subsystem {
     setOutputRange(Constants.elevatorDownPIDOutputRange[0], Constants.elevatorDownPIDOutputRange[1], Constants.kElevatorDownPID);
   }
 
-  // public void execute()
-  // {
-  //   activePreset = -1;
-  //   // RUN THROUGH PRESET BUTTONS
-  //   for (int i = 0; i < OI.elevatorButtons.length; ++i)
-  //   {
-  //     if (OI.elevatorButtons[i].get())
-  //     {
-  //       activePreset = i;
-  //       setPID(activePreset);
-  //       break;
-  //     }
-  //   }
-  //   if (activePreset != -1)
-  //   {
-  //     runPID();
-  //   }
-  //   else
-  //   {
-  //     // joystickDrive();
-
-  //   }
-  // }
+  public void execute()
+  {
+    // joystickDrive();
+  }
 
   private void joystickDrive()
   {
     double power = -OI.stick2.getRawAxis(OI.elevatorAxis);
-    if (-power >= deadband) direction = Direction.UP;
-    else if (-power <= -deadband) direction = Direction.DOWN;
+    if (power >= deadband) direction = Direction.UP;
+    else if (power <= -deadband) direction = Direction.DOWN;
     if (withinLimits()) drive(power);
     else stop();
   }
@@ -179,7 +160,7 @@ public class Elevator extends Subsystem {
   public void report()
   {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
-    // if (activePreset != -1) SmartDashboard.putNumber("Elevator PID Setpoint", getCurrentPreset());
+    SmartDashboard.putNumber("Elevator PID Setpoint", getActiveSetpoint());
     SmartDashboard.putString("Elevator Direction", direction.toString());
     SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
     SmartDashboard.putNumber("Elevator Left Raw Enc", elevatorLeftEncoder.getPosition());
@@ -215,6 +196,8 @@ public class Elevator extends Subsystem {
     setD(0);
     setFF(0);
     setSetpoint(0);
+    // setSetpoint(0, ControlType.kDutyCycle);
+    // stop();
     activeSetpoint = -1;
   }
 

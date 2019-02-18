@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.RobotMap;
+import frc.robot.commands.TrimIntake;
 
 public class Intake extends Subsystem {
 
@@ -32,6 +33,7 @@ public class Intake extends Subsystem {
   DoubleSolenoid hangPiston;
 
   boolean trim;
+  boolean wasIntaking;
 
   public enum Direction
   {
@@ -84,6 +86,7 @@ public class Intake extends Subsystem {
     
     sensor = new DigitalInput(RobotMap.intakeSensor);
     trim = true;
+    wasIntaking = false;
     pivotIntake(Direction.IN);
     innerPush(Direction.IN);
     outerPush(Direction.IN);
@@ -97,26 +100,25 @@ public class Intake extends Subsystem {
   //   solenoid.set(on);
   // }
 
-  public void execute()
-  {
-    // if (trim && Math.abs(power) <= 0.05)
-    //   drive(Constants.kIntakeTrim);
-    
-    double power = OI.stick2.getRawAxis(OI.intakeAxis);
-    if (OI.intakeBall.get())
-    {
-      pivotIntake(Direction.OUT);
-      drive(-1.0);
-    }
-    else if (Math.abs(power) > 0.05)
-    {
-      drive(power);
-    }
-    else
-    {
-      pivotIntake(Direction.IN);
-      if (trim) drive(-Constants.kIntakeTrim);
-    }
+  // public void execute()
+  // {
+  //   double power = OI.stick2.getRawAxis(OI.intakeAxis);
+  //   if (OI.intakeBall.get())
+  //   {
+  //     pivotIntake(Direction.OUT);
+  //     drive(-1.0);
+  //   }
+  //   else if (Math.abs(power) > 0.05)
+  //   {
+  //     drive(power);
+  //   }
+  //   else if(!OI.intakeBall.get())
+  //   {
+  //     if (wasIntaking) pivotIntake(Direction.IN);
+  //     if (trim) drive(-Constants.kIntakeTrim);
+  //   }
+
+  //   wasIntaking = OI.intakeBall.get();
 
     // if (getSensor() && power >= 0) stop();
     // else drive(power);
@@ -149,7 +151,8 @@ public class Intake extends Subsystem {
     // fire(solenoids[5], OI.stick2.getRawButton(1));
     // fire(solenoids[6], OI.stick2.getRawButton(2));
     // fire(solenoids[7], OI.stick2.getRawButton(3));
-  }
+
+  // }
 
   public void drive(double power)
   {
@@ -194,7 +197,6 @@ public class Intake extends Subsystem {
   public void report()
   {
     SmartDashboard.putBoolean("Intake Sensor", sensor.get());
-    // System.out.println("Intake sensor: " + sensor.get());
   }
 
   public void stop()
@@ -206,5 +208,6 @@ public class Intake extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new TrimIntake());
   }
 }

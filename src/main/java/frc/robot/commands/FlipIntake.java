@@ -7,53 +7,39 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
 
-public class MoveIntake extends Command {
+public class FlipIntake extends Command {
 
-  double power;
-  double time;
-  Timer t;
+  Intake.Direction d;
 
-  public MoveIntake(double power)
-  {
-    this(power, -1);
-  }
-
-  public MoveIntake(double power, double time) {
+  public FlipIntake(Intake.Direction d) {
     requires(Robot.intake);
-    this.power = power;
-    this.time = time;
+    this.d = d;
   }
-  
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t = new Timer();
-    t.start();
-    Robot.intake.setTrim(false);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.drive(power);
+    Robot.intake.pivotIntake(d);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (time < 0) return false;
-    return t.get() > time;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.stop();
-    Robot.intake.setTrim(true);
   }
 
   // Called when another command which requires one or more of the same

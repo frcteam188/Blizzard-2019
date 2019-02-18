@@ -7,53 +7,37 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
 import frc.robot.Robot;
 
-public class MoveIntake extends Command {
-
-  double power;
-  double time;
-  Timer t;
-
-  public MoveIntake(double power)
-  {
-    this(power, -1);
+public class JoystickArm extends Command {
+  public JoystickArm() {
+    requires(Robot.hang);
   }
 
-  public MoveIntake(double power, double time) {
-    requires(Robot.intake);
-    this.power = power;
-    this.time = time;
-  }
-  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t = new Timer();
-    t.start();
-    Robot.intake.setTrim(false);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.drive(power);
+    double power = OI.stick.getRawAxis(3) - OI.stick.getRawAxis(2);
+    Robot.hang.drive(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (time < 0) return false;
-    return t.get() > time;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.stop();
-    Robot.intake.setTrim(true);
+    Robot.hang.stop();
   }
 
   // Called when another command which requires one or more of the same

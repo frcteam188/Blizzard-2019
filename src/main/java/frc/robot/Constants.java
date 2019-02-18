@@ -13,8 +13,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Constants {
 
+    // Conversion Factors
+    public static final double kRevsToInches = 31.2 / 6 / Math.PI;
+
     // PID Gains
     public static final double[] basePIDF = {0, 0, 0, 0};
+    public static final double[] baseEncHighPID = {0.05, 0, 0}; // 70 percent power
+    public static final double[] baseEncLowPID = {0.08, 0, 0}; // 30 percent power
+    public static final double[] baseGyroTurnPID = {0.014, 0, 0.0085}; // 75 percent power
+    public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
     public static final double[] elevatorUpPID = {0.07, 0.0005, 0};
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
@@ -23,13 +30,21 @@ public class Constants {
 
     // Ramp Rates
     public static final double kClosedLoopRampRate = 0.2;
+    public static final double kBaseEncPIDRampRate = 0.01;
 
     // PID Slots
     public static final int kElevatorUpPID = 0;
     public static final int kElevatorDownPID = 1;
 
-    // Power Scalars (Do not affect PID)
-    public static final double kBasePower = 0.75;
+    // Power Scalars
+    public static final double kBasePower = 1.0;
+    public static final double kBaseSlowPower = 0.2;
+    public static final double kBaseTeleopTurnPower = 0.6;
+    public static final double kBaseEncHighPIDPower = 0.7;
+    public static final double kBaseEncLowPIDPower = 0.3;
+    public static final double kGyroTurnPower = 0.75;
+    public static final double kGyroCorrectionPower = 0.3;
+    public static final double kGyroCorrectionForwardPower = 0.2;
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
 
@@ -47,19 +62,26 @@ public class Constants {
     public static final double kIntakeTrim = 0.2;
 
     // Tolerances
-    public static final double kElevatorPIDTolerance = 1;
+    public static final double kElevatorPIDTolerance = 1.0;
+    public static final double kBaseEncPIDTolerance = 0.5;
+    public static final double kBaseGyroPIDTolerance = 1.0;
 
-    // Default Values
+    // Default PID Control Types
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
     public static final ControlType kElevatorPIDDefaultType = ControlType.kPosition;
 
     // Limits
     public static final double kElevatorUpperLimit = 55.;
-    public static final double kElevatorLowerLimit = Double.NEGATIVE_INFINITY;
+    public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {1, 23.5, 43.5, 3, 10}; // Last one is hatch pickup
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 1.75, 6}; // Last one is hatch pickup, value 10
     public static final double[] ballPresets = {14, 35, 53};
     public static final double bottomPreset = 1.0;
 
+    // Vision Constants
+    public static final double kWidthThreshold = 210.0;
+    public static final int kRollingAverageSize = 3;
+    public static final int kStaleSampleThreshold = 5;
+    public static final double kStalenessThreshold = 8;
 }

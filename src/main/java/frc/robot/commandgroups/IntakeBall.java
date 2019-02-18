@@ -8,15 +8,13 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.commands.MoveHatchRelease;
+import frc.robot.commands.FlipIntake;
+import frc.robot.commands.MoveIntake;
 import frc.robot.subsystems.Intake;
 
-public class ReleaseHatch extends CommandGroup {
-  
-  public ReleaseHatch() {
-    addSequential(new MoveHatchRelease(Intake.Direction.OUT));
-    addSequential(new WaitCommand(0.8));
-    addSequential(new MoveHatchRelease(Intake.Direction.IN));
+public class IntakeBall extends CommandGroup {
+  public IntakeBall() {
+    addSequential(new FlipIntake(Intake.Direction.OUT));
+    addSequential(new MoveIntake(-1.0));
   }
 }

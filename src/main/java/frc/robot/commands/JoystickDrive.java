@@ -7,53 +7,46 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.Robot;
 
-public class MoveIntake extends Command {
-
-  double power;
-  double time;
-  Timer t;
-
-  public MoveIntake(double power)
-  {
-    this(power, -1);
+public class JoystickDrive extends Command {
+  public JoystickDrive() {
+    requires(Robot.base);
   }
 
-  public MoveIntake(double power, double time) {
-    requires(Robot.intake);
-    this.power = power;
-    this.time = time;
-  }
-  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t = new Timer();
-    t.start();
-    Robot.intake.setTrim(false);
+    Robot.base.setOpenLoopRampRate(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.drive(power);
+    double forward = OI.stick.getRawAxis(OI.fwdAxis);
+    double turn = OI.stick.getRawAxis(OI.turnAxis);
+    if (OI.slowButton.get())
+    {
+      forward *= Constants.kBaseSlowPower;
+      turn *= Constants.kBaseSlowPower;
+    }
+    Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
+    System.out.println("Joystick Driving");
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (time < 0) return false;
-    return t.get() > time;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.stop();
-    Robot.intake.setTrim(true);
+    Robot.base.stop();
   }
 
   // Called when another command which requires one or more of the same

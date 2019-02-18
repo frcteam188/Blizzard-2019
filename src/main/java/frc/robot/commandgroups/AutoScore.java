@@ -8,15 +8,19 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.commands.MoveHatchRelease;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.MoveElevator;
+import frc.robot.commands.WaitOnTarget;
+import frc.robot.subsystems.Elevator;
 
-public class ReleaseHatch extends CommandGroup {
-  
-  public ReleaseHatch() {
-    addSequential(new MoveHatchRelease(Intake.Direction.OUT));
-    addSequential(new WaitCommand(0.8));
-    addSequential(new MoveHatchRelease(Intake.Direction.IN));
+public class AutoScore extends CommandGroup {
+
+  public AutoScore(int preset, Elevator.GamePiece gamePieceType) {
+    addParallel(new MoveElevator(preset, gamePieceType));
+    addSequential(new WaitOnTarget());
+    if (gamePieceType == Elevator.GamePiece.BALL)
+      addSequential(new ScoreBall());
+    else if (gamePieceType == Elevator.GamePiece.HATCH)
+      addSequential(new ScoreHatch());
+    addSequential(new MoveElevator(-1));
   }
 }

@@ -70,29 +70,29 @@ public class DriveCommand extends Command {
       double proposedTurn = 0.0;
 
       // double goalAngle = (double)SmartDashboard.getNumber("goal:closest", 0.0);
-      double goalAngle = 0;
-      if(Math.abs(goalAngle) > 0){
-        double error = goalAngle/25.0;
-        double P =.125, I=0.0, D=0.02;
+      // double goalAngle = 0;
+      // if(Math.abs(goalAngle) > 0){
+      //   double error = goalAngle/25.0;
+      //   double P =.125, I=0.0, D=0.02;
         
-       proposedTurn = P*error + D*(lastError - error);
-       lastError = error;
-       if (OI.stick.getRawButton(5)){
-          turn = proposedTurn;
-          forward *= 0.45;
-        }
-        else{
-          turn *= 0.75;
-        }
-      }
+      //  proposedTurn = P*error + D*(lastError - error);
+      //  lastError = error;
+      //  if (OI.stick.getRawButton(5)){
+      //     turn = proposedTurn;
+      //     forward *= 0.45;
+      //   }
+      //   else{
+      //     turn *= 0.75;
+      //   }
+      // }
 
       // SmartDashboard.putNumber("Forward", forward);
       // SmartDashboard.putNumber("Turn", turn);
       // SmartDashboard.putNumber("Proposed Turn", proposedTurn);
 
-      Robot.base.driveArcade(forward, turn);
-      Robot.intake.execute();
-      Robot.hang.execute();
+      // Robot.base.driveArcade(forward, turn);
+      // Robot.intake.execute();
+      // Robot.hang.execute();
       // Robot.elevator.execute();
     }
    

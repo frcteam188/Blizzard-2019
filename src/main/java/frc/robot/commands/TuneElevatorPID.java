@@ -42,7 +42,7 @@ public class TuneElevatorPID extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.base.setClosedLoopRampRate(0.2);
+    // Robot.base.setClosedLoopRampRate(0.2);
     SmartDashboard.putNumber("Elevator Enc P", 0.0);
     SmartDashboard.putNumber("Elevator Enc I", 0.0);
     SmartDashboard.putNumber("Elevator Enc D", 0.0);

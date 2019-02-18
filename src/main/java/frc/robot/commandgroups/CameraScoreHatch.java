@@ -8,15 +8,13 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.commands.MoveHatchRelease;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.GyroCorrect;
+import frc.robot.commands.GyroTurn;
 
-public class ReleaseHatch extends CommandGroup {
-  
-  public ReleaseHatch() {
-    addSequential(new MoveHatchRelease(Intake.Direction.OUT));
-    addSequential(new WaitCommand(0.8));
-    addSequential(new MoveHatchRelease(Intake.Direction.IN));
+public class CameraScoreHatch extends CommandGroup {
+
+  public CameraScoreHatch(double gyroSetpoint, int elevatorPreset) {
+    addSequential(new GyroTurn(gyroSetpoint));
+    // addSequential(new GyroCorrect(gyroSetpoint));      
   }
 }

@@ -7,63 +7,61 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.BaseEncPID;
+import frc.robot.subsystems.BaseGyroPID;
 
-public class MoveElevator extends Command {
+public class DriveStraight extends Command {
 
-  int preset;
+  BaseEncPID encPID;
+  BaseGyroPID gyroPID;
   double setpoint;
-  Elevator.GamePiece gamePieceType;
+  double angle;
+  int onTargetCount;
+  int onTargetThreshold;
 
-  public MoveElevator(int preset) {
-    this(preset, Elevator.GamePiece.NONE);
-  }
-
-  public MoveElevator(int preset, Elevator.GamePiece gamePieceType)
-  {
-    requires(Robot.elevator);
-    this.preset = preset;
-    this.gamePieceType = gamePieceType;
+  public DriveStraight(double setpoint, double angle) {
+    requires(Robot.base);
+    this.setpoint = setpoint + Robot.base.getLeftEnc();
+    this.angle = angle + Robot.base.getAngle();
+    this.onTargetThreshold = 5;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.elevator.flashPIDValues();
-    if (preset < 0)
-      setpoint = Constants.bottomPreset;
-    else if (gamePieceType == Elevator.GamePiece.BALL || gamePieceType == Elevator.GamePiece.NONE && OI.ballToggle.get())
-      setpoint = Constants.ballPresets[preset];
-    else
-      setpoint = Constants.hatchPresets[preset];
-    Robot.elevator.setPID(setpoint);
+    onTargetCount = 0;
+    Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
+    encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
+                            setpoint, Constants.kBaseEncHighPIDPower, true);
+    gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
+                              Constants.baseGyroCorrectionPID[2], angle, Constants.kGyroCorrectionPower, true);
+    encPID.enable();
+    gyroPID.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.runPID(setpoint);
-    // System.out.println(setpoint);
+    Robot.base.driveStored();
+    if (encPID.onTarget() && gyroPID.onTarget()) onTargetCount++;
+    else onTargetCount = 0;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1 && setpoint == 1
-            || DriverStation.getInstance().isDisabled();
+    return onTargetCount >= onTargetThreshold;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.stopPID();
-    Robot.elevator.stop();
-    // System.out.println("FINISHED PID");
+    encPID.disable();
+    gyroPID.disable();
+    Robot.base.stop();
   }
 
   // Called when another command which requires one or more of the same

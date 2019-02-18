@@ -8,7 +8,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.RobotMap;
+import frc.robot.commands.JoystickDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,6 +35,9 @@ public class Base extends Subsystem {
 
   AHRS navx;
 
+  public double encPIDPower;
+  public double gyroPIDPower;
+
   public Base() {
     navx = new AHRS(RobotMap.navxPort);
     frontLeft = new CANSparkMax(RobotMap.frontLeft, MotorType.kBrushless);
@@ -52,6 +57,12 @@ public class Base extends Subsystem {
     backRight.setInverted(true);
     leftEncoder = frontLeft.getEncoder();
     rightEncoder = frontRight.getEncoder();
+
+    leftEncoder.setPositionConversionFactor(Constants.kRevsToInches);
+    rightEncoder.setPositionConversionFactor(Constants.kRevsToInches);
+
+    encPIDPower = 0;
+    gyroPIDPower = 0;
   }
 
   public void driveArcade(double y, double x) {
@@ -61,14 +72,28 @@ public class Base extends Subsystem {
   }
 
   public void driveTank(double left, double right) {
-    left *= Constants.kBasePower;
-    right *= Constants.kBasePower;
     frontLeft.set(left);
     midLeft.set(left);
     backLeft.set(left);
     frontRight.set(right);
     midRight.set(right);
     backRight.set(right);
+  }
+
+  public void driveStored()
+  {
+    driveArcade(-encPIDPower, gyroPIDPower);
+  }
+
+  public void setOpenLoopRampRate(double rate)
+  {
+    frontLeft.setOpenLoopRampRate(rate);
+    midLeft.setOpenLoopRampRate(rate);
+    backLeft.setOpenLoopRampRate(rate);
+    frontRight.setOpenLoopRampRate(rate);
+    midRight.setOpenLoopRampRate(rate);
+    backRight.setOpenLoopRampRate(rate);
+
   }
 
   public void setClosedLoopRampRate(double rate)
@@ -148,7 +173,7 @@ public class Base extends Subsystem {
 
   public double getRightVel()
   {
-    return -frontRight.getEncoder().getVelocity();
+    return frontRight.getEncoder().getVelocity();
   }
 
   public void setSetpoint(double setpoint)
@@ -257,5 +282,6 @@ public class Base extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new JoystickDrive());
   }
 }

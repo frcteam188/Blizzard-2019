@@ -7,53 +7,55 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.BaseGyroPID;
 
-public class MoveIntake extends Command {
+public class GyroTurn extends Command {
 
-  double power;
-  double time;
-  Timer t;
+  double setpoint;
+  int onTargetCount;
+  int onTargetThreshold;
+  BaseGyroPID pid;
 
-  public MoveIntake(double power)
+  public GyroTurn(double setpoint) {
+    this(setpoint, 7);
+  }
+
+  public GyroTurn(double setpoint, int onTargetThreshold)
   {
-    this(power, -1);
+    requires(Robot.base);
+    this.setpoint = setpoint + Robot.base.getAngle();
+    this.onTargetThreshold = onTargetThreshold;
   }
 
-  public MoveIntake(double power, double time) {
-    requires(Robot.intake);
-    this.power = power;
-    this.time = time;
-  }
-  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t = new Timer();
-    t.start();
-    Robot.intake.setTrim(false);
+    onTargetCount = 0;
+    pid = new BaseGyroPID(Constants.baseGyroTurnPID[0], Constants.baseGyroTurnPID[1], Constants.baseGyroTurnPID[2], setpoint, Constants.kGyroTurnPower);
+    pid.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.drive(power);
+    if (pid.onTarget()) ++onTargetCount;
+    else onTargetCount = 0;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (time < 0) return false;
-    return t.get() > time;
+    return onTargetCount >= onTargetThreshold;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.stop();
-    Robot.intake.setTrim(true);
+    pid.disable();
+    Robot.base.stop();
   }
 
   // Called when another command which requires one or more of the same

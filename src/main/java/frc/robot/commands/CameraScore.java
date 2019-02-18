@@ -7,53 +7,57 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.commandgroups.CameraScoreBall;
+import frc.robot.commandgroups.CameraScoreHatch;
 
-public class MoveIntake extends Command {
+public class CameraScore extends Command {
 
-  double power;
-  double time;
-  Timer t;
+  CommandGroup c;
+  int elevatorPreset;
 
-  public MoveIntake(double power)
-  {
-    this(power, -1);
+  public CameraScore(int elevatorPreset) {
+    this.elevatorPreset = elevatorPreset;
   }
 
-  public MoveIntake(double power, double time) {
-    requires(Robot.intake);
-    this.power = power;
-    this.time = time;
-  }
-  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t = new Timer();
-    t.start();
-    Robot.intake.setTrim(false);
+    double[] goals = SmartDashboard.getNumberArray("goal:angles", new double[]{});
+    double[] heights = SmartDashboard.getNumberArray("goal:heights", new double[]{});
+    double closestGoal;
+    if (goals.length > 0) closestGoal = goals[0];
+    else return;
+    if (OI.ballToggle.get())
+    {
+      c = new CameraScoreBall(closestGoal, elevatorPreset);
+    }
+    else
+    {
+      c = new CameraScoreHatch(closestGoal, elevatorPreset);
+    }
+    c.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.drive(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (time < 0) return false;
-    return t.get() > time;
+    return c == null || c.isCompleted();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.stop();
-    Robot.intake.setTrim(true);
+    System.out.println("CAMERASCORE ENDED.");
   }
 
   // Called when another command which requires one or more of the same

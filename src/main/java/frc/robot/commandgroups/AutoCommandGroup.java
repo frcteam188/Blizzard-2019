@@ -8,15 +8,20 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.commands.MoveHatchRelease;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.DriveSlow;
+import frc.robot.commands.DriveStraight;
+import frc.robot.commands.GyroCorrect;
+import frc.robot.commands.GyroTurn;
+import frc.robot.commands.TuneBaseEncPID;
+import frc.robot.subsystems.Elevator;
 
-public class ReleaseHatch extends CommandGroup {
-  
-  public ReleaseHatch() {
-    addSequential(new MoveHatchRelease(Intake.Direction.OUT));
-    addSequential(new WaitCommand(0.8));
-    addSequential(new MoveHatchRelease(Intake.Direction.IN));
+public class AutoCommandGroup extends CommandGroup {
+
+  public AutoCommandGroup() {
+    addSequential(new DriveSlow(60, 0));
+    // addSequential(new GyroTurn(90));
+    // addSequential(new DriveStraight(90, 0));
+    // addSequential(new GyroCorrect(-45));
+    // addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
   }
 }
