@@ -18,26 +18,35 @@ public class GyroCorrect extends Command {
   double setpoint;
   int onTargetCount;
   int onTargetThreshold;
+  boolean absolute;
   BaseGyroPID pid;
 
   public GyroCorrect(double setpoint)
   {
-    this(setpoint, 7);
+    this(setpoint, false);
   }
 
-  public GyroCorrect(double setpoint, int onTargetThreshold) {
+  public GyroCorrect(double setpoint, boolean absolute)
+  {
+    this(setpoint, absolute, 7);
+  }
+
+  public GyroCorrect(double setpoint, boolean absolute, int onTargetThreshold) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.onTargetThreshold = onTargetThreshold;
+    this.absolute = absolute;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     onTargetCount = 0;
-    double relativeSetpoint = setpoint + Robot.base.getAngle();
+    double absoluteSetpoint;
+    if (absolute) absoluteSetpoint = setpoint;
+    else absoluteSetpoint = setpoint + Robot.base.getAngle();
     pid = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1], Constants.baseGyroCorrectionPID[2],
-                          relativeSetpoint, Constants.kGyroCorrectionPower, Constants.kGyroCorrectionForwardPower);
+                          absoluteSetpoint, Constants.kGyroCorrectionPower, Constants.kGyroCorrectionForwardPower);
     pid.enable();
   }
 

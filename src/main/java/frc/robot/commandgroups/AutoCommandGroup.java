@@ -12,7 +12,9 @@ import frc.robot.commands.DriveSlow;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.GyroCorrect;
 import frc.robot.commands.GyroTurn;
+import frc.robot.commands.MoveElevator;
 import frc.robot.commands.TuneBaseEncPID;
+import frc.robot.commands.TuneBaseGyroPID;
 import frc.robot.subsystems.Elevator;
 
 public class AutoCommandGroup extends CommandGroup {
@@ -22,16 +24,19 @@ public class AutoCommandGroup extends CommandGroup {
     addSequential(new GyroTurn(90));
     addSequential(new DriveStraight(90, 0));
     addSequential(new GyroTurn(-25));
+    addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
     addSequential(new DriveSlow(14, 0));
     addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(-16, 0));
+    addSequential(new DriveSlow(-19, 0));
     addSequential(new GyroTurn(205));
-    addSequential(new DriveStraight(139, 0));
+    addSequential(new DriveStraight(136, 0));
     addSequential(new IntakeHatch());
-    addSequential(new DriveStraight(-139, 0));
-    addSequential(new GyroTurn(-100), 0.2);
-    addSequential(new GyroTurn(-105));
+    addSequential(new DriveStraight(-144, 0));
+    addSequential(new GyroTurn(-100, false), 0.3);
+    addSequential(new GyroTurn(65, true));
     addSequential(new DriveSlow(16, 0));
     addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
+
+    // addSequential(new TuneBaseGyroPID());
   }
 }

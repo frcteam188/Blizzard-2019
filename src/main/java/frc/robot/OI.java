@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Score;
 import frc.robot.commands.StopPID;
+import frc.robot.commands.TrimIntake;
 import frc.robot.commandgroups.IntakeBall;
 import frc.robot.commandgroups.IntakeHatch;
+import frc.robot.commandgroups.IntakeHumanBall;
 import frc.robot.commands.CameraScore;
 import frc.robot.commands.FlipIntake;
 import frc.robot.commands.MoveElevator;
@@ -44,6 +46,7 @@ public class OI {
   // public static JoystickButton pushOuterIn;
   public static JoystickButton intakeHatch;
   public static JoystickButton intakeBall;
+  public static JoystickButton intakeHumanBall;
   public static JoystickButton ballToggle;
   
   // Axis Numbers (Driver)
@@ -77,9 +80,10 @@ public class OI {
     
     elevatorButtons = new JoystickButton[] {new JoystickButton(stick2, 2), 
       new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
-    intakeBall = new JoystickButton(stick2, 8);
-    intakeHatch = new JoystickButton(stick2, 7);
+    intakeHumanBall = new JoystickButton(stick2, 5);
     ballToggle = new JoystickButton(stick2, 6);
+    intakeHatch = new JoystickButton(stick2, 7);
+    intakeBall = new JoystickButton(stick2, 8);
 
     cameraCorrect = new JoystickButton(stick, 6);
 
@@ -94,6 +98,9 @@ public class OI {
     cameraCorrect.whenReleased(new StopPID());
     intakeBall.whenPressed(new IntakeBall());
     intakeBall.whenReleased(new FlipIntake(Intake.Direction.IN));
+    intakeHumanBall.whenPressed(new IntakeHumanBall());
+    intakeHumanBall.whenReleased(new TrimIntake());
+    intakeHumanBall.whenReleased(new MoveElevator(-1));
   }
 
 

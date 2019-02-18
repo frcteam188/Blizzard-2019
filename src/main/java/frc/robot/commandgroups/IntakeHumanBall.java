@@ -8,24 +8,16 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveHatch;
+import frc.robot.commands.MoveIntake;
 import frc.robot.commands.WaitOnTarget;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 
-public class IntakeHatch extends CommandGroup {
-  
-  public IntakeHatch() {
+public class IntakeHumanBall extends CommandGroup {
+
+  public IntakeHumanBall() {
     addParallel(new MoveElevator(3, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnTarget(1));
-    addSequential(new MoveHatch(Intake.Direction.OUT));
-    addSequential(new WaitCommand(0.3));
-    addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
-    addSequential(new WaitCommand(0.5));
-    addSequential(new MoveHatch(Intake.Direction.IN));
-    addSequential(new WaitCommand(0.3));
-    addSequential(new MoveElevator(-1));
+    addParallel(new MoveIntake(-1.0));
   }
 }

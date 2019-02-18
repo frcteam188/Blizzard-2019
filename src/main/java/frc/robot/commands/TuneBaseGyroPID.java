@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.BaseGyroPID;
@@ -39,6 +40,7 @@ public class TuneBaseGyroPID extends Command {
     SmartDashboard.putNumber("Base Gyro D", 0.0);
     SmartDashboard.putNumber("Base Gyro I", 0.0);
     SmartDashboard.putNumber("Base Gyro Setpoint", 0.0);
+    Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
     toggle = OI.stick2.getRawButton(1);
     pid = new BaseGyroPID(SmartDashboard.getNumber("Base Gyro P", 0.0), 
       SmartDashboard.getNumber("Base Gyro I", 0.0),
