@@ -26,7 +26,7 @@ public class GyroTurn extends Command {
 
   public GyroTurn(double setpoint, boolean absolute)
   {
-    this(setpoint, absolute, 4);
+    this(setpoint, absolute, 1);
   }
 
   public GyroTurn(double setpoint, boolean absolute, int onTargetThreshold)
@@ -53,6 +53,7 @@ public class GyroTurn extends Command {
   protected void execute() {
     if (pid.onTarget()) ++onTargetCount;
     else onTargetCount = 0;
+    System.out.println(pid.onTarget());
   }
 
   // Make this return true when this Command no longer needs to run execute()

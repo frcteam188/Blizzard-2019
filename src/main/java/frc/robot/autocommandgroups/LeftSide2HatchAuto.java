@@ -22,20 +22,20 @@ import frc.robot.subsystems.Elevator;
 public class LeftSide2HatchAuto extends CommandGroup {
 
   public LeftSide2HatchAuto() {
-    addSequential(new DriveSlow(80, 0));
+    addSequential(new DriveSlow(76, 0));
     addSequential(new GyroTurn(90));
-    addSequential(new DriveStraight(90, 0));
-    addSequential(new GyroTurn(-25));
+    addSequential(new DriveStraight(109, 0));
+    addSequential(new GyroTurn(-38));
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(16, 0));
+    addSequential(new DriveSlow(12, 0));
     addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(-21, 0));
-    addSequential(new GyroTurn(205));
-    addSequential(new DriveStraight(138, 0));
+    addSequential(new DriveSlow(-17, 0));
+    addSequential(new GyroTurn(220));
+    addSequential(new DriveStraight(149, 0));
     addSequential(new IntakeHatch());
-    addSequential(new DriveStraight(-146, 0));
+    addSequential(new DriveStraight(-157, 0));
     addSequential(new GyroTurn(-100, false), 0.3);
-    addSequential(new GyroTurn(65, true));
+    addSequential(new GyroTurn(47, true));
     addSequential(new DriveSlow(16, 0));
     addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
   }
