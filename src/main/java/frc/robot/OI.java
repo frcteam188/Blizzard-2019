@@ -98,6 +98,7 @@ public class OI {
     cameraCorrect.whenReleased(new StopPID());
     intakeBall.whenPressed(new IntakeBall());
     intakeBall.whenReleased(new FlipIntake(Intake.Direction.IN));
+    intakeBall.whenReleased(new TrimIntake());
     intakeHumanBall.whenPressed(new IntakeHumanBall());
     intakeHumanBall.whenReleased(new TrimIntake());
     intakeHumanBall.whenReleased(new MoveElevator(-1));

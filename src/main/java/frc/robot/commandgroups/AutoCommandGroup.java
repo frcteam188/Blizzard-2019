@@ -8,6 +8,8 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.autocommandgroups.LeftSide2HatchAuto;
+import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.commands.DriveSlow;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.GyroCorrect;
@@ -20,23 +22,6 @@ import frc.robot.subsystems.Elevator;
 public class AutoCommandGroup extends CommandGroup {
 
   public AutoCommandGroup() {
-    addSequential(new DriveSlow(80, 0));
-    addSequential(new GyroTurn(90));
-    addSequential(new DriveStraight(90, 0));
-    addSequential(new GyroTurn(-25));
-    addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(14, 0));
-    addSequential(new AutoScore(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(-19, 0));
-    addSequential(new GyroTurn(205));
-    addSequential(new DriveStraight(136, 0));
-    addSequential(new IntakeHatch());
-    addSequential(new DriveStraight(-144, 0));
-    addSequential(new GyroTurn(-100, false), 0.3);
-    addSequential(new GyroTurn(65, true));
-    addSequential(new DriveSlow(16, 0));
-    addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
-
-    // addSequential(new TuneBaseGyroPID());
+    addSequential(new LeftSide2HatchAuto());
   }
 }

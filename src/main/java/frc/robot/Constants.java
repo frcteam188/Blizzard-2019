@@ -75,7 +75,7 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 1.75, 6}; // Last one is hatch pickup, value 10
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2, 6}; // Last one is hatch pickup, value 10
     public static final double[] ballPresets = {14, 35, 53};
     public static final double bottomPreset = 1.0;
 

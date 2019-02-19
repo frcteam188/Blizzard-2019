@@ -19,6 +19,7 @@ public class TrimIntake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Trimming intake");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -36,6 +37,7 @@ public class TrimIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("No longer trimming");
     Robot.intake.stop();
   }
 

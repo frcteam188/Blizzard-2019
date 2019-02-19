@@ -25,7 +25,7 @@ public class IntakeHatch extends CommandGroup {
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     addSequential(new WaitCommand(0.5));
     addSequential(new MoveHatch(Intake.Direction.IN));
-    addSequential(new WaitCommand(0.3));
+    addSequential(new WaitCommand(0.5));
     addSequential(new MoveElevator(-1));
   }
 }

@@ -14,7 +14,7 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeBall extends CommandGroup {
   public IntakeBall() {
-    addSequential(new FlipIntake(Intake.Direction.OUT));
+    addParallel(new FlipIntake(Intake.Direction.OUT));
     addSequential(new MoveIntake(-1.0));
   }
 }

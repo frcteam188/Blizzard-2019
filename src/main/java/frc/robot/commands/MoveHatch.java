@@ -16,7 +16,7 @@ public class MoveHatch extends Command {
   Intake.Direction direction;
 
   public MoveHatch(Intake.Direction direction) {
-    requires(Robot.intake);
+    // requires(Robot.intake);
     this.direction = direction;
   }
 

@@ -16,7 +16,7 @@ public class FlipIntake extends Command {
   Intake.Direction d;
 
   public FlipIntake(Intake.Direction d) {
-    requires(Robot.intake);
+    // requires(Robot.intake);
     this.d = d;
   }
 

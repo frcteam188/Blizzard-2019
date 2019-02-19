@@ -14,6 +14,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.commandgroups.AutoCommandGroup;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.TestArmPID;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     // NetworkTable table = inst.getTable("SmartDashboard");
     // goalEntry = table.getEntry("goal:closest");
     
-    teleopCommand = null;
+    teleopCommand = new JoystickDrive();
     testCommand = new TuneBaseEncPID();
     autoCommandGroup = new AutoCommandGroup();
 
@@ -124,9 +125,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if(teleopCommand != null) {
+    if (autoCommandGroup != null)
+      autoCommandGroup.cancel();
+    if(teleopCommand != null)
       teleopCommand.start();
-    }
     Robot.elevator.stopPID();
   }
 
