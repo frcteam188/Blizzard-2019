@@ -61,8 +61,10 @@ public class MoveElevator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.stopPID();
-    Robot.elevator.stop();
+    if(setpoint == 1 || DriverStation.getInstance().isDisabled()) {
+      Robot.elevator.stopPID();
+      Robot.elevator.stop();
+    }
     // System.out.println("FINISHED PID");
   }
 

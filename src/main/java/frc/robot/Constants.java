@@ -51,9 +51,9 @@ public class Constants {
     // Pneumatics Directions
     public static final Value kIntakePivotOut = Value.kForward;
     public static final Value kIntakePivotIn = (kIntakePivotOut == Value.kForward ? Value.kReverse : Value.kForward);
-    public static final Value kInnerPushOut = Value.kForward;
+    public static final Value kInnerPushOut = Value.kReverse;
     public static final Value kInnerPushIn = (kInnerPushOut == Value.kForward ? Value.kReverse : Value.kForward);
-    public static final Value kOuterPushOut = Value.kReverse;
+    public static final Value kOuterPushOut = Value.kForward;
     public static final Value kOuterPushIn = (kOuterPushOut == Value.kForward ? Value.kReverse : Value.kForward);
     public static final Value kHangOut = Value.kForward;
     public static final Value kHangIn = (kHangOut == Value.kForward ? Value.kReverse : Value.kForward);
