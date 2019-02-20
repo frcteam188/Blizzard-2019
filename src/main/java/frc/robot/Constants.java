@@ -17,13 +17,12 @@ public class Constants {
     public static final double kRevsToInches = 31.2 / 6 / Math.PI;
 
     // PID Gains
-    public static final double[] basePIDF = {0, 0, 0, 0};
     public static final double[] baseEncHighPID = {0.035, 0, 0.013}; // 70 percent power (0.05, 0, 0)
-    public static final double[] baseEncLowPID = {0.08, 0, 0}; // 30 percent power
-    public static final double[] baseGyroTurnPID = {0.0085, 0, 0.007}; // 75 percent power (0.014, 0, 0.01)
+    public static final double[] baseEncLowPID = {0.084, 0, 0}; // 30 percent power (0.08, 0, 0)
+    public static final double[] baseGyroTurnPID = {0.0085, 0, 0.0085}; // 75 percent power (0.014, 0, 0.01)
     public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
-    public static final double[] elevatorUpPID = {0.07, 0.0005, 0};
+    public static final double[] elevatorUpPID = {0.06, 0.0004, 0};
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
@@ -31,6 +30,7 @@ public class Constants {
     // Ramp Rates
     public static final double kClosedLoopRampRate = 0.2;
     public static final double kBaseEncPIDRampRate = 0.01;
+    public static final double kBaseGyroPIDRampRate = 0.2;
 
     // PID Slots
     public static final int kElevatorUpPID = 0;
@@ -41,7 +41,8 @@ public class Constants {
     public static final double kBaseSlowPower = 0.2;
     public static final double kBaseTeleopTurnPower = 0.6;
     public static final double kBaseEncHighPIDPower = 0.7;
-    public static final double kBaseEncLowPIDPower = 0.3;
+    public static final double kBaseEncMidPIDPower = 0.3; //is 0.3
+    public static final double kBaseEncLowPIDPower = 0.2; //meant to be 0.3
     public static final double kGyroTurnPower = 0.75;
     public static final double kGyroCorrectionPower = 0.3;
     public static final double kGyroCorrectionForwardPower = 0.2;
@@ -75,7 +76,7 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2, 6}; // Last one is hatch pickup, value 10
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 1.5, 6}; // Last one is hatch pickup, value 10
     public static final double[] ballPresets = {14, 35, 53};
     public static final double bottomPreset = 1.0;
 

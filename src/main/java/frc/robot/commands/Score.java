@@ -27,7 +27,7 @@ public class Score extends Command {
     if (OI.ballToggle.get())
       c = new ScoreBall();
     else
-      c = new ScoreHatch();
+      c = new ScoreHatch(true);
     c.start();
   }
 

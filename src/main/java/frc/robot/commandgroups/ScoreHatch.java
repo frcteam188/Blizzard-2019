@@ -17,7 +17,7 @@ import frc.robot.subsystems.Intake;
 
 public class ScoreHatch extends CommandGroup {
   
-  public ScoreHatch() {
+  public ScoreHatch(boolean resetElevator) {
     // addSequential(new MoveHatch(Intake.Direction.OUT));
     // addSequential(new WaitCommand(0.1));   
     addParallel(new MoveIntake(0, 1));
@@ -25,7 +25,10 @@ public class ScoreHatch extends CommandGroup {
     addSequential(new ReleaseHatch());
     addSequential(new FlipIntake(Intake.Direction.IN));
     // addSequential(new MoveHatch(Intake.Direction.IN));
-    addSequential(new WaitCommand(0.175));
-    addSequential(new MoveElevator(-1));
+    if(resetElevator) {
+      addSequential(new WaitCommand(0.175));
+      addSequential(new MoveElevator(-1));
+    }
+      
   }
 }

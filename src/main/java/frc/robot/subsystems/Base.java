@@ -106,6 +106,10 @@ public class Base extends Subsystem {
     backRight.setClosedLoopRampRate(rate);
   }
 
+  public void setCoast() {
+   // frontLeft.setParameter(CANSpaark., value)
+  }
+
   public void report()
   {
     SmartDashboard.putNumber("Base Left Enc", getLeftEnc());

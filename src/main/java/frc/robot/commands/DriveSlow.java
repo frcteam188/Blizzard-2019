@@ -22,12 +22,14 @@ public class DriveSlow extends Command {
   double angle;
   int onTargetCount;
   int onTargetThreshold;
+  boolean superSlow;
 
-  public DriveSlow(double setpoint, double angle) {
+  public DriveSlow(double setpoint, double angle, boolean superSlow) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
-    this.onTargetThreshold = 5;
+    this.onTargetThreshold = 1;
+    this.superSlow = superSlow;
   }
 
   // Called just before this Command runs the first time
@@ -37,8 +39,11 @@ public class DriveSlow extends Command {
     double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
     double relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
+    double encPwr;
+    if(superSlow) encPwr = Constants.kBaseEncLowPIDPower;
+    else encPwr = Constants.kBaseEncMidPIDPower;
     encPID = new BaseEncPID(Constants.baseEncLowPID[0], Constants.baseEncLowPID[1], Constants.baseEncLowPID[2],
-                            relativeSetpoint, Constants.kBaseEncLowPIDPower, true);
+                            relativeSetpoint, encPwr, true);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
                               Constants.baseGyroCorrectionPID[2], relativeAngle, Constants.kGyroCorrectionPower, true);
     encPID.enable();

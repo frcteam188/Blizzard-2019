@@ -29,11 +29,13 @@ public class MoveElevator extends Command {
     requires(Robot.elevator);
     this.preset = preset;
     this.gamePieceType = gamePieceType;
+    System.out.println("Move elevator " + preset);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Move elevator " + preset + " started");
     Robot.elevator.flashPIDValues();
     if (preset < 0)
       setpoint = Constants.bottomPreset;

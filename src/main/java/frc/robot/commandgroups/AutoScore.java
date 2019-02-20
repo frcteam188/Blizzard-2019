@@ -20,7 +20,7 @@ public class AutoScore extends CommandGroup {
     if (gamePieceType == Elevator.GamePiece.BALL)
       addSequential(new ScoreBall());
     else if (gamePieceType == Elevator.GamePiece.HATCH)
-      addSequential(new ScoreHatch());
-    addSequential(new MoveElevator(-1));
+      addSequential(new ScoreHatch(true));
+   // addSequential(new MoveElevator(-1));
   }
 }

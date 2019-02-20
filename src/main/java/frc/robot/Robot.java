@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
       Robot.base.resetGyro();
       System.out.println("Gyro reset.");
     }
-
+    alwaysReset = false;
     report();
   }
 
@@ -134,6 +134,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    alwaysReset = true;
     Scheduler.getInstance().run();
     report();
   }

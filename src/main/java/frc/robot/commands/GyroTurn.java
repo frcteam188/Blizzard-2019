@@ -40,10 +40,11 @@ public class GyroTurn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    onTargetCount = 3;
+    onTargetCount = 4;
     double absoluteSetpoint;
     if (absolute) absoluteSetpoint = setpoint;
     else absoluteSetpoint = setpoint + Robot.base.getAngle();
+    Robot.base.setOpenLoopRampRate(Constants.kBaseGyroPIDRampRate);
     pid = new BaseGyroPID(Constants.baseGyroTurnPID[0], Constants.baseGyroTurnPID[1], Constants.baseGyroTurnPID[2], absoluteSetpoint, Constants.kGyroTurnPower);
     pid.enable();
   }
@@ -53,7 +54,6 @@ public class GyroTurn extends Command {
   protected void execute() {
     if (pid.onTarget()) ++onTargetCount;
     else onTargetCount = 0;
-    System.out.println(pid.onTarget());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -74,6 +74,8 @@ public class GyroTurn extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    pid.disable();
+    System.out.println("GyroTurn interrupted.");
+    //end();
   }
 }
