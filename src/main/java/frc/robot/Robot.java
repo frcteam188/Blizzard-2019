@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
   public static Vision vision;
   public static OI oi;
   NetworkTableEntry goalEntry;
-
+  boolean alwaysReset = true;
   @Override
   public void robotInit() {
     base = new Base();
@@ -88,19 +88,19 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
 
     // Reset sensors
-    if (OI.resetBaseEnc.get())
+    if (OI.resetBaseEnc.get() || alwaysReset)
     {
       Robot.base.resetLeftEnc();
       Robot.base.resetRightEnc();
       System.out.println("Base encoders reset.");
     }
-    if (OI.resetElevatorEnc.get())
+    if (OI.resetElevatorEnc.get() || alwaysReset)
     {
       Robot.elevator.resetElevatorEnc();
       System.out.println("Elevator encoder reset.");
       Robot.hang.resetArmEnc();
     }
-    if (OI.resetGyro.get())
+    if (OI.resetGyro.get() || alwaysReset)
     {
       Robot.base.resetGyro();
       System.out.println("Gyro reset.");

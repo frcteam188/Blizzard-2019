@@ -40,7 +40,7 @@ public class GyroTurn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    onTargetCount = 0;
+    onTargetCount = 3;
     double absoluteSetpoint;
     if (absolute) absoluteSetpoint = setpoint;
     else absoluteSetpoint = setpoint + Robot.base.getAngle();
