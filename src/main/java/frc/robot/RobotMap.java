@@ -33,6 +33,13 @@ public class RobotMap {
   public static int hangLeft = 9;
   public static int hangRight = 10;
 
+  public static int pushDownLeft = 0;
+  public static int pushDownRight = 0;
+  public static int pushDownBack = 0;
+
+  public static int frontHangSensor = 0;
+  public static int backHangSensor = 0;
+
   public static Port navxPort = Port.kMXP;
 
 }

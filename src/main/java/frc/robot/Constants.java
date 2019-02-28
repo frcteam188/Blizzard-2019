@@ -26,6 +26,8 @@ public class Constants {
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
+    public static final double[] pushDownMainPID = {0, 0, 0};
+    public static final double[] pushDownCorrectionPID = {0, 0, 0};
 
     // Ramp Rates
     public static final double kClosedLoopRampRate = 0.2;
@@ -48,6 +50,8 @@ public class Constants {
     public static final double kGyroCorrectionForwardPower = 0.2;
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
+    public static final double kPushDownMainPower = 1.0;
+    public static final double kPushDownCorrectionPower = 1.0;
 
     // Pneumatics Directions
     public static final Value kIntakePivotOut = Value.kForward;
@@ -58,14 +62,16 @@ public class Constants {
     public static final Value kOuterPushIn = (kOuterPushOut == Value.kForward ? Value.kReverse : Value.kForward);
     public static final Value kHangOut = Value.kForward;
     public static final Value kHangIn = (kHangOut == Value.kForward ? Value.kReverse : Value.kForward);
-
+    
     // Trim
     public static final double kIntakeTrim = 0.2;
-
+    
     // Tolerances
     public static final double kElevatorPIDTolerance = 1.0;
     public static final double kBaseEncPIDTolerance = 1.0;
     public static final double kBaseGyroPIDTolerance = 2.0;
+    public static final double kPushDownMainTolerance = 0.5;
+    public static final double kPushDownCorrectionTolerance = 1.0;
 
     // Default PID Control Types
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
@@ -85,4 +91,5 @@ public class Constants {
     public static final int kRollingAverageSize = 3;
     public static final int kStaleSampleThreshold = 5;
     public static final double kStalenessThreshold = 8;
+
 }

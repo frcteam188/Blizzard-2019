@@ -15,7 +15,6 @@ import frc.robot.subsystems.Vision;
 import frc.robot.commandgroups.AutoCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.JoystickDrive;
-import frc.robot.commands.TestArmPID;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
 import frc.robot.commands.TuneElevatorPID;
@@ -98,7 +97,8 @@ public class Robot extends TimedRobot {
     {
       Robot.elevator.resetElevatorEnc();
       System.out.println("Elevator encoder reset.");
-      Robot.hang.resetArmEnc();
+      Robot.hang.resetMainEnc();
+      Robot.hang.resetCorrectionEnc();
     }
     if (OI.resetGyro.get() || alwaysReset)
     {
@@ -162,7 +162,8 @@ public class Robot extends TimedRobot {
     base.report();
     elevator.report();
     intake.report();
-    vision.report();
+    hang.report();
+    // vision.report();
     SmartDashboard.putNumberArray("hsv:lower", 
       new double[]{SmartDashboard.getNumber("h:lo", 0), SmartDashboard.getNumber("s:lo", 0), SmartDashboard.getNumber("v:lo", 0)});
     SmartDashboard.putNumberArray("hsv:upper", 

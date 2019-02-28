@@ -7,40 +7,62 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.JoystickArm;
 
 
 public class Hang extends Subsystem {
 
-  // Naming based on placement of Sparks, not Neos
-  CANSparkMax hangLeft;
-  CANSparkMax hangRight;
 
-  CANEncoder armEncoder;
+  CANSparkMax pushDownLeft;
+  CANSparkMax pushDownRight;
+  TalonSRX pushDownBack;
+
+  CANEncoder mainEnc;
+
+  DigitalInput frontSensor;
+  DigitalInput backSensor;
+
+  PushDownCorrectionPID correctionPID;
+
 
   public Hang()
   {
-    hangLeft = new CANSparkMax(RobotMap.hangLeft, MotorType.kBrushless);
-    hangRight = new CANSparkMax(RobotMap.hangRight, MotorType.kBrushless);
-    hangLeft.setInverted(false);
-    hangRight.setInverted(false);
-    armEncoder = hangLeft.getEncoder();
+    pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushed);
+    pushDownRight = new CANSparkMax(RobotMap.pushDownRight, MotorType.kBrushed);
+    pushDownLeft.setInverted(false);
+    pushDownRight.setInverted(false);
+    pushDownBack = new TalonSRX(RobotMap.pushDownBack);
+    pushDownLeft.getEncoder().setPositionConversionFactor(Constants.kRevsToInches);
+    pushDownRight.getEncoder().setPositionConversionFactor(Constants.kRevsToInches);
+    mainEnc = pushDownLeft.getEncoder();
+    frontSensor = new DigitalInput(RobotMap.frontHangSensor);
+    backSensor = new DigitalInput(RobotMap.backHangSensor);
+    correctionPID = new PushDownCorrectionPID(Constants.pushDownCorrectionPID[0], Constants.pushDownCorrectionPID[1],
+                          Constants.pushDownCorrectionPID[2], 0, Constants.kPushDownCorrectionPower);
   }
 
-  public void drive(double power)
+  public void driveMain(double power)
   {
-    power *= Constants.kHangArmPower;
-    hangLeft.set(power);
-    hangRight.set(power);
+    pushDownLeft.set(power);
+    pushDownRight.set(power);
+  }
+
+  public void driveCorrection(double power)
+  {
+    pushDownBack.set(ControlMode.PercentOutput, power);
   }
 
   public void execute()
@@ -53,17 +75,45 @@ public class Hang extends Subsystem {
 
   public void stop()
   {
-    drive(0);
+    driveMain(0);
+    driveCorrection(0);
   }
 
-  public void resetArmEnc()
+  public boolean getFrontSensor()
   {
-    armEncoder.setPosition(0);
+    return frontSensor.get();
   }
 
-  public double getArmEnc()
+  public boolean getBackSensor()
   {
-    return armEncoder.getPosition();
+    return backSensor.get();
+  }
+
+  public void resetMainEnc()
+  {
+    mainEnc.setPosition(0);
+  }
+
+  public double getMainEnc()
+  {
+    return mainEnc.getPosition();
+  }
+
+  public void resetCorrectionEnc()
+  {
+    pushDownBack.getSensorCollection().setQuadraturePosition(0, 0);
+  }
+
+  public double getCorrectionEnc()
+  {
+    return pushDownBack.getSensorCollection().getQuadraturePosition();
+  }
+
+  public void report()
+  {
+    SmartDashboard.putNumber("Encoder Main Enc", getMainEnc());
+    SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
+    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
   }
 
   public void setSetpoint(double setpoint)
@@ -73,8 +123,8 @@ public class Hang extends Subsystem {
 
   public void setSetpoint(double setpoint, ControlType type)
   {
-    hangLeft.getPIDController().setReference(setpoint, type, 0);
-    hangRight.getPIDController().setReference(setpoint, type, 0);
+    pushDownLeft.getPIDController().setReference(setpoint, type, 0);
+    pushDownRight.getPIDController().setReference(setpoint, type, 0);
   }
 
   public void setP(double p)
@@ -84,8 +134,8 @@ public class Hang extends Subsystem {
 
   public void setP(double p, int slotID)
   {
-    hangLeft.getPIDController().setP(p, slotID);
-    hangRight.getPIDController().setP(p, slotID);
+    pushDownLeft.getPIDController().setP(p, slotID);
+    pushDownRight.getPIDController().setP(p, slotID);
   }
 
   public void setI(double i)
@@ -95,8 +145,8 @@ public class Hang extends Subsystem {
 
   public void setI(double i, int slotID)
   {
-    hangLeft.getPIDController().setI(i, slotID);
-    hangRight.getPIDController().setI(i, slotID);
+    pushDownLeft.getPIDController().setI(i, slotID);
+    pushDownRight.getPIDController().setI(i, slotID);
   }
 
   public void setD(double d)
@@ -106,8 +156,8 @@ public class Hang extends Subsystem {
 
   public void setD(double d, int slotID)
   {
-    hangLeft.getPIDController().setD(d, slotID);
-    hangRight.getPIDController().setD(d, slotID);
+    pushDownLeft.getPIDController().setD(d, slotID);
+    pushDownRight.getPIDController().setD(d, slotID);
   }
 
   public void setFF(double f)
@@ -117,14 +167,14 @@ public class Hang extends Subsystem {
 
   public void setFF(double f, int slotID)
   {
-    hangLeft.getPIDController().setFF(f, slotID);
-    hangRight.getPIDController().setFF(f, slotID);
+    pushDownLeft.getPIDController().setFF(f, slotID);
+    pushDownRight.getPIDController().setFF(f, slotID);
   }
 
   public void setIAccum(double iAccum)
   {
-    hangLeft.getPIDController().setIAccum(iAccum);
-    hangRight.getPIDController().setIAccum(iAccum);
+    pushDownLeft.getPIDController().setIAccum(iAccum);
+    pushDownRight.getPIDController().setIAccum(iAccum);
   }
 
   public void setIZone(double IZone)
@@ -134,8 +184,8 @@ public class Hang extends Subsystem {
 
   public void setIZone(double IZone, int slotID)
   {
-    hangLeft.getPIDController().setIZone(IZone, slotID);
-    hangRight.getPIDController().setIZone(IZone, slotID);
+    pushDownLeft.getPIDController().setIZone(IZone, slotID);
+    pushDownRight.getPIDController().setIZone(IZone, slotID);
   }
 
   public void setIMaxAccum(double iMaxAccum)
@@ -145,8 +195,8 @@ public class Hang extends Subsystem {
 
   public void setIMaxAccum(double iMaxAccum, int slotID)
   {
-    hangLeft.getPIDController().setIMaxAccum(iMaxAccum, slotID);
-    hangRight.getPIDController().setIMaxAccum(iMaxAccum, slotID);
+    pushDownLeft.getPIDController().setIMaxAccum(iMaxAccum, slotID);
+    pushDownRight.getPIDController().setIMaxAccum(iMaxAccum, slotID);
   }
 
   public void setOutputRange(double min, double max)
@@ -156,43 +206,43 @@ public class Hang extends Subsystem {
 
   public void setOutputRange(double min, double max, int slotID)
   {
-    hangLeft.getPIDController().setOutputRange(min, max, slotID);
-    hangRight.getPIDController().setOutputRange(min, max, slotID);
+    pushDownLeft.getPIDController().setOutputRange(min, max, slotID);
+    pushDownRight.getPIDController().setOutputRange(min, max, slotID);
   }
 
   public double getP()
   {
-    return hangLeft.getPIDController().getP();
+    return pushDownLeft.getPIDController().getP();
   }
   
   public double getI()
   {
-    return hangLeft.getPIDController().getI();
+    return pushDownLeft.getPIDController().getI();
   }
 
   public double getD()
   {
-    return hangLeft.getPIDController().getD();
+    return pushDownLeft.getPIDController().getD();
   }
 
   public double getFF()
   {
-    return hangLeft.getPIDController().getFF();
+    return pushDownLeft.getPIDController().getFF();
   }
 
   public double getIAccum()
   {
-    return hangLeft.getPIDController().getIAccum();
+    return pushDownLeft.getPIDController().getIAccum();
   }
 
   public double getIZone()
   {
-    return hangLeft.getPIDController().getIZone();
+    return pushDownLeft.getPIDController().getIZone();
   }
 
   public double getIMaxAccum()
   {
-    return hangLeft.getPIDController().getIMaxAccum(0);
+    return pushDownLeft.getPIDController().getIMaxAccum(0);
   }
 
   public double getOutputMax()
@@ -202,7 +252,7 @@ public class Hang extends Subsystem {
 
   public double getOutputMax(int slotID)
   {
-    return hangLeft.getPIDController().getOutputMax(slotID);
+    return pushDownLeft.getPIDController().getOutputMax(slotID);
   }
 
   public double getOutputMin()
@@ -212,13 +262,10 @@ public class Hang extends Subsystem {
 
   public double getOutputMin(int slotID)
   {
-    return hangLeft.getPIDController().getOutputMin(slotID);
+    return pushDownLeft.getPIDController().getOutputMin(slotID);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new JoystickArm());
   }
 }
