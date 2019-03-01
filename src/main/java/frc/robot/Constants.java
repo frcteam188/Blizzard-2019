@@ -50,7 +50,7 @@ public class Constants {
     public static final double kGyroCorrectionForwardPower = 0.2;
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
-    public static final double kPushDownMainPower = 1.0;
+    public static final double kPushDownMainPower = 0.3;;
     public static final double kPushDownCorrectionPower = 1.0;
 
     // Pneumatics Directions

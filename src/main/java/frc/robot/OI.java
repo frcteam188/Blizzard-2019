@@ -52,6 +52,8 @@ public class OI {
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
   public static final int turnAxis = 4;
+  public static final int pushDownDownAxis = 3;
+  public static final int pushDownUpAxis = 2;
 
   // Axis Numbers (Operator)
   public static final int elevatorAxis = 3;

@@ -46,10 +46,10 @@ public class Hang extends Subsystem {
     pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushless);
     pushDownRight = new CANSparkMax(RobotMap.pushDownRight, MotorType.kBrushless);
     pushDownLeft.setInverted(false);
-    pushDownRight.setInverted(false);
+    pushDownRight.setInverted(true);
     pushDownBack = new TalonSRX(RobotMap.pushDownBack);
     mainLeftEnc = pushDownLeft.getEncoder();
-    mainRightEnc = pushDownLeft.getEncoder();
+    mainRightEnc = pushDownRight.getEncoder();
     mainLeftEnc.setPositionConversionFactor(Constants.kRevsToInches);
     mainRightEnc.setPositionConversionFactor(Constants.kRevsToInches);
     frontSensor = new DigitalInput(RobotMap.frontHangSensor);
@@ -61,6 +61,7 @@ public class Hang extends Subsystem {
 
   public void driveMain(double power)
   {
+    power *= Constants.kPushDownMainPower;
     pushDownLeft.set(power);
     pushDownRight.set(power);
   }
@@ -72,8 +73,7 @@ public class Hang extends Subsystem {
 
   public void execute()
   {
-    pushDownLeft.set(OI.stick2.getRawAxis(1) * 1);
-    pushDownRight.set(OI.stick2.getRawAxis(3) * 1);
+    driveMain(OI.stick.getRawAxis(OI.pushDownDownAxis) - OI.stick.getRawAxis(OI.pushDownUpAxis));
   }
 
   public void stop()
@@ -115,9 +115,10 @@ public class Hang extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putNumber("PushDown Main Enc", getMainEnc());
+    SmartDashboard.putNumber("PushDown Main Left Enc", mainLeftEnc.getPosition());
+    SmartDashboard.putNumber("PushDown Main Right Enc", mainRightEnc.getPosition());
     // SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
-    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
+    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll()); // NOSE UP = NEGATIVE ANGLE
   }
 
   public void setSetpoint(double setpoint)
