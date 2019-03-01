@@ -15,6 +15,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -31,6 +32,7 @@ public class Hang extends Subsystem {
   TalonSRX pushDownBack;
 
   CANEncoder mainEnc;
+  Encoder correctionEnc;
 
   DigitalInput frontSensor;
   DigitalInput backSensor;
@@ -40,8 +42,8 @@ public class Hang extends Subsystem {
 
   public Hang()
   {
-    pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushed);
-    pushDownRight = new CANSparkMax(RobotMap.pushDownRight, MotorType.kBrushed);
+    pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushless);
+    pushDownRight = new CANSparkMax(RobotMap.pushDownRight, MotorType.kBrushless);
     pushDownLeft.setInverted(false);
     pushDownRight.setInverted(false);
     pushDownBack = new TalonSRX(RobotMap.pushDownBack);
@@ -50,6 +52,7 @@ public class Hang extends Subsystem {
     mainEnc = pushDownLeft.getEncoder();
     frontSensor = new DigitalInput(RobotMap.frontHangSensor);
     backSensor = new DigitalInput(RobotMap.backHangSensor);
+    correctionEnc = new Encoder(RobotMap.pushDownCorrectionEncoder[0], RobotMap.pushDownCorrectionEncoder[1]);
     correctionPID = new PushDownCorrectionPID(Constants.pushDownCorrectionPID[0], Constants.pushDownCorrectionPID[1],
                           Constants.pushDownCorrectionPID[2], 0, Constants.kPushDownCorrectionPower);
   }
@@ -67,10 +70,8 @@ public class Hang extends Subsystem {
 
   public void execute()
   {
-    // if (OI.hangArmOut.get()) drive(1.0);
-    // else if (OI.hangArmIn.get()) drive(-1.0);
-    // else stop();
-    // drive(OI.stick.getRawAxis(5));
+    pushDownLeft.set(OI.stick2.getRawAxis(1) * 0.2);
+    pushDownRight.set(OI.stick2.getRawAxis(3) * 0.2);
   }
 
   public void stop()
@@ -111,9 +112,9 @@ public class Hang extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putNumber("Encoder Main Enc", getMainEnc());
-    SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
-    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
+    // SmartDashboard.putNumber("Encoder Main Enc", getMainEnc());
+    // SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
+    // SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
   }
 
   public void setSetpoint(double setpoint)

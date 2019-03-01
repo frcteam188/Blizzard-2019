@@ -137,6 +137,8 @@ public class Robot extends TimedRobot {
     alwaysReset = true;
     Scheduler.getInstance().run();
     report();
+
+    Robot.hang.execute(); // REMOVE THIS LATER
   }
 
   @Override
