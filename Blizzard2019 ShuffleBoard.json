@@ -308,6 +308,32 @@
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[0,3]/Value",
                   "_title": "DoubleSolenoid[0,3]/Value"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[2]/Value",
+                  "_title": "DigitalInput[2]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[0]",
+                  "_title": "Encoder[0]"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[3]/Value",
+                  "_title": "DigitalInput[3]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[4]/Value",
+                  "_title": "DigitalInput[4]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
                 }
               ]
             }
@@ -382,6 +408,74 @@
                   "_children": []
                 }
               ]
+            }
+          },
+          "0,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/p",
+              "_title": "PushDownCorrectionPID/PIDController/p"
+            }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/i",
+              "_title": "PushDownCorrectionPID/PIDController/i"
+            }
+          },
+          "2,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/d",
+              "_title": "PushDownCorrectionPID/PIDController/d"
+            }
+          },
+          "3,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/f",
+              "_title": "PushDownCorrectionPID/PIDController/f"
+            }
+          },
+          "4,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/setpoint",
+              "_title": "PushDownCorrectionPID/PIDController/setpoint"
+            }
+          },
+          "5,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/PushDownCorrectionPID/PIDController/enabled",
+              "_title": "PushDownCorrectionPID/PIDController/enabled",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
@@ -496,18 +590,6 @@
             }
           }
         }
-      }
-    },
-    {
-      "title": "Arm Test",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
       }
     },
     {
@@ -771,6 +853,30 @@
               "_title": "SmartDashboard/Base Gyro",
               "Graph/Visible time": 30.0,
               "Visible data/SmartDashboard/Base Gyro": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Hang Tuning",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Tilt Angle",
+              "_title": "/SmartDashboard/Tilt Angle"
             }
           }
         }

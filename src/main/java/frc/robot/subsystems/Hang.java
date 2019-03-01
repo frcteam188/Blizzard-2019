@@ -31,7 +31,8 @@ public class Hang extends Subsystem {
   CANSparkMax pushDownRight;
   TalonSRX pushDownBack;
 
-  CANEncoder mainEnc;
+  CANEncoder mainLeftEnc;
+  CANEncoder mainRightEnc;
   Encoder correctionEnc;
 
   DigitalInput frontSensor;
@@ -47,9 +48,10 @@ public class Hang extends Subsystem {
     pushDownLeft.setInverted(false);
     pushDownRight.setInverted(false);
     pushDownBack = new TalonSRX(RobotMap.pushDownBack);
-    pushDownLeft.getEncoder().setPositionConversionFactor(Constants.kRevsToInches);
-    pushDownRight.getEncoder().setPositionConversionFactor(Constants.kRevsToInches);
-    mainEnc = pushDownLeft.getEncoder();
+    mainLeftEnc = pushDownLeft.getEncoder();
+    mainRightEnc = pushDownLeft.getEncoder();
+    mainLeftEnc.setPositionConversionFactor(Constants.kRevsToInches);
+    mainRightEnc.setPositionConversionFactor(Constants.kRevsToInches);
     frontSensor = new DigitalInput(RobotMap.frontHangSensor);
     backSensor = new DigitalInput(RobotMap.backHangSensor);
     correctionEnc = new Encoder(RobotMap.pushDownCorrectionEncoder[0], RobotMap.pushDownCorrectionEncoder[1]);
@@ -70,8 +72,8 @@ public class Hang extends Subsystem {
 
   public void execute()
   {
-    pushDownLeft.set(OI.stick2.getRawAxis(1) * 0.2);
-    pushDownRight.set(OI.stick2.getRawAxis(3) * 0.2);
+    pushDownLeft.set(OI.stick2.getRawAxis(1) * 1);
+    pushDownRight.set(OI.stick2.getRawAxis(3) * 1);
   }
 
   public void stop()
@@ -92,12 +94,13 @@ public class Hang extends Subsystem {
 
   public void resetMainEnc()
   {
-    mainEnc.setPosition(0);
+    mainLeftEnc.setPosition(0);
+    mainRightEnc.setPosition(0);
   }
 
   public double getMainEnc()
   {
-    return mainEnc.getPosition();
+    return mainLeftEnc.getPosition();
   }
 
   public void resetCorrectionEnc()
@@ -112,9 +115,9 @@ public class Hang extends Subsystem {
 
   public void report()
   {
-    // SmartDashboard.putNumber("Encoder Main Enc", getMainEnc());
+    SmartDashboard.putNumber("PushDown Main Enc", getMainEnc());
     // SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
-    // SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
+    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll());
   }
 
   public void setSetpoint(double setpoint)

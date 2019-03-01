@@ -28,19 +28,19 @@ public class RobotMap {
   public static int[] innerPushPiston = {5, 2};
   public static int[] outerPushPiston = {6, 1};
 
-  public static int intakeSensor = 2;
+  public static int intakeSensor = 2; // NOT ATTACHED
 
   // public static int hangLeft = 9;
   // public static int hangRight = 10;
 
-  public static int pushDownLeft = 9;
-  public static int pushDownRight = 10;
+  public static int pushDownLeft = 10;
+  public static int pushDownRight = 9;
   public static int pushDownBack = 0;
 
-  public static int[] pushDownCorrectionEncoder = {0, 1};
+  public static int[] pushDownCorrectionEncoder = {0, 1}; // NOT ATTACHED
 
-  public static int frontHangSensor = 3;
-  public static int backHangSensor = 4;
+  public static int frontHangSensor = 3; // NOT ATTACHED
+  public static int backHangSensor = 4; // NOT ATTACHED
 
   public static Port navxPort = Port.kMXP;
 
