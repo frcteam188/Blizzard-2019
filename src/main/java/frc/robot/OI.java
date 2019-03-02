@@ -102,7 +102,7 @@ public class OI {
       elevatorButtons[i].whenReleased(new Score());
     }
 
-    intakeHatch.whenPressed(new IntakeHatch());
+    intakeHatch.whenPressed(new IntakeHatch(true));
     cameraCorrect.whenPressed(new CameraScore(0));
     cameraCorrect.whenReleased(new StopPID());
     intakeBall.whenPressed(new IntakeBall());

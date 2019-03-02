@@ -18,6 +18,7 @@ public class GyroTurn extends Command {
   int onTargetCount;
   int onTargetThreshold;
   boolean absolute;
+  boolean stop;
   BaseGyroPID pid;
 
   public GyroTurn(double setpoint) {
@@ -26,15 +27,26 @@ public class GyroTurn extends Command {
 
   public GyroTurn(double setpoint, boolean absolute)
   {
-    this(setpoint, absolute, 1);
+    this(setpoint, absolute, true);
+  }
+
+  public GyroTurn(double setpoint, boolean absolute, boolean stop)
+  {
+    this(setpoint, absolute, 1, stop);
   }
 
   public GyroTurn(double setpoint, boolean absolute, int onTargetThreshold)
+  {
+    this(setpoint, absolute, onTargetThreshold, true);
+  }
+
+  public GyroTurn(double setpoint, boolean absolute, int onTargetThreshold, boolean stop)
   {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.onTargetThreshold = onTargetThreshold;
     this.absolute = absolute;
+    this.stop = stop;
   }
 
   // Called just before this Command runs the first time
@@ -70,7 +82,7 @@ public class GyroTurn extends Command {
   @Override
   protected void end() {
     pid.disable();
-    Robot.base.stop();
+    if (stop) Robot.base.stop();
     System.out.println("GyroTurn ended.");
   }
 

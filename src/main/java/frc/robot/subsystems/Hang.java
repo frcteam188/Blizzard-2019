@@ -84,12 +84,18 @@ public class Hang extends Subsystem {
 
   public void driveCorrection(double power)
   {
+    power *= Constants.kPushDownCorrectionPower;
     pushDownBack.set(ControlMode.PercentOutput, power);
   }
 
   public void execute()
   {
     driveMain(OI.stick.getRawAxis(OI.pushDownDownAxis) - OI.stick.getRawAxis(OI.pushDownUpAxis));
+
+    // if (OI.stick.getRawButton(5)) driveMain(1);
+    // else driveMain(-OI.stick.getRawAxis(2));
+    // if (OI.stick.getRawButton(6)) driveCorrection(1);
+    // else driveCorrection(-OI.stick.getRawAxis(3));
   }
 
   public void stop()

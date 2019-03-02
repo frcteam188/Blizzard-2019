@@ -199,6 +199,17 @@
                 }
               ]
             }
+          },
+          "0,2": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Selected Auto",
+              "_title": "SmartDashboard/Selected Auto"
+            }
           }
         }
       }
@@ -555,7 +566,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Elevator Enc",
               "_title": "SmartDashboard/Elevator Enc",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Elevator Enc": true
             }
           }
         }
@@ -733,7 +745,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Gyro": true
             }
           }
         }
@@ -806,7 +819,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Left Enc",
               "_title": "SmartDashboard/Base Left Enc",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Left Enc": true
             }
           },
           "7,0": {
@@ -818,7 +832,8 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/Base Gyro": true
             }
           }
         }

@@ -78,11 +78,12 @@ public class Intake extends Subsystem {
 
   public Intake()
   {
-    intakeMotor = new TalonSRX(RobotMap.intakeMotor);
     pivotPiston = new DoubleSolenoid(RobotMap.pivotPiston[0], RobotMap.pivotPiston[1]);
     innerPushPiston = new DoubleSolenoid(RobotMap.innerPushPiston[0], RobotMap.innerPushPiston[1]);
     outerPushPiston = new DoubleSolenoid(RobotMap.outerPushPiston[0], RobotMap.outerPushPiston[1]);
     hangPiston = new DoubleSolenoid(RobotMap.hangPiston[0], RobotMap.hangPiston[1]);
+    intakeMotor = new TalonSRX(RobotMap.intakeMotor);
+    intakeMotor.setInverted(true);
     
     sensor = new DigitalInput(RobotMap.intakeSensor);
     trim = true;

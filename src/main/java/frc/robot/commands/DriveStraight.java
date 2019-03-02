@@ -21,21 +21,41 @@ public class DriveStraight extends Command {
   double angle;
   int onTargetCount;
   int onTargetThreshold;
+  boolean stop;
+  double rampValue;
+  double rampCutoff;
+  double relativeRampCutoff;
+  double initialEnc;
 
   public DriveStraight(double setpoint, double angle) {
+    this(setpoint, angle, true);
+  }
+
+  public DriveStraight(double setpoint, double angle, boolean stop)
+  {
+    this(setpoint, angle, stop, Constants.kBaseEncPIDRampRate, 0);
+  }
+
+  public DriveStraight(double setpoint, double angle, boolean stop, double rampValue, double rampCutoff)
+  {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
     this.onTargetThreshold = 5;
+    this.stop = stop;
+    this.rampValue = rampValue;
+    this.rampCutoff = rampCutoff;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     onTargetCount = 0;
+    initialEnc = Robot.base.getLeftEnc();
+    relativeRampCutoff = initialEnc + rampCutoff;
     double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
     double relativeAngle = angle + Robot.base.getAngle();
-    Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
+    Robot.base.setOpenLoopRampRate(rampValue);
     encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
                             relativeSetpoint, Constants.kBaseEncHighPIDPower, true);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
@@ -47,6 +67,12 @@ public class DriveStraight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (rampCutoff > 0 && Robot.base.getLeftEnc() > relativeRampCutoff ||
+        rampCutoff < 0 && Robot.base.getLeftEnc() < relativeRampCutoff)
+    {
+      Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
+      rampCutoff = 0;
+    }
     Robot.base.driveStored();
     if (encPID.onTarget() && gyroPID.onTarget()) onTargetCount++;
     else onTargetCount = 0;
@@ -63,7 +89,7 @@ public class DriveStraight extends Command {
   protected void end() {
     encPID.disable();
     gyroPID.disable();
-    Robot.base.stop();
+    if (stop) Robot.base.stop();
     System.out.println("DriveStraight ended.");
   }
 

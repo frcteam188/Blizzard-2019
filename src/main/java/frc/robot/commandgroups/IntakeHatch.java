@@ -19,7 +19,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeHatch extends CommandGroup {
   
   public IntakeHatch() {
-    this(true);
+    this(false);
   }
 
   public IntakeHatch(boolean drive)

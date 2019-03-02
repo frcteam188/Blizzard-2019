@@ -31,10 +31,10 @@ public class LeftSide2HatchAuto extends CommandGroup {
   public LeftSide2HatchAuto() {
     addSequential(new DriveSlow(77.5, 0, true));
     addSequential(new GyroTurn(89));
-    addSequential(new DriveStraight(109, 1));
+    addSequential(new DriveStraight(104, 1));
     addSequential(new GyroTurn(-40));
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(18, 0, false));
+    addSequential(new DriveSlow(20, 0, false));
 
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnTarget());
@@ -44,23 +44,32 @@ public class LeftSide2HatchAuto extends CommandGroup {
     addSequential(new FlipIntake(Intake.Direction.IN));
 
     addParallel(new MoveElevator(-1));
-    addSequential(new DriveSlow(-11, 0, false));
+    addSequential(new DriveSlow(-13, 0, false));
     addSequential(new GyroTurn(219));
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
-    addParallel(new MoveHatch(Intake.Direction.OUT));
-    addSequential(new DriveStraight(171.5, 0));
-    
-    // addSequential(new WaitCommand(0.3));
-    addParallel(new MoveElevator(5, Elevator.GamePiece.HATCH));
-    addSequential(new WaitCommand(0.5));
+    // addParallel(new MoveHatch(Intake.Direction.OUT));
+    addSequential(new DriveStraight(179.5, 0));
+    addSequential(new IntakeHatch());
+    addSequential(new DriveStraight(-179.5, 0, true, 0.75, -60));
+    addSequential(new GyroTurn(45));
+    addSequential(new DriveStraight(-40, 0));
+    addSequential(new GyroTurn(-45));
+    addSequential(new DriveStraight(-20, 0));
 
-    addParallel(new MoveHatch(Intake.Direction.IN));
-    addSequential(new DriveStraight(-171.5, 0));
-    addSequential(new GyroTurn(-170, false), 0.4);
-    addSequential(new GyroTurn(53, true));
-    addParallel(new MoveElevator(1, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(17, 0, false));
-    addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
-    addSequential(new MoveElevator(-1));
+
+    // addSequential(new DriveStraight(-100, 0, false, 0.75, -60), 1.25);
+    // addSequential(new DriveStraight(-80, 15));
+
+    // addSequential(new WaitCommand(0.3));
+    // addParallel(new MoveElevator(5, Elevator.GamePiece.HATCH));
+    // addSequential(new WaitCommand(0.5));
+
+    // addParallel(new MoveHatch(Intake.Direction.IN));
+    // addSequential(new GyroTurn(-170, false), 0.4);
+    // addSequential(new GyroTurn(53, true));
+    // addParallel(new MoveElevator(1, Elevator.GamePiece.HATCH));
+    // addSequential(new DriveSlow(17, 0, false));
+    // addSequential(new AutoScore(1, Elevator.GamePiece.HATCH));
+    // addSequential(new MoveElevator(-1));
   }
 }

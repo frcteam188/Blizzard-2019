@@ -35,7 +35,7 @@ public class RobotMap {
 
   public static int pushDownLeft = 10;
   public static int pushDownRight = 9;
-  public static int pushDownBack = 0;
+  public static int pushDownBack = 7;
 
   public static int[] pushDownCorrectionEncoder = {0, 1}; // NOT ATTACHED
 
