@@ -13,8 +13,11 @@ import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.autocommandgroups.LeftSide2HatchAuto;
+import frc.robot.autocommandgroups.LeftSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.RightSide2HatchAuto;
+import frc.robot.autocommandgroups.RightSideCargo2HatchAuto;
 import frc.robot.commandgroups.AutoCommandGroup;
+import frc.robot.commands.Auto;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.TuneBaseEncPID;
@@ -27,17 +30,16 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
   private static Command teleopCommand;
   private static Command testCommand;
+  private static Auto autoCommand;
 
-  private static CommandGroup autoCommandGroup;
-
-  static CommandGroup[] autos;
-  static String[] autoNames;
+  static Auto[] autos;
   static int selectedAuto;
 
   public static Base base;
@@ -49,7 +51,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry goalEntry;
 
   static boolean alwaysReset = true;
-  static boolean prevSelectAuto;
+  static boolean prevChangeAuto;
 
   @Override
   public void robotInit() {
@@ -59,19 +61,24 @@ public class Robot extends TimedRobot {
     hang = new Hang();
     vision = new Vision();
     oi = new OI();
+
+
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // NetworkTable table = inst.getTable("SmartDashboard");
     // goalEntry = table.getEntry("goal:closest");
     
     teleopCommand = new JoystickDrive();
     testCommand = new TuneBaseEncPID();
-    autoCommandGroup = new AutoCommandGroup();
-
+    
     selectedAuto = 0;
-    prevSelectAuto = false;
-    autos = new CommandGroup[] {new LeftSide2HatchAuto(), new RightSide2HatchAuto()};
-    autoNames = new String[] {"Left Side 2 Hatch", "Right Side 2 Hatch"};
-
+    prevChangeAuto = false;
+    autos = new Auto[] {new Auto(new LeftSide2HatchAuto(),  "LeftSide2HatchAuto",  Auto.Side.LEFT),
+                        new Auto(new RightSide2HatchAuto(), "RightSide2HatchAuto", Auto.Side.RIGHT),
+                        new Auto(new LeftSideCargo2HatchAuto(), "LeftSideCargo2HatchAuto", Auto.Side.CENTRE),
+                        new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE)
+                        };
+    autoCommand = autos[selectedAuto];
+    
     push();
     report();
   }
@@ -90,8 +97,8 @@ public class Robot extends TimedRobot {
       teleopCommand.cancel();
     if (testCommand != null)
       testCommand.cancel();
-    if (autoCommandGroup != null)
-      autoCommandGroup.cancel();
+    if (autoCommand != null)
+      autoCommand.cancel();
 
     Robot.elevator.stopPID();
   }
@@ -100,28 +107,20 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
 
+    if (OI.nextAuto.get() && !prevChangeAuto) ++selectedAuto;
+    else if (OI.prevAuto.get() && !prevChangeAuto) --selectedAuto;
     
+    if (selectedAuto >= autos.length) selectedAuto = 0;
+    else if (selectedAuto < 0) selectedAuto = autos.length - 1;
 
-    // Reset sensors
-    if (OI.resetBaseEnc.get() || alwaysReset)
-    {
-      Robot.base.resetLeftEnc();
-      Robot.base.resetRightEnc();
-      System.out.println("Base encoders reset.");
-    }
-    if (OI.resetElevatorEnc.get() || alwaysReset)
-    {
-      Robot.elevator.resetElevatorEnc();
-      System.out.println("Elevator encoder reset.");
-      Robot.hang.resetMainEnc();
-      Robot.hang.resetCorrectionEnc();
-    }
-    if (OI.resetGyro.get() || alwaysReset)
-    {
-      Robot.base.resetGyro();
-      System.out.println("Gyro reset.");
-    }
+    prevChangeAuto = OI.nextAuto.get() || OI.prevAuto.get();
+    
+    autoCommand = autos[selectedAuto];
+    if (prevChangeAuto) System.out.println(autoCommand);
+
+    resetSensors(alwaysReset);
     alwaysReset = false;
+
     report();
   }
 
@@ -129,20 +128,21 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // if (testCommand != null)
     //   testCommand.start();
-    if (autoCommandGroup != null)
-      autoCommandGroup.start();
+    if (autoCommand != null)
+      autoCommand.start();
   }
 
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
     report();
+    if (autoCommand != null && !autoCommand.isRunning()) teleopInit();
   }
 
   @Override
   public void teleopInit() {
-    if (autoCommandGroup != null)
-      autoCommandGroup.cancel();
+    if (autoCommand != null)
+      autoCommand.cancel();
     if(teleopCommand != null)
       teleopCommand.start();
     Robot.elevator.stopPID();
@@ -163,6 +163,11 @@ public class Robot extends TimedRobot {
       testCommand.start();
   }
 
+  public static Auto getSelectedAuto()
+  {
+    return autoCommand;
+  }
+
   public static void push() 
   {
     SmartDashboard.putNumber("h:lo", 25);
@@ -175,8 +180,35 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("hsv:toggle", false);
   }
 
+  public static void resetSensors(boolean override)
+  {
+    if (override || OI.resetBaseEnc.get())
+    {
+      Robot.base.resetLeftEnc();
+      Robot.base.resetRightEnc();
+      System.out.println("Base encoders reset.");
+    }
+    if (override || OI.resetElevatorEnc.get())
+    {
+      Robot.elevator.resetElevatorEnc();
+      System.out.println("Elevator encoder reset.");      
+    }
+    if (override || OI.resetPushDownEnc.get())
+    {
+      Robot.hang.resetMainEnc();
+      Robot.hang.resetCorrectionEnc();
+      System.out.println("Pushdown encoders reset.");
+    }
+    if (override || OI.resetGyro.get())
+    {
+      Robot.base.resetGyro();
+      System.out.println("Gyro reset.");
+    }
+  }
+
   public static void report()
   {
+    SmartDashboard.putString("Selected Auto", autoCommand.toString());
     base.report();
     elevator.report();
     intake.report();

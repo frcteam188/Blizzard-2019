@@ -22,6 +22,7 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.Auto;
 
 
 public class Hang extends Subsystem {
@@ -57,6 +58,21 @@ public class Hang extends Subsystem {
     correctionEnc = new Encoder(RobotMap.pushDownCorrectionEncoder[0], RobotMap.pushDownCorrectionEncoder[1]);
     correctionPID = new PushDownCorrectionPID(Constants.pushDownCorrectionPID[0], Constants.pushDownCorrectionPID[1],
                           Constants.pushDownCorrectionPID[2], 0, Constants.kPushDownCorrectionPower);
+  }
+
+  public static double getHabAngle()
+  {
+    switch (Robot.getSelectedAuto().getSide())
+    {
+      case LEFT:
+        return -90;
+      case CENTRE:
+        return 180;
+      case RIGHT:
+        return 90;
+      default:
+        return 0;
+    }
   }
 
   public void driveMain(double power)

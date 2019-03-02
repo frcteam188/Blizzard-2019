@@ -36,7 +36,7 @@ public class DriveUntilJoystick extends Command {
     onTargetCount = 0;
     double relativeAngle = angle + Robot.base.getAngle();
     this.initialEnc = Robot.base.getLeftEnc();
-    Robot.base.setOpenLoopRampRate(1);
+    Robot.base.setOpenLoopRampRate(2.0);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
                               Constants.baseGyroCorrectionPID[2], relativeAngle, Constants.kGyroCorrectionPower, true);
     gyroPID.enable();
@@ -52,9 +52,9 @@ public class DriveUntilJoystick extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(initialEnc - Robot.base.getLeftEnc()) >= 171.5
+    return Robot.base.getLeftEnc() - initialEnc <= -171.5
             || (Math.abs(OI.stick.getRawAxis(OI.fwdAxis)) > 0.05 || Math.abs(OI.stick.getRawAxis(OI.fwdAxis)) > 0.05)
-            && Robot.base.getLeftEnc() - initialEnc < overrideDistance;
+            && Robot.base.getLeftEnc() - initialEnc < -overrideDistance;
   }
 
   // Called once after isFinished returns true

@@ -19,11 +19,11 @@ import frc.robot.subsystems.Intake;
 public class IntakeHatchDrive extends CommandGroup {
   
   public IntakeHatchDrive(double setpoint, double angle) {
-    addParallel(new MoveElevator(3, Elevator.GamePiece.HATCH));
+    addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnTarget(1));
     addSequential(new MoveHatch(Intake.Direction.OUT));
     addSequential(new WaitCommand(0.3));
-    addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
+    addParallel(new MoveElevator(5, Elevator.GamePiece.HATCH));
     addSequential(new WaitCommand(0.3));
     addSequential(new MoveHatch(Intake.Direction.IN));
     addParallel(new DriveStraight(setpoint, angle));

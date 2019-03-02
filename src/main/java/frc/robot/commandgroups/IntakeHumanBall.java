@@ -16,7 +16,7 @@ import frc.robot.subsystems.Elevator;
 public class IntakeHumanBall extends CommandGroup {
 
   public IntakeHumanBall() {
-    addParallel(new MoveElevator(3, Elevator.GamePiece.HATCH));
+    addParallel(new MoveElevator(4, Elevator.GamePiece.BALL));
     addSequential(new WaitOnTarget(1));
     addParallel(new MoveIntake(-1.0));
   }

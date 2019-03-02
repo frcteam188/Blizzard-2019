@@ -30,6 +30,7 @@ public class OI {
   // Buttons (Driver)
   public static JoystickButton resetElevatorEnc;
   public static JoystickButton resetBaseEnc;
+  public static JoystickButton resetPushDownEnc;
   public static JoystickButton resetGyro;
   public static JoystickButton slowButton;
   // public static JoystickButton hangArmIn;
@@ -70,6 +71,7 @@ public class OI {
     resetGyro = new JoystickButton(stick, 2);
     resetElevatorEnc = new JoystickButton(stick, 1);
     resetBaseEnc = resetElevatorEnc;
+    resetPushDownEnc = resetElevatorEnc;
     // hangArmIn = new JoystickButton(stick, 5);
     // hangArmOut = new JoystickButton(stick, 6);
 
@@ -83,7 +85,7 @@ public class OI {
     // pushInnerOut = new JoystickButton(stick2, 4);
     
     elevatorButtons = new JoystickButton[] {new JoystickButton(stick2, 2), 
-      new JoystickButton(stick2, 3), new JoystickButton(stick2, 4)};
+      new JoystickButton(stick2, 3), new JoystickButton(stick2, 4), new JoystickButton(stick2, 1)};
     intakeHumanBall = new JoystickButton(stick2, 5);
     ballToggle = new JoystickButton(stick2, 6);
     intakeHatch = new JoystickButton(stick2, 7);
@@ -111,5 +113,13 @@ public class OI {
     intakeHumanBall.whenReleased(new MoveElevator(-1));
   }
 
+  public static boolean isOverriding()
+  {
+    for (int i = 0; i <= 5; ++i) if (Math.abs(stick.getRawAxis(i)) >= 0.1) return true;
+    for (int i = 1; i <= 10; ++i) if (stick.getRawButton(i)) return true;
+    for (int i = 0; i <= 3; ++i) if (Math.abs(stick2.getRawAxis(i)) >= 0.1) return true;
+    for (int i = 1; i <= 12; ++i) if (stick2.getRawButton(i)) return true;
+    return false;
+  }
 
 }

@@ -82,8 +82,8 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2, 11}; // Second last one is hatch pickup, value 10
-    public static final double[] ballPresets = {14, 35, 53};
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    public static final double[] ballPresets = {14, 35, 53, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 1.0;
 
     // Vision Constants

@@ -175,7 +175,7 @@
           "5,0": {
             "size": [
               2,
-              3
+              2
             ],
             "content": {
               "_type": "Subsystem Layout",
@@ -555,8 +555,7 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Elevator Enc",
               "_title": "SmartDashboard/Elevator Enc",
-              "Graph/Visible time": 30.0,
-              "Visible data/SmartDashboard/Elevator Enc": true
+              "Graph/Visible time": 30.0
             }
           }
         }
@@ -734,8 +733,7 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0,
-              "Visible data/SmartDashboard/Base Gyro": true
+              "Graph/Visible time": 30.0
             }
           }
         }
@@ -808,8 +806,7 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Left Enc",
               "_title": "SmartDashboard/Base Left Enc",
-              "Graph/Visible time": 30.0,
-              "Visible data/SmartDashboard/Base Left Enc": true
+              "Graph/Visible time": 30.0
             }
           },
           "7,0": {
@@ -821,8 +818,7 @@
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Base Gyro",
               "_title": "SmartDashboard/Base Gyro",
-              "Graph/Visible time": 30.0,
-              "Visible data/SmartDashboard/Base Gyro": true
+              "Graph/Visible time": 30.0
             }
           }
         }
