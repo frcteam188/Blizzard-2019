@@ -20,6 +20,7 @@ public class GyroCorrect extends Command {
   int onTargetThreshold;
   boolean absolute;
   BaseGyroPID pid;
+  double fwdPower;
 
   public GyroCorrect(double setpoint)
   {
@@ -32,10 +33,15 @@ public class GyroCorrect extends Command {
   }
 
   public GyroCorrect(double setpoint, boolean absolute, int onTargetThreshold) {
+    this(setpoint, absolute, onTargetThreshold, Constants.kGyroCorrectionForwardPower);
+  }
+
+  public GyroCorrect(double setpoint, boolean absolute, int onTargetThreshold, double fwdPower) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.onTargetThreshold = onTargetThreshold;
     this.absolute = absolute;
+    this.fwdPower = fwdPower;
   }
 
   // Called just before this Command runs the first time
@@ -46,7 +52,7 @@ public class GyroCorrect extends Command {
     if (absolute) absoluteSetpoint = setpoint;
     else absoluteSetpoint = setpoint + Robot.base.getAngle();
     pid = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1], Constants.baseGyroCorrectionPID[2],
-                          absoluteSetpoint, Constants.kGyroCorrectionPower, Constants.kGyroCorrectionForwardPower);
+                          absoluteSetpoint, Constants.kGyroCorrectionPower, fwdPower);
     pid.enable();
   }
 
@@ -66,7 +72,8 @@ public class GyroCorrect extends Command {
     double[] widths = SmartDashboard.getNumberArray("goal:widths", new double[]{});
     double width = -1;
     if (widths.length > 0) width = widths[0];    
-    return onTargetCount >= onTargetThreshold && width >= Constants.kWidthThreshold;
+    // return onTargetCount >= onTargetThreshold && width >= Constants.kWidthThreshold;
+    return onTargetCount >= onTargetThreshold;
   }
 
   // Called once after isFinished returns true

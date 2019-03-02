@@ -49,6 +49,8 @@ public class Hang extends Subsystem {
     pushDownLeft.setInverted(false);
     pushDownRight.setInverted(true);
     pushDownBack = new TalonSRX(RobotMap.pushDownBack);
+    pushDownBack.setInverted(false);
+    // pushDownBack.enableVoltageCompensation(true);
     mainLeftEnc = pushDownLeft.getEncoder();
     mainRightEnc = pushDownRight.getEncoder();
     mainLeftEnc.setPositionConversionFactor(Constants.kRevsToInches);
@@ -90,12 +92,13 @@ public class Hang extends Subsystem {
 
   public void execute()
   {
-    driveMain(OI.stick.getRawAxis(OI.pushDownDownAxis) - OI.stick.getRawAxis(OI.pushDownUpAxis));
+    // driveMain(OI.stick.getRawAxis(OI.pushDownDownAxis) - OI.stick.getRawAxis(OI.pushDownUpAxis));
 
-    // if (OI.stick.getRawButton(5)) driveMain(1);
-    // else driveMain(-OI.stick.getRawAxis(2));
-    // if (OI.stick.getRawButton(6)) driveCorrection(1);
-    // else driveCorrection(-OI.stick.getRawAxis(3));
+    // if (OI.stick.getRawButton(5)) driveMain(-1);
+    // else driveMain(OI.stick.getRawAxis(2));
+
+    // if (OI.stick.getRawButton(6)) driveCorrection(-1);
+    // else driveCorrection(OI.stick.getRawAxis(3));
   }
 
   public void stop()

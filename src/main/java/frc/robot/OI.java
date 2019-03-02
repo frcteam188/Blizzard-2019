@@ -15,6 +15,7 @@ import frc.robot.commands.TrimIntake;
 import frc.robot.commandgroups.IntakeBall;
 import frc.robot.commandgroups.IntakeHatch;
 import frc.robot.commandgroups.IntakeHumanBall;
+import frc.robot.commandgroups.Level2Hang;
 import frc.robot.commands.CameraScore;
 import frc.robot.commands.FlipIntake;
 import frc.robot.commands.MoveElevator;
@@ -51,6 +52,7 @@ public class OI {
   public static JoystickButton intakeBall;
   public static JoystickButton intakeHumanBall;
   public static JoystickButton ballToggle;
+  public static JoystickButton hangButton;
   
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
@@ -96,6 +98,8 @@ public class OI {
     prevAuto = new JoystickButton(stick, 5);
     nextAuto = new JoystickButton(stick, 6);
 
+    hangButton = new JoystickButton(stick, 8);
+
     for (int i = 0; i < OI.elevatorButtons.length; ++i)
     {
       elevatorButtons[i].whenPressed(new MoveElevator(i));
@@ -103,14 +107,16 @@ public class OI {
     }
 
     intakeHatch.whenPressed(new IntakeHatch(true));
-    cameraCorrect.whenPressed(new CameraScore(0));
-    cameraCorrect.whenReleased(new StopPID());
+    // cameraCorrect.whenPressed(new CameraScore(0));
+    // cameraCorrect.whenReleased(new StopPID());
     intakeBall.whenPressed(new IntakeBall());
     intakeBall.whenReleased(new FlipIntake(Intake.Direction.IN));
     intakeBall.whenReleased(new TrimIntake());
     intakeHumanBall.whenPressed(new IntakeHumanBall());
     intakeHumanBall.whenReleased(new TrimIntake());
     intakeHumanBall.whenReleased(new MoveElevator(-1));
+
+    // hangButton.whenPressed(new Level2Hang());
   }
 
   public static boolean isOverriding()

@@ -26,13 +26,15 @@ import frc.robot.subsystems.Intake;
 
 public class RightSide2HatchAuto extends CommandGroup {
 
+  //Currently more up to date than Left
+
   public RightSide2HatchAuto() {
     addSequential(new DriveSlow(77.5, 0, true));
-    addSequential(new GyroTurn(-89));
-    addSequential(new DriveStraight(108, -1)); // 104
-    addSequential(new GyroTurn(35));
+    addSequential(new GyroTurn(-89)); // RIGHT-
+    addSequential(new DriveStraight(110, -1)); // 104 RIGHT-
+    addSequential(new GyroTurn(35)); // RIGHT+
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(20, 0, false));
+    addSequential(new DriveSlow(18.5, 0, false)); //changed from 20
 
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnTarget());
@@ -42,8 +44,8 @@ public class RightSide2HatchAuto extends CommandGroup {
     addSequential(new FlipIntake(Intake.Direction.IN));
 
     addParallel(new MoveElevator(-1));
-    addSequential(new DriveSlow(-13, 0, false));
-    addSequential(new GyroTurn(90, true));
+    addSequential(new DriveSlow(-11.5, 0, false)); //changed from -13
+    addSequential(new GyroTurn(90, true)); // RIGHT+
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     // addParallel(new MoveHatch(Intake.Direction.OUT));
     addSequential(new DriveStraight(154.5, 0)); // 179.5

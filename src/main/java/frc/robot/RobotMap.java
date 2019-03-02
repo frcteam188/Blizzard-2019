@@ -23,8 +23,8 @@ public class RobotMap {
 
   public static int intakeMotor = 1;
 
-  public static int[] hangPiston = {0, 4};
-  public static int[] pivotPiston = {3, 7};
+  public static int[] hangPiston = {3, 4}; // 0, 4
+  public static int[] pivotPiston = {0, 7}; // 3, 7
   public static int[] innerPushPiston = {5, 2};
   public static int[] outerPushPiston = {6, 1};
 
