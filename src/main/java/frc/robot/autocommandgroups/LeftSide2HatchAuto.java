@@ -31,8 +31,8 @@ public class LeftSide2HatchAuto extends CommandGroup {
   public LeftSide2HatchAuto() {
     addSequential(new DriveSlow(77.5, 0, true));
     addSequential(new GyroTurn(89));
-    addSequential(new DriveStraight(104, 1));
-    addSequential(new GyroTurn(-40));
+    addSequential(new DriveStraight(108, 1)); // 104
+    addSequential(new GyroTurn(-35));
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
     addSequential(new DriveSlow(20, 0, false));
 
@@ -45,16 +45,17 @@ public class LeftSide2HatchAuto extends CommandGroup {
 
     addParallel(new MoveElevator(-1));
     addSequential(new DriveSlow(-13, 0, false));
-    addSequential(new GyroTurn(219));
+    addSequential(new GyroTurn(-90, true));
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     // addParallel(new MoveHatch(Intake.Direction.OUT));
-    addSequential(new DriveStraight(179.5, 0));
-    addSequential(new IntakeHatch());
-    addSequential(new DriveStraight(-179.5, 0, true, 0.75, -60));
-    addSequential(new GyroTurn(45));
-    addSequential(new DriveStraight(-40, 0));
-    addSequential(new GyroTurn(-45));
-    addSequential(new DriveStraight(-20, 0));
+    addSequential(new DriveStraight(154.5, 0)); // 179.5
+
+    // addSequential(new IntakeHatch());
+    // addSequential(new DriveStraight(-179.5, 0, true, 0.75, -60));
+    // addSequential(new GyroTurn(45));
+    // addSequential(new DriveStraight(-40, 0));
+    // addSequential(new GyroTurn(-45));
+    // addSequential(new DriveStraight(-20, 0));
 
 
     // addSequential(new DriveStraight(-100, 0, false, 0.75, -60), 1.25);
