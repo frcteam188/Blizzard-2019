@@ -35,6 +35,8 @@ public class OI {
   // public static JoystickButton hangArmIn;
   // public static JoystickButton hangArmOut;
   public static JoystickButton cameraCorrect;
+  public static JoystickButton nextAuto;
+  public static JoystickButton prevAuto;
 
   // Buttons (Operator)
   public static JoystickButton[] elevatorButtons;
@@ -88,6 +90,9 @@ public class OI {
     intakeBall = new JoystickButton(stick2, 8);
 
     cameraCorrect = new JoystickButton(stick, 6);
+
+    prevAuto = new JoystickButton(stick, 5);
+    nextAuto = new JoystickButton(stick, 6);
 
     for (int i = 0; i < OI.elevatorButtons.length; ++i)
     {

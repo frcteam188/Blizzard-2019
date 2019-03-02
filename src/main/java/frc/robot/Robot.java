@@ -12,6 +12,8 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import frc.robot.autocommandgroups.LeftSide2HatchAuto;
+import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.commandgroups.AutoCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.JoystickDrive;
@@ -34,6 +36,10 @@ public class Robot extends TimedRobot {
 
   private static CommandGroup autoCommandGroup;
 
+  static CommandGroup[] autos;
+  static String[] autoNames;
+  static int selectedAuto;
+
   public static Base base;
   public static Elevator elevator;
   public static Intake intake;
@@ -41,7 +47,10 @@ public class Robot extends TimedRobot {
   public static Vision vision;
   public static OI oi;
   NetworkTableEntry goalEntry;
-  boolean alwaysReset = true;
+
+  static boolean alwaysReset = true;
+  static boolean prevSelectAuto;
+
   @Override
   public void robotInit() {
     base = new Base();
@@ -57,6 +66,11 @@ public class Robot extends TimedRobot {
     teleopCommand = new JoystickDrive();
     testCommand = new TuneBaseEncPID();
     autoCommandGroup = new AutoCommandGroup();
+
+    selectedAuto = 0;
+    prevSelectAuto = false;
+    autos = new CommandGroup[] {new LeftSide2HatchAuto(), new RightSide2HatchAuto()};
+    autoNames = new String[] {"Left Side 2 Hatch", "Right Side 2 Hatch"};
 
     push();
     report();
@@ -85,6 +99,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+
+    
 
     // Reset sensors
     if (OI.resetBaseEnc.get() || alwaysReset)

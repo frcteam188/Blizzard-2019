@@ -19,7 +19,7 @@ public class Constants {
     // PID Gains
     public static final double[] baseEncHighPID = {0.035, 0, 0.013}; // 70 percent power (0.05, 0, 0)
     public static final double[] baseEncLowPID = {0.084, 0, 0}; // 30 percent power (0.08, 0, 0)
-    public static final double[] baseGyroTurnPID = {0.0085, 0, 0.0085}; // 75 percent power (0.014, 0, 0.01)
+    public static final double[] baseGyroTurnPID = {0.0095, 0, 0.0085}; // 75 percent power (0.014, 0, 0.01) (acutally 0.0085, 0, 0.0085)
     public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
     public static final double[] elevatorUpPID = {0.06, 0.0004, 0};
@@ -82,7 +82,7 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 1.5, 6}; // Last one is hatch pickup, value 10
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2, 11}; // Second last one is hatch pickup, value 10
     public static final double[] ballPresets = {14, 35, 53};
     public static final double bottomPreset = 1.0;
 

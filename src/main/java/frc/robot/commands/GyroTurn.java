@@ -40,7 +40,7 @@ public class GyroTurn extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    onTargetCount = 4;
+    onTargetCount = onTargetThreshold;
     double absoluteSetpoint;
     if (absolute) absoluteSetpoint = setpoint;
     else absoluteSetpoint = setpoint + Robot.base.getAngle();
@@ -52,7 +52,11 @@ public class GyroTurn extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (pid.onTarget()) ++onTargetCount;
+    if (pid.onTarget())
+    {
+      ++onTargetCount;
+      System.out.println("Gyro on target for " + onTargetCount + " iterations");
+    }
     else onTargetCount = 0;
   }
 
