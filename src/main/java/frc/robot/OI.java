@@ -18,6 +18,7 @@ import frc.robot.commandgroups.IntakeHumanBall;
 import frc.robot.commandgroups.Level2Hang;
 import frc.robot.commands.CameraScore;
 import frc.robot.commands.FlipIntake;
+import frc.robot.commands.ManualPushDown;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
 import frc.robot.subsystems.Intake;
@@ -53,13 +54,16 @@ public class OI {
   public static JoystickButton intakeBall;
   public static JoystickButton intakeHumanBall;
   public static JoystickButton ballToggle;
-  public static JoystickButton hangButton;
+  public static JoystickButton hangLeftButton;
+  public static JoystickButton hangRightButton;
   
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
   public static final int turnAxis = 4;
-  public static final int pushDownDownAxis = 3;
-  public static final int pushDownUpAxis = 2;
+  // public static final int pushDownDownAxis = 3;
+  // public static final int pushDownUpAxis = 2;
+  public static final int pushDownMainAxis = 2;
+  public static final int pushDownCorrectionAxis = 3;
 
   // Axis Numbers (Operator)
   public static final int elevatorAxis = 3;
@@ -100,7 +104,8 @@ public class OI {
     prevAuto = new JoystickButton(stick, 5);
     nextAuto = new JoystickButton(stick, 6);
 
-    hangButton = new JoystickButton(stick, 8);
+    hangLeftButton = new JoystickButton(stick, 7);
+    hangRightButton = new JoystickButton(stick, 8);
 
     for (int i = 0; i < OI.elevatorButtons.length; ++i)
     {
@@ -108,9 +113,10 @@ public class OI {
       elevatorButtons[i].whenReleased(new Score());
     }
 
-    intakeHatch.whenPressed(new IntakeHatch(true));
     // cameraCorrect.whenPressed(new CameraScore(0));
     // cameraCorrect.whenReleased(new StopPID());
+
+    intakeHatch.whenPressed(new IntakeHatch(true));
     intakeBall.whenPressed(new IntakeBall());
     intakeBall.whenReleased(new FlipIntake(Intake.Direction.IN));
     intakeBall.whenReleased(new TrimIntake());
@@ -118,7 +124,10 @@ public class OI {
     intakeHumanBall.whenReleased(new TrimIntake());
     intakeHumanBall.whenReleased(new MoveElevator(-1));
 
-    // hangButton.whenPressed(new Level2Hang());
+    hangLeftButton.whenPressed(new Level2Hang(Level2Hang.Side.LEFT));
+    hangLeftButton.whenReleased(new ManualPushDown());
+    hangRightButton.whenPressed(new Level2Hang(Level2Hang.Side.RIGHT));
+    hangRightButton.whenReleased(new ManualPushDown());
   }
 
   public static boolean isOverriding()

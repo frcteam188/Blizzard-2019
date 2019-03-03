@@ -23,6 +23,7 @@ import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.Auto;
+import frc.robot.commands.ManualPushDown;
 
 
 public class Hang extends Subsystem {
@@ -297,5 +298,6 @@ public class Hang extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new ManualPushDown());
   }
 }

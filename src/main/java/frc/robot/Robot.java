@@ -16,6 +16,8 @@ import frc.robot.autocommandgroups.LeftSide2HatchAuto;
 import frc.robot.autocommandgroups.LeftSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.autocommandgroups.RightSideCargo2HatchAuto;
+import frc.robot.autocommandgroups.PlatformDrop;
+import frc.robot.autocommandgroups.PlatformDropSideHatch;
 import frc.robot.commandgroups.AutoCommandGroup;
 import frc.robot.commands.Auto;
 import frc.robot.commands.DriveCommand;
@@ -63,20 +65,25 @@ public class Robot extends TimedRobot {
     vision = new Vision();
     oi = new OI();
 
-    CameraServer.getInstance().startAutomaticCapture();
+    // CameraServer.getInstance().startAutomaticCapture();
 
 
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
     // NetworkTable table = inst.getTable("SmartDashboard");
     // goalEntry = table.getEntry("goal:closest");
     
+    testCommand = null;
     teleopCommand = new JoystickDrive();
-    testCommand = new TuneBaseEncPID();
+    // testCommand = new TuneBaseGyroPID();
     
-    selectedAuto = 0;
+    selectedAuto = 4;
     prevChangeAuto = false;
     autos = new Auto[] {new Auto(new LeftSide2HatchAuto(),  "LeftSide2HatchAuto",  Auto.Side.LEFT),
                         new Auto(new RightSide2HatchAuto(), "RightSide2HatchAuto", Auto.Side.RIGHT),
+                        new Auto(new PlatformDrop(PlatformDrop.Side.LEFT), "Left PlatformDrop", null),
+                        new Auto(new PlatformDrop(PlatformDrop.Side.RIGHT), "Right PlatformDrop", null),
+                        new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.LEFT), "Left PlatformDropSideHatch", null),
+                        new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.RIGHT), "Right PlatformDropSideHatch", null),
                         new Auto(new LeftSideCargo2HatchAuto(), "LeftSideCargo2HatchAuto", Auto.Side.CENTRE),
                         new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE)
                         };
@@ -129,9 +136,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    // if (testCommand != null)
-    //   testCommand.start();
-    if (autoCommand != null)
+    if (testCommand != null)
+      testCommand.start();
+    else if (autoCommand != null)
       autoCommand.start();
   }
 
@@ -139,7 +146,9 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
     report();
-    if (autoCommand != null && !autoCommand.isRunning()) teleopInit();
+    if (testCommand != null && !testCommand.isRunning() && 
+        autoCommand != null && !autoCommand.isRunning())
+        teleopInit();
   }
 
   @Override
@@ -153,7 +162,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    alwaysReset = true;
+    // alwaysReset = true;
     Scheduler.getInstance().run();
     report();
 

@@ -23,13 +23,19 @@ public class DriveSlow extends Command {
   int onTargetCount;
   int onTargetThreshold;
   boolean superSlow;
+  boolean stop;
 
   public DriveSlow(double setpoint, double angle, boolean superSlow) {
+    this(setpoint, angle, superSlow, true);
+  }
+
+  public DriveSlow(double setpoint, double angle, boolean superSlow, boolean stop) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
     this.onTargetThreshold = 1;
     this.superSlow = superSlow;
+    this.stop = stop;
   }
 
   // Called just before this Command runs the first time
@@ -69,7 +75,7 @@ public class DriveSlow extends Command {
   protected void end() {
     encPID.disable();
     gyroPID.disable();
-    Robot.base.stop();
+    if (stop) Robot.base.stop();
     System.out.println("DriveSlow ended.");
   }
 

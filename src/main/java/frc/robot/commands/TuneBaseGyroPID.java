@@ -19,10 +19,12 @@ public class TuneBaseGyroPID extends Command {
   double setpoint;
   BaseGyroPID pid;
   boolean toggle;
+  int buttonNumber;
 
   public TuneBaseGyroPID() {
     requires(Robot.base);
     setpoint = 0;
+    buttonNumber = 9;
   }
 
   private void refreshValues()
@@ -45,13 +47,14 @@ public class TuneBaseGyroPID extends Command {
     pid = new BaseGyroPID(SmartDashboard.getNumber("Base Gyro P", 0.0), 
       SmartDashboard.getNumber("Base Gyro I", 0.0),
       SmartDashboard.getNumber("Base Gyro D", 0.0),
-      SmartDashboard.getNumber("Base Gyro Setpoint", 0.0), 1);
+      SmartDashboard.getNumber("Base Gyro Setpoint", 0.0), 0.5);
     refreshValues();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("Tuning Gyro");
     if (SmartDashboard.getNumber("Base Gyro P", 0.0) != pid.getPIDController().getP() ||
         SmartDashboard.getNumber("Base Gyro I", 0.0) != pid.getPIDController().getI() ||
         SmartDashboard.getNumber("Base Gyro D", 0.0) != pid.getPIDController().getD() ||
@@ -60,15 +63,15 @@ public class TuneBaseGyroPID extends Command {
       refreshValues();
     }
 
-    if(OI.stick2.getRawButton(1) && !toggle) {
+    if(OI.stick2.getRawButton(buttonNumber) && !toggle) {
       pid.enable();
     }
-    else if(!OI.stick2.getRawButton(1) && toggle) {
+    else if(!OI.stick2.getRawButton(buttonNumber) && toggle) {
       pid.disable();
       Robot.base.stop();
     }
 
-    toggle = OI.stick2.getRawButton(1);
+    toggle = OI.stick2.getRawButton(buttonNumber);
     SmartDashboard.putNumber("Base Gyro", Robot.base.getAngle());
   }
 
