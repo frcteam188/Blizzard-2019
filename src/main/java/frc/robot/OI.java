@@ -34,6 +34,7 @@ public class OI {
   public static JoystickButton resetPushDownEnc;
   public static JoystickButton resetGyro;
   public static JoystickButton slowButton;
+  public static JoystickButton fastButton;
   // public static JoystickButton hangArmIn;
   // public static JoystickButton hangArmOut;
   public static JoystickButton cameraCorrect;
@@ -78,6 +79,7 @@ public class OI {
     // hangArmOut = new JoystickButton(stick, 6);
 
     slowButton = new JoystickButton(stick, 5);
+    fastButton = new JoystickButton(stick, 6);
 
     // pivotIntakeIn = new JoystickButton(stick2, 7);
     // pivotIntakeOut = new JoystickButton(stick2, 8);

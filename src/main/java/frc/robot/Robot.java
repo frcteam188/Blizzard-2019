@@ -23,6 +23,7 @@ import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
 import frc.robot.commands.TuneElevatorPID;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -61,6 +62,8 @@ public class Robot extends TimedRobot {
     hang = new Hang();
     vision = new Vision();
     oi = new OI();
+
+    CameraServer.getInstance().startAutomaticCapture();
 
 
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();

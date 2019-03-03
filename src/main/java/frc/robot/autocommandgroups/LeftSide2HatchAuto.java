@@ -34,7 +34,7 @@ public class LeftSide2HatchAuto extends CommandGroup {
     addSequential(new DriveStraight(110, 1)); // 104 RIGHT-
     addSequential(new GyroTurn(-35)); // RIGHT+
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(18.5, 0, false)); //changed from 20
+    addSequential(new DriveSlow(16, 0, false), 3.0); //changed from 20
 
     addParallel(new MoveElevator(2, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnTarget());
@@ -44,11 +44,11 @@ public class LeftSide2HatchAuto extends CommandGroup {
     addSequential(new FlipIntake(Intake.Direction.IN));
 
     addParallel(new MoveElevator(-1));
-    addSequential(new DriveSlow(-11.5, 0, false)); //changed from -13
-    addSequential(new GyroTurn(-90, true)); // RIGHT+
+    addSequential(new DriveSlow(-9, 0, false)); //changed from -13
+    addSequential(new GyroTurn(-91, true)); // RIGHT+
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     // addParallel(new MoveHatch(Intake.Direction.OUT));
-    addSequential(new DriveStraight(154.5, 0)); // 179.5
+    addSequential(new DriveStraight(154.5, 1)); // 179.5
 
     // addSequential(new IntakeHatch());
     // addSequential(new DriveStraight(-179.5, 0, true, 0.75, -60));

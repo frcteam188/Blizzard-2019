@@ -34,6 +34,16 @@ public class JoystickDrive extends Command {
       forward *= Constants.kBaseSlowPower;
       turn *= Constants.kBaseSlowPower;
     }
+    else if (OI.fastButton.get())
+    {
+      forward *= Constants.kBaseFastPower;
+      turn *= Constants.kBaseFastPower;
+    }
+    else
+    {
+      forward *= Constants.kBaseDefaultPower;
+      turn *= Constants.kBaseDefaultPower;
+    }
     Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
   }
 
