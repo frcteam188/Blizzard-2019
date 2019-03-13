@@ -210,6 +210,19 @@
               "_source0": "network_table:///SmartDashboard/Selected Auto",
               "_title": "SmartDashboard/Selected Auto"
             }
+          },
+          "5,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/PushDown Main Left Enc",
+              "_title": "SmartDashboard/PushDown Main Left Enc",
+              "Graph/Visible time": 30.0,
+              "Visible data/SmartDashboard/PushDown Main Left Enc": true
+            }
           }
         }
       }
