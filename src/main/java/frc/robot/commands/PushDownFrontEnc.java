@@ -7,46 +7,46 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class PushDownCorrection extends Command {
+public class PushDownFrontEnc extends Command {
 
   double power;
-  double time;
-  Timer t;
+  double setpoint;
+  double initialEnc;
+  double relativeSetpoint;
 
-  public PushDownCorrection(double power, double time) {
-    requires(Robot.hang);
+  public PushDownFrontEnc(double power, double setpoint) {
+    requires(Robot.hangFront);
     this.power = power;
-    this.time = time;
-    t = new Timer();
+    this.setpoint = setpoint;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    t.reset();
-    t.start();
+    initialEnc = Robot.hangFront.getEnc();
+    relativeSetpoint = initialEnc + setpoint;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hang.driveCorrection(power);
+    Robot.hangFront.drive(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return t.get() >= time;
+    return setpoint > 0 && Robot.hangFront.getEnc() > relativeSetpoint ||
+            setpoint < 0 && Robot.hangFront.getEnc() < relativeSetpoint;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hang.driveCorrection(0);
+    Robot.hangFront.stop();
   }
 
   // Called when another command which requires one or more of the same

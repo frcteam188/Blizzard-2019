@@ -11,15 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.PushDownCorrectionPID;
+import frc.robot.subsystems.BackHangPID;
 
 public class TunePushDownCorrectionPID extends Command {
 
-  PushDownCorrectionPID pid;
+  BackHangPID pid;
   boolean toggle;
 
   public TunePushDownCorrectionPID() {
-    requires(Robot.hang);
+    requires(Robot.hangFront);
+    requires(Robot.hangBack);
   }
 
   private void refreshValues()
@@ -38,7 +39,7 @@ public class TunePushDownCorrectionPID extends Command {
     SmartDashboard.putNumber("PushDown Correction I", 0.0);
     SmartDashboard.putNumber("PushDown Correction Setpoint", 0.0);
     toggle = OI.stick2.getRawButton(1);
-    pid = new PushDownCorrectionPID(SmartDashboard.getNumber("PushDown Correction P", 0.0), 
+    pid = new BackHangPID(SmartDashboard.getNumber("PushDown Correction P", 0.0), 
       SmartDashboard.getNumber("PushDown Correction I", 0.0),
       SmartDashboard.getNumber("PushDown Correction D", 0.0),
       SmartDashboard.getNumber("PushDown Correction Setpoint", 0.0), 1);
@@ -61,11 +62,12 @@ public class TunePushDownCorrectionPID extends Command {
     }
     else if(!OI.stick2.getRawButton(1) && toggle) {
       pid.disable();
-      Robot.hang.stop();
+      Robot.hangFront.stop();
+      Robot.hangBack.stop();
     }
 
     toggle = OI.stick2.getRawButton(1);
-    SmartDashboard.putNumber("PushDown Correction Enc", Robot.hang.getCorrectionEnc());
+    SmartDashboard.putNumber("PushDown Correction Enc", Robot.hangBack.getEnc());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -78,7 +80,8 @@ public class TunePushDownCorrectionPID extends Command {
   @Override
   protected void end() {
     pid.disable();
-    Robot.hang.stop();
+    Robot.hangFront.stop();
+    Robot.hangBack.stop();
   }
 
   // Called when another command which requires one or more of the same

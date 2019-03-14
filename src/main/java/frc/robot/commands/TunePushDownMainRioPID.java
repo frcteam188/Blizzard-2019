@@ -20,7 +20,8 @@ public class TunePushDownMainRioPID extends Command {
   boolean toggle;
 
   public TunePushDownMainRioPID() {
-    requires(Robot.hang);
+    requires(Robot.hangFront);
+    requires(Robot.hangBack);
   }
 
   private void refreshValues()
@@ -62,11 +63,12 @@ public class TunePushDownMainRioPID extends Command {
     }
     else if(!OI.stick2.getRawButton(1) && toggle) {
       pid.disable();
-      Robot.hang.stop();
+      Robot.hangFront.stop();
+      Robot.hangBack.stop();
     }
 
     toggle = OI.stick2.getRawButton(1);
-    SmartDashboard.putNumber("PushDown Main Enc", Robot.hang.getMainEnc());
+    SmartDashboard.putNumber("PushDown Main Enc", Robot.hangFront.getEnc());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -79,7 +81,8 @@ public class TunePushDownMainRioPID extends Command {
   @Override
   protected void end() {
     pid.disable();
-    Robot.hang.stop();
+    Robot.hangFront.stop();
+    Robot.hangBack.stop();
   }
 
   // Called when another command which requires one or more of the same

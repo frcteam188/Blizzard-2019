@@ -31,12 +31,12 @@ public class PushDownMainPID extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    return Robot.hang.getMainEnc();
+    return Robot.hangFront.getEnc();
   }
 
   @Override
   protected void usePIDOutput(double output) {
     output *= power;
-    Robot.hang.driveMain(output);
+    Robot.hangFront.drive(output);
   }
 }

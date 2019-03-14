@@ -14,11 +14,11 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
-public class PushDownCorrectionPID extends PIDSubsystem {
+public class BackHangPID extends PIDSubsystem {
   
   double power;
 
-  public PushDownCorrectionPID(double p, double i, double d, double setpoint, double power) {
+  public BackHangPID(double p, double i, double d, double setpoint, double power) {
     super("PushDownCorrectionPID", p, i, d);
     this.power = power;
     setSetpoint(setpoint);
@@ -37,6 +37,6 @@ public class PushDownCorrectionPID extends PIDSubsystem {
   @Override
   protected void usePIDOutput(double output) {
     output *= power;
-    Robot.hang.driveCorrection(output);
+    Robot.hangBack.drivePushDown(output);
   }
 }

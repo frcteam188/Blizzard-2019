@@ -26,8 +26,8 @@ public class Constants {
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
-    public static final double[] pushDownMainPID = {0, 0, 0};
-    public static final double[] pushDownCorrectionPID = {0, 0, 0};
+    public static final double[] mainHangPID = {0, 0, 0};
+    public static final double[] backHangPID = {0, 0, 0};
 
     // Ramp Rates
     public static final double kClosedLoopRampRate = 0.2;
@@ -52,8 +52,9 @@ public class Constants {
     public static final double kGyroCorrectionForwardPower = 0.2;
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
-    public static final double kPushDownMainPower = 0.5;;
-    public static final double kPushDownCorrectionPower = 0.7;
+    public static final double kPushDownFrontPower = 0.5;
+    public static final double kPushDownBackPower = 0.7;
+    public static final double kHangDrivePower = 0.4;
 
     // Pneumatics Directions
     public static final Value kIntakePivotOut = Value.kForward;
@@ -84,8 +85,9 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
-    public static final double[] ballPresets = {14, 35, 53, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
+    //Make high presets back to 48.5 and 53
+    public static final double[] hatchPresets = {2.5, 26.5, 26.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    public static final double[] ballPresets = {14, 35, 35, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 1.0;
 
     // Vision Constants

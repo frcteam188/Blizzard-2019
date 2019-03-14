@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.DriveSlow;
 import frc.robot.commands.GyroCorrect;
 import frc.robot.commands.GyroTurn;
-import frc.robot.commands.PushDownCorrection;
-import frc.robot.commands.PushDownMainEnc;
+import frc.robot.commands.PushDownBack;
+import frc.robot.commands.PushDownFrontEnc;
 
 public class PlatformDrop extends CommandGroup {
 
@@ -24,12 +24,12 @@ public class PlatformDrop extends CommandGroup {
 
   public PlatformDrop(Side side) {
     addSequential(new DriveSlow(-19, 0, true));
-    addSequential(new PushDownCorrection(1.0, 0.5));
+    addSequential(new PushDownBack(1.0, 0.5));
     addSequential(new DriveSlow(-20.5, 0, true));
-    addSequential(new PushDownMainEnc(1.0, 35));
-    addSequential(new PushDownCorrection(-0.3, 0.8));
+    addSequential(new PushDownFrontEnc(1.0, 35));
+    addSequential(new PushDownBack(-0.3, 0.8));
     addSequential(new DriveSlow(-15.5, 0, true));
-    addSequential(new PushDownMainEnc(-1.0, -32), 2.0);
+    addSequential(new PushDownFrontEnc(-1.0, -32), 2.0);
     addSequential(new DriveSlow(-40, 0, true));
     if (side == Side.RIGHT)
       addSequential(new GyroCorrect(90, false, 5, 0));

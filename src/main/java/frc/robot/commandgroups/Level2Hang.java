@@ -14,9 +14,9 @@ import frc.robot.commands.DriveSlow;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.GyroCorrect;
 import frc.robot.commands.GyroTurn;
-import frc.robot.commands.PushDownCorrection;
-import frc.robot.commands.PushDownMain;
-import frc.robot.commands.PushDownMainEnc;
+import frc.robot.commands.PushDownBack;
+import frc.robot.commands.PushDownFront;
+import frc.robot.commands.PushDownFrontEnc;
 
 public class Level2Hang extends CommandGroup {
 
@@ -38,12 +38,12 @@ public class Level2Hang extends CommandGroup {
 
     addParallel(new DriveSlow(9999999, 0, false));
     // addSequential(new PushDownMain(1.0, 0.75));
-    addSequential(new PushDownMainEnc(1.0, 50));
+    addSequential(new PushDownFrontEnc(1.0, 50));
     addSequential(new WaitCommand(1.0));
-    addSequential(new PushDownMain(-1.0, 0.6));
-    addSequential(new PushDownCorrection(1.0, 0.8));
+    addSequential(new PushDownFront(-1.0, 0.6));
+    addSequential(new PushDownBack(1.0, 0.8));
     addSequential(new DriveSlow(20, 0, false), 2.0);
-    addSequential(new PushDownCorrection(-1.0, 0.55));
+    addSequential(new PushDownBack(-1.0, 0.55));
     addSequential(new DriveSlow(10, 0, false), 2.0);
 
     // if (side == Side.LEFT)

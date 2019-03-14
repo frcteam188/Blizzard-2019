@@ -10,15 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class PushDownMainEnc extends Command {
+public class PushDownBackEnc extends Command {
 
   double power;
   double setpoint;
   double initialEnc;
   double relativeSetpoint;
 
-  public PushDownMainEnc(double power, double setpoint) {
-    requires(Robot.hang);
+  public PushDownBackEnc(double power, double setpoint) {
+    requires(Robot.hangBack);
     this.power = power;
     this.setpoint = setpoint;
   }
@@ -26,27 +26,27 @@ public class PushDownMainEnc extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    initialEnc = Robot.hang.getMainEnc();
+    initialEnc = Robot.hangBack.getEnc();
     relativeSetpoint = initialEnc + setpoint;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hang.driveMain(power);
+    Robot.hangBack.drivePushDown(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return setpoint > 0 && Robot.hang.getMainEnc() > relativeSetpoint ||
-            setpoint < 0 && Robot.hang.getMainEnc() < relativeSetpoint;
+    return setpoint > 0 && Robot.hangBack.getEnc() > relativeSetpoint ||
+            setpoint < 0 && Robot.hangBack.getEnc() < relativeSetpoint;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hang.driveMain(0);
+    Robot.hangBack.stop();
   }
 
   // Called when another command which requires one or more of the same

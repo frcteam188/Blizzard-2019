@@ -56,6 +56,8 @@ public class OI {
   public static JoystickButton ballToggle;
   public static JoystickButton hangLeftButton;
   public static JoystickButton hangRightButton;
+  public static JoystickButton hangDriveForwardButton;
+  public static JoystickButton hangDriveBackButton;
   
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
@@ -81,9 +83,11 @@ public class OI {
     resetPushDownEnc = resetElevatorEnc;
     // hangArmIn = new JoystickButton(stick, 5);
     // hangArmOut = new JoystickButton(stick, 6);
+    hangDriveForwardButton = new JoystickButton(stick, 3);
+    hangDriveBackButton = new JoystickButton(stick, 4);
 
-    slowButton = new JoystickButton(stick, 5);
-    fastButton = new JoystickButton(stick, 6);
+    // slowButton = new JoystickButton(stick, 5);
+    // fastButton = new JoystickButton(stick, 6);
 
     // pivotIntakeIn = new JoystickButton(stick2, 7);
     // pivotIntakeOut = new JoystickButton(stick2, 8);

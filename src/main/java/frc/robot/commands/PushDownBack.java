@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class PushDownMain extends Command {
+public class PushDownBack extends Command {
 
   double power;
   double time;
   Timer t;
 
-  public PushDownMain(double power, double time) {
-    requires(Robot.hang);
+  public PushDownBack(double power, double time) {
+    requires(Robot.hangBack);
     this.power = power;
     this.time = time;
     t = new Timer();
@@ -34,7 +34,7 @@ public class PushDownMain extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hang.driveMain(power);
+    Robot.hangBack.drivePushDown(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +46,7 @@ public class PushDownMain extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hang.driveMain(0);
+    Robot.hangBack.stop();
   }
 
   // Called when another command which requires one or more of the same

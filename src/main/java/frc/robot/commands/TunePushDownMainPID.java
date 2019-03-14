@@ -19,20 +19,21 @@ public class TunePushDownMainPID extends Command {
   double setpoint;
 
   public TunePushDownMainPID() {
-    requires(Robot.hang);
+    requires(Robot.hangFront);
+    requires(Robot.hangBack);
     setpoint = 0;
   }
 
   private void refreshValues()
   {
-    Robot.hang.setP(SmartDashboard.getNumber("PushDown Main P", 0.0));
-    Robot.hang.setI(SmartDashboard.getNumber("PushDown Main I", 0.0));
-    Robot.hang.setD(SmartDashboard.getNumber("PushDown Main D", 0.0));
-    Robot.hang.setFF(SmartDashboard.getNumber("PushDown Main FF", 0.0));
-    Robot.hang.setIAccum(SmartDashboard.getNumber("PushDown Main IAccum", 0.0));
-    Robot.hang.setIZone(SmartDashboard.getNumber("PushDown Main IZone", 0.0));
-    Robot.hang.setIMaxAccum(SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0));
-    Robot.hang.setOutputRange(SmartDashboard.getNumber("PushDown Main OutputMin", -1),
+    Robot.hangFront.setP(SmartDashboard.getNumber("PushDown Main P", 0.0));
+    Robot.hangFront.setI(SmartDashboard.getNumber("PushDown Main I", 0.0));
+    Robot.hangFront.setD(SmartDashboard.getNumber("PushDown Main D", 0.0));
+    Robot.hangFront.setFF(SmartDashboard.getNumber("PushDown Main FF", 0.0));
+    Robot.hangFront.setIAccum(SmartDashboard.getNumber("PushDown Main IAccum", 0.0));
+    Robot.hangFront.setIZone(SmartDashboard.getNumber("PushDown Main IZone", 0.0));
+    Robot.hangFront.setIMaxAccum(SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0));
+    Robot.hangFront.setOutputRange(SmartDashboard.getNumber("PushDown Main OutputMin", -1),
                                   SmartDashboard.getNumber("PushDown Main OutputMax", 1));
 
     setpoint = SmartDashboard.getNumber("PushDown Main Setpoint", 0.0);
@@ -60,28 +61,28 @@ public class TunePushDownMainPID extends Command {
   protected void execute() {
     if (!OI.stick2.getRawButton(2))
     {
-      Robot.hang.setP(0);
-      Robot.hang.setI(0);
-      Robot.hang.setD(0);
-      Robot.hang.setFF(0);
-      Robot.hang.setIAccum(0);
-      Robot.hang.setIZone(0);
-      Robot.hang.setIMaxAccum(0);
-      Robot.hang.setOutputRange(-1, 1);
+      Robot.hangFront.setP(0);
+      Robot.hangFront.setI(0);
+      Robot.hangFront.setD(0);
+      Robot.hangFront.setFF(0);
+      Robot.hangFront.setIAccum(0);
+      Robot.hangFront.setIZone(0);
+      Robot.hangFront.setIMaxAccum(0);
+      Robot.hangFront.setOutputRange(-1, 1);
       System.out.println("Not running PID.");
-      Robot.hang.setSetpoint(0, ControlType.kDutyCycle);
-      Robot.hang.driveMain(-OI.stick2.getRawAxis(1));
+      Robot.hangFront.setSetpoint(0, ControlType.kDutyCycle);
+      Robot.hangFront.drive(-OI.stick2.getRawAxis(1));
     }
-    else if (SmartDashboard.getNumber("PushDown Main P", 0.0) != Robot.hang.getP() ||
-        SmartDashboard.getNumber("PushDown Main I", 0.0) != Robot.hang.getI() ||
-        SmartDashboard.getNumber("PushDown Main D", 0.0) != Robot.hang.getD() ||
-        SmartDashboard.getNumber("PushDown Main FF", 0.0) != Robot.hang.getFF() ||
+    else if (SmartDashboard.getNumber("PushDown Main P", 0.0) != Robot.hangFront.getP() ||
+        SmartDashboard.getNumber("PushDown Main I", 0.0) != Robot.hangFront.getI() ||
+        SmartDashboard.getNumber("PushDown Main D", 0.0) != Robot.hangFront.getD() ||
+        SmartDashboard.getNumber("PushDown Main FF", 0.0) != Robot.hangFront.getFF() ||
         SmartDashboard.getNumber("PushDown Main Setpoint", 0.0) != setpoint ||
-        SmartDashboard.getNumber("PushDown Main IAccum", 0.0) != Robot.hang.getIAccum() ||
-        SmartDashboard.getNumber("PushDown Main IZone", 0.0) != Robot.hang.getIZone() ||
-        SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0) != Robot.hang.getIMaxAccum() ||
-        SmartDashboard.getNumber("PushDown Main OutputMax", 1) != Robot.hang.getOutputMax() ||
-        SmartDashboard.getNumber("PushDown Main OutputMin", -1) != Robot.hang.getOutputMin())
+        SmartDashboard.getNumber("PushDown Main IAccum", 0.0) != Robot.hangFront.getIAccum() ||
+        SmartDashboard.getNumber("PushDown Main IZone", 0.0) != Robot.hangFront.getIZone() ||
+        SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0) != Robot.hangFront.getIMaxAccum() ||
+        SmartDashboard.getNumber("PushDown Main OutputMax", 1) != Robot.hangFront.getOutputMax() ||
+        SmartDashboard.getNumber("PushDown Main OutputMin", -1) != Robot.hangFront.getOutputMin())
     {
       refreshValues();
       System.out.println("Values refreshed.");
@@ -89,10 +90,10 @@ public class TunePushDownMainPID extends Command {
     else {
       System.out.println("Running PID.");
     }
-    if (Robot.hang.getMainEnc() > setpoint && Robot.hang.getIAccum() > 0)
-      Robot.hang.setIAccum(0);
-    Robot.hang.setSetpoint(setpoint);
-    SmartDashboard.putNumber("PushDown Main", Robot.hang.getMainEnc());
+    if (Robot.hangFront.getEnc() > setpoint && Robot.hangFront.getIAccum() > 0)
+      Robot.hangFront.setIAccum(0);
+    Robot.hangFront.setSetpoint(setpoint);
+    SmartDashboard.putNumber("PushDown Main", Robot.hangFront.getEnc());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -104,7 +105,8 @@ public class TunePushDownMainPID extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hang.stop();
+    Robot.hangFront.stop();
+    Robot.hangBack.stop();
   }
 
   // Called when another command which requires one or more of the same

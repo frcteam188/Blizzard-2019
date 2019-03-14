@@ -9,7 +9,8 @@ package frc.robot;
 
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Hang;
+import frc.robot.subsystems.HangFront;
+import frc.robot.subsystems.HangBack;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.autocommandgroups.LeftSide2HatchAuto;
@@ -48,7 +49,8 @@ public class Robot extends TimedRobot {
   public static Base base;
   public static Elevator elevator;
   public static Intake intake;
-  public static Hang hang;
+  public static HangFront hangFront;
+  public static HangBack hangBack;
   public static Vision vision;
   public static OI oi;
   NetworkTableEntry goalEntry;
@@ -61,7 +63,8 @@ public class Robot extends TimedRobot {
     base = new Base();
     intake = new Intake();
     elevator = new Elevator();
-    hang = new Hang();
+    hangFront = new HangFront();
+    hangBack = new HangBack();
     vision = new Vision();
     oi = new OI();
 
@@ -166,7 +169,8 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     report();
 
-    Robot.hang.execute(); // REMOVE THIS LATER
+    // Robot.hangFront.execute(); // REMOVE THIS LATER
+    // Robot.hangBack.execute(); // REMOVE THIS LATER
   }
 
   @Override
@@ -207,8 +211,8 @@ public class Robot extends TimedRobot {
     }
     if (override || OI.resetPushDownEnc.get())
     {
-      Robot.hang.resetMainEnc();
-      Robot.hang.resetCorrectionEnc();
+      Robot.hangFront.resetEnc();
+      Robot.hangBack.resetEnc();
       System.out.println("Pushdown encoders reset.");
     }
     if (override || OI.resetGyro.get())
@@ -224,7 +228,8 @@ public class Robot extends TimedRobot {
     base.report();
     elevator.report();
     intake.report();
-    hang.report();
+    hangFront.report();
+    hangBack.report();
     // vision.report();
     SmartDashboard.putNumberArray("hsv:lower", 
       new double[]{SmartDashboard.getNumber("h:lo", 0), SmartDashboard.getNumber("s:lo", 0), SmartDashboard.getNumber("v:lo", 0)});

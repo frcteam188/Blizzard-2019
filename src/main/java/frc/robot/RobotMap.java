@@ -23,10 +23,10 @@ public class RobotMap {
 
   public static int intakeMotor = 1;
 
-  public static int[] hangPiston = {3, 4}; // 0, 4
-  public static int[] pivotPiston = {0, 7}; // 3, 7
-  public static int[] innerPushPiston = {5, 2};
-  public static int[] outerPushPiston = {6, 1};
+  public static int[] hangPiston = {2, 3}; // 0, 4
+  public static int[] pivotPiston = {4, 7}; // 3, 7
+  public static int[] innerPushPiston = {0, 1};
+  public static int[] outerPushPiston = {5, 6};
 
   public static int intakeSensor = 2; // NOT ATTACHED
 
@@ -35,7 +35,8 @@ public class RobotMap {
 
   public static int pushDownLeft = 10;
   public static int pushDownRight = 9;
-  public static int pushDownBack = 7;
+  public static int pushDownBack = 11;
+  public static int hangDrive = 7;
 
   public static int[] pushDownCorrectionEncoder = {0, 1}; // NOT ATTACHED
 

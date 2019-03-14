@@ -7,38 +7,52 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class PushDown extends Command {
-  public PushDown() {
-    requires(Robot.hang);
+public class PushDownFront extends Command {
+
+  double power;
+  double time;
+  Timer t;
+
+  public PushDownFront(double power, double time) {
+    requires(Robot.hangFront);
+    this.power = power;
+    this.time = time;
+    t = new Timer();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    t.reset();
+    t.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.hangFront.drive(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return t.get() >= time;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.hangFront.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

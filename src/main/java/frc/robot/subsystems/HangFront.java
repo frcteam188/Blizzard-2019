@@ -26,41 +26,26 @@ import frc.robot.commands.Auto;
 import frc.robot.commands.ManualPushDown;
 
 
-public class Hang extends Subsystem {
-
+public class HangFront extends Subsystem {
 
   CANSparkMax pushDownLeft;
   CANSparkMax pushDownRight;
-  TalonSRX pushDownBack;
 
-  CANEncoder mainLeftEnc;
-  CANEncoder mainRightEnc;
-  Encoder correctionEnc;
+  CANEncoder leftEnc;
+  CANEncoder rightEnc;
 
-  DigitalInput frontSensor;
-  DigitalInput backSensor;
-
-  PushDownCorrectionPID correctionPID;
-
-
-  public Hang()
+  public HangFront()
   {
     pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushless);
     pushDownRight = new CANSparkMax(RobotMap.pushDownRight, MotorType.kBrushless);
     pushDownLeft.setInverted(false);
     pushDownRight.setInverted(true);
-    pushDownBack = new TalonSRX(RobotMap.pushDownBack);
-    pushDownBack.setInverted(false);
-    // pushDownBack.enableVoltageCompensation(true);
-    mainLeftEnc = pushDownLeft.getEncoder();
-    mainRightEnc = pushDownRight.getEncoder();
-    mainLeftEnc.setPositionConversionFactor(Constants.kRevsToInches);
-    mainRightEnc.setPositionConversionFactor(Constants.kRevsToInches);
-    frontSensor = new DigitalInput(RobotMap.frontHangSensor);
-    backSensor = new DigitalInput(RobotMap.backHangSensor);
-    correctionEnc = new Encoder(RobotMap.pushDownCorrectionEncoder[0], RobotMap.pushDownCorrectionEncoder[1]);
-    correctionPID = new PushDownCorrectionPID(Constants.pushDownCorrectionPID[0], Constants.pushDownCorrectionPID[1],
-                          Constants.pushDownCorrectionPID[2], 0, Constants.kPushDownCorrectionPower);
+    pushDownLeft.setOpenLoopRampRate(0.2);
+    pushDownRight.setOpenLoopRampRate(0.2);
+    leftEnc = pushDownLeft.getEncoder();
+    rightEnc = pushDownRight.getEncoder();
+    leftEnc.setPositionConversionFactor(Constants.kRevsToInches);
+    rightEnc.setPositionConversionFactor(Constants.kRevsToInches);
   }
 
   public static double getHabAngle()
@@ -78,17 +63,11 @@ public class Hang extends Subsystem {
     }
   }
 
-  public void driveMain(double power)
+  public void drive(double power)
   {
-    power *= Constants.kPushDownMainPower;
-    pushDownLeft.set(power);
-    pushDownRight.set(power);
-  }
-
-  public void driveCorrection(double power)
-  {
-    power *= Constants.kPushDownCorrectionPower;
-    pushDownBack.set(ControlMode.PercentOutput, power);
+    power *= Constants.kPushDownFrontPower;
+    pushDownLeft.set(-power);
+    pushDownRight.set(-power);
   }
 
   public void execute()
@@ -104,45 +83,24 @@ public class Hang extends Subsystem {
 
   public void stop()
   {
-    driveMain(0);
-    driveCorrection(0);
+    drive(0);
   }
 
-  public boolean getFrontSensor()
+  public void resetEnc()
   {
-    return frontSensor.get();
+    leftEnc.setPosition(0);
+    rightEnc.setPosition(0);
   }
 
-  public boolean getBackSensor()
+  public double getEnc()
   {
-    return backSensor.get();
-  }
-
-  public void resetMainEnc()
-  {
-    mainLeftEnc.setPosition(0);
-    mainRightEnc.setPosition(0);
-  }
-
-  public double getMainEnc()
-  {
-    return mainLeftEnc.getPosition();
-  }
-
-  public void resetCorrectionEnc()
-  {
-    pushDownBack.getSensorCollection().setQuadraturePosition(0, 0);
-  }
-
-  public double getCorrectionEnc()
-  {
-    return pushDownBack.getSensorCollection().getQuadraturePosition();
+    return leftEnc.getPosition();
   }
 
   public void report()
   {
-    SmartDashboard.putNumber("PushDown Main Left Enc", mainLeftEnc.getPosition());
-    SmartDashboard.putNumber("PushDown Main Right Enc", mainRightEnc.getPosition());
+    SmartDashboard.putNumber("PushDown Main Left Enc", leftEnc.getPosition());
+    SmartDashboard.putNumber("PushDown Main Right Enc", rightEnc.getPosition());
     // SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
     SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll()); // NOSE UP = NEGATIVE ANGLE
   }
