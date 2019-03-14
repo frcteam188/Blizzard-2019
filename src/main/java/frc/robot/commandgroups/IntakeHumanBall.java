@@ -10,14 +10,14 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
-import frc.robot.commands.WaitOnTarget;
+import frc.robot.commands.WaitOnElevatorTarget;
 import frc.robot.subsystems.Elevator;
 
 public class IntakeHumanBall extends CommandGroup {
 
   public IntakeHumanBall() {
     addParallel(new MoveElevator(4, Elevator.GamePiece.BALL));
-    addSequential(new WaitOnTarget(1));
+    addSequential(new WaitOnElevatorTarget(1));
     addParallel(new MoveIntake(-1.0));
   }
 }

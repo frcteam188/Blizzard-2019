@@ -22,30 +22,34 @@ import frc.robot.commands.MoveHatch;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
-import frc.robot.commands.WaitOnTarget;
+import frc.robot.commands.TunePushDownMainPID;
+import frc.robot.commands.WaitOnElevatorTarget;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
 public class LeftSide2HatchAuto extends CommandGroup {
 
   public LeftSide2HatchAuto() {
-    addSequential(new DriveSlow(77.5, 0, true));
-    addSequential(new GyroCorrect(90, false, 7, 0)); // RIGHT-
-    addSequential(new DriveStraight(111, 0)); // 104 RIGHT-
-    addSequential(new GyroCorrect(-27.75, false, 7, 0)); // RIGHT+
-    addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
-    addSequential(new DriveSlow(12, 0, false), 1.5); //changed from 20
+    addSequential(new TunePushDownMainPID());
+    // addSequential(new DriveSlow(77.5, 0, true));
+    // addSequential(new GyroCorrect(90, false, 7, 0)); // RIGHT-
+    // addSequential(new DriveStraight(111, 0)); // 104 RIGHT-
+    // addSequential(new GyroCorrect(-27.75, false, 7, 0)); // RIGHT+
+    // addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
+    // addSequential(new DriveSlow(12, 0, false), 1.5); //changed from 20
 
-    addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
-    addSequential(new WaitOnTarget());
-    addParallel(new MoveIntake(0, 1));
-    addSequential(new FlipIntake(Intake.Direction.OUT));
-    addSequential(new ReleaseHatch());
-    addSequential(new FlipIntake(Intake.Direction.IN));
+    // addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
+    // addSequential(new WaitOnElevatorTarget());
+    // addParallel(new MoveIntake(0, 1));
+    // addSequential(new FlipIntake(Intake.Direction.OUT));
+    // addSequential(new ReleaseHatch());
+    // addSequential(new FlipIntake(Intake.Direction.IN));
 
-    addParallel(new MoveElevator(-1));
-    addSequential(new DriveSlow(-5, 0, false)); //changed from -13
-    addSequential(new GyroCorrect(-90, true, 7, 0)); // RIGHT+
+    // addParallel(new MoveElevator(-1));
+    // addSequential(new DriveSlow(-5, 0, false)); //changed from -13
+    // addSequential(new GyroCorrect(-90, true, 7, 0)); // RIGHT+
+
+
     // addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     // addParallel(new MoveHatch(Intake.Direction.OUT));
     // addSequential(new DriveStraight(154.5, 0)); // 179.5

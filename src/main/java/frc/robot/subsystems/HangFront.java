@@ -42,10 +42,44 @@ public class HangFront extends Subsystem {
     pushDownRight.setInverted(true);
     pushDownLeft.setOpenLoopRampRate(0.2);
     pushDownRight.setOpenLoopRampRate(0.2);
+    pushDownLeft.setClosedLoopRampRate(0.2);
+    pushDownRight.setClosedLoopRampRate(0.2);
     leftEnc = pushDownLeft.getEncoder();
     rightEnc = pushDownRight.getEncoder();
     leftEnc.setPositionConversionFactor(Constants.kRevsToInches);
     rightEnc.setPositionConversionFactor(Constants.kRevsToInches);
+  }
+
+  public void flashPIDValues()
+  {
+    // Flash up PID
+    setP(Constants.mainHangPID[0]);
+    setI(Constants.mainHangPID[1]);
+    setD(Constants.mainHangPID[2]);
+    // setIZone(Constants.elevatorUpIZone, Constants.kElevatorUpPID);
+    // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
+
+    // Flash down PID
+    // setP(Constants.elevatorDownPID[0], Constants.kElevatorDownPID);
+    // setI(Constants.elevatorDownPID[1], Constants.kElevatorDownPID);
+    // setD(Constants.elevatorDownPID[2], Constants.kElevatorDownPID);
+    setOutputRange(-0.7, 0.7);
+  }
+
+  public void runPID(double setpoint)
+  {
+    setSetpoint(setpoint);
+  }
+
+  public void stopPID()
+  {
+    setP(0);
+    setI(0);
+    setD(0);
+    setFF(0);
+    setSetpoint(0);
+    // setSetpoint(0, ControlType.kDutyCycle);
+    // stop();
   }
 
   public static double getHabAngle()

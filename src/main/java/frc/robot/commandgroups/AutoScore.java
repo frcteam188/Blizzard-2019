@@ -9,14 +9,14 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.WaitOnTarget;
+import frc.robot.commands.WaitOnElevatorTarget;
 import frc.robot.subsystems.Elevator;
 
 public class AutoScore extends CommandGroup {
 
   public AutoScore(int preset, Elevator.GamePiece gamePieceType) {
     addParallel(new MoveElevator(preset, gamePieceType));
-    addSequential(new WaitOnTarget());
+    addSequential(new WaitOnElevatorTarget());
     if (gamePieceType == Elevator.GamePiece.BALL)
       addSequential(new ScoreBall());
     else if (gamePieceType == Elevator.GamePiece.HATCH)

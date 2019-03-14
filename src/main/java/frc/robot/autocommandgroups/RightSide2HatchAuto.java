@@ -20,7 +20,7 @@ import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
-import frc.robot.commands.WaitOnTarget;
+import frc.robot.commands.WaitOnElevatorTarget;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
@@ -37,7 +37,7 @@ public class RightSide2HatchAuto extends CommandGroup {
     addSequential(new DriveSlow(12, 0, false), 1.5); //changed from 20
 
     addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
-    addSequential(new WaitOnTarget());
+    addSequential(new WaitOnElevatorTarget());
     addParallel(new MoveIntake(0, 1));
     addSequential(new FlipIntake(Intake.Direction.OUT));
     addSequential(new ReleaseHatch());

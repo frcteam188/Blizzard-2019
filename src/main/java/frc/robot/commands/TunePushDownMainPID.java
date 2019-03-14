@@ -33,8 +33,8 @@ public class TunePushDownMainPID extends Command {
     Robot.hangFront.setIAccum(SmartDashboard.getNumber("PushDown Main IAccum", 0.0));
     Robot.hangFront.setIZone(SmartDashboard.getNumber("PushDown Main IZone", 0.0));
     Robot.hangFront.setIMaxAccum(SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0));
-    Robot.hangFront.setOutputRange(SmartDashboard.getNumber("PushDown Main OutputMin", -1),
-                                  SmartDashboard.getNumber("PushDown Main OutputMax", 1));
+    Robot.hangFront.setOutputRange(SmartDashboard.getNumber("PushDown Main OutputMin", -0.7),
+                                  SmartDashboard.getNumber("PushDown Main OutputMax", 0.7));
 
     setpoint = SmartDashboard.getNumber("PushDown Main Setpoint", 0.0);
   }
@@ -50,8 +50,8 @@ public class TunePushDownMainPID extends Command {
     SmartDashboard.putNumber("PushDown Main IAccum", 0.0);
     SmartDashboard.putNumber("PushDown Main IZone", 0.0);
     SmartDashboard.putNumber("PushDown Main IMaxAccum", 0.0);
-    SmartDashboard.putNumber("PushDown Main OutputMax", 1.0);
-    SmartDashboard.putNumber("PushDown Main OutputMin", -1.0);
+    SmartDashboard.putNumber("PushDown Main OutputMax", 0.7);
+    SmartDashboard.putNumber("PushDown Main OutputMin", -0.7);
     refreshValues();
     System.out.println("Started tuning.");
   }
@@ -59,7 +59,7 @@ public class TunePushDownMainPID extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (!OI.stick2.getRawButton(2))
+   /* if (!OI.stick2.getRawButton(2))
     {
       Robot.hangFront.setP(0);
       Robot.hangFront.setI(0);
@@ -73,7 +73,7 @@ public class TunePushDownMainPID extends Command {
       Robot.hangFront.setSetpoint(0, ControlType.kDutyCycle);
       Robot.hangFront.drive(-OI.stick2.getRawAxis(1));
     }
-    else if (SmartDashboard.getNumber("PushDown Main P", 0.0) != Robot.hangFront.getP() ||
+    else */if (SmartDashboard.getNumber("PushDown Main P", 0.0) != Robot.hangFront.getP() ||
         SmartDashboard.getNumber("PushDown Main I", 0.0) != Robot.hangFront.getI() ||
         SmartDashboard.getNumber("PushDown Main D", 0.0) != Robot.hangFront.getD() ||
         SmartDashboard.getNumber("PushDown Main FF", 0.0) != Robot.hangFront.getFF() ||
@@ -81,8 +81,8 @@ public class TunePushDownMainPID extends Command {
         SmartDashboard.getNumber("PushDown Main IAccum", 0.0) != Robot.hangFront.getIAccum() ||
         SmartDashboard.getNumber("PushDown Main IZone", 0.0) != Robot.hangFront.getIZone() ||
         SmartDashboard.getNumber("PushDown Main IMaxAccum", 0.0) != Robot.hangFront.getIMaxAccum() ||
-        SmartDashboard.getNumber("PushDown Main OutputMax", 1) != Robot.hangFront.getOutputMax() ||
-        SmartDashboard.getNumber("PushDown Main OutputMin", -1) != Robot.hangFront.getOutputMin())
+        SmartDashboard.getNumber("PushDown Main OutputMax", 0.7) != Robot.hangFront.getOutputMax() ||
+        SmartDashboard.getNumber("PushDown Main OutputMin", -0.7) != Robot.hangFront.getOutputMin())
     {
       refreshValues();
       System.out.println("Values refreshed.");

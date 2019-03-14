@@ -33,14 +33,16 @@ public class PushDownFrontEnc extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangFront.drive(power);
+    Robot.hangFront.drive(-power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return setpoint > 0 && Robot.hangFront.getEnc() > relativeSetpoint ||
-            setpoint < 0 && Robot.hangFront.getEnc() < relativeSetpoint;
+    return relativeSetpoint > initialEnc && Robot.hangFront.getEnc() > relativeSetpoint ||
+    relativeSetpoint < initialEnc && Robot.hangFront.getEnc() < relativeSetpoint;
+    // return setpoint > 0 && Robot.hangFront.getEnc() > relativeSetpoint ||
+    //         setpoint < 0 && Robot.hangFront.getEnc() < relativeSetpoint;
   }
 
   // Called once after isFinished returns true

@@ -7,40 +7,47 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 
-public class ManualPushDown extends Command {
-  public ManualPushDown() {
-    requires(Robot.hangFront);
-    requires(Robot.hangBack);
+public class PushDownFrontPID extends Command {
+
+  double setpoint;
+
+  public PushDownFrontPID(int setpoint) {
+    this.setpoint = setpoint;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.hangFront.flashPIDValues();
+    // Robot.hangFront.setPID(setpoint);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
-    Robot.hangBack.drivePushDown(OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
-    Robot.hangBack.driveForward(OI.hangDriveForwardButton, OI.hangDriveBackButton);
+    Robot.hangFront.runPID(setpoint);
+    // System.out.println(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs(setpoint - Robot.hangFront.getEnc()) < 5.0 || DriverStation.getInstance().isDisabled();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hangFront.stop();
-    Robot.hangBack.stop();
+      Robot.hangFront.stopPID();
+      Robot.hangFront.stop();
+    // System.out.println("FINISHED PID");
   }
 
   // Called when another command which requires one or more of the same

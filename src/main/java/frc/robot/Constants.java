@@ -26,7 +26,7 @@ public class Constants {
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
-    public static final double[] mainHangPID = {0, 0, 0};
+    public static final double[] mainHangPID = {0.02, 0, 0};
     public static final double[] backHangPID = {0, 0, 0};
 
     // Ramp Rates
@@ -53,7 +53,7 @@ public class Constants {
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
     public static final double kPushDownFrontPower = 0.5;
-    public static final double kPushDownBackPower = 0.7;
+    public static final double kPushDownBackPower = 1.0;
     public static final double kHangDrivePower = 0.4;
 
     // Pneumatics Directions
@@ -75,6 +75,7 @@ public class Constants {
     public static final double kBaseGyroPIDTolerance = 2.0;
     public static final double kPushDownMainTolerance = 0.5;
     public static final double kPushDownCorrectionTolerance = 1.0;
+    public static final double kFrontHangTolerance = 10.0;
 
     // Default PID Control Types
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;

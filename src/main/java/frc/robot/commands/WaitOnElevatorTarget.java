@@ -12,17 +12,17 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 
-public class WaitOnTarget extends Command {
+public class WaitOnElevatorTarget extends Command {
 
   int iterationTheshold;
   int iterations;
 
-  public WaitOnTarget()
+  public WaitOnElevatorTarget()
   {
     this(5);
   }
 
-  public WaitOnTarget(int iterationTheshold) {
+  public WaitOnElevatorTarget(int iterationTheshold) {
     this.iterationTheshold = iterationTheshold;    
   }
 

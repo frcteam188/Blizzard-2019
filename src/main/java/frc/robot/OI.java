@@ -129,9 +129,9 @@ public class OI {
     intakeHumanBall.whenReleased(new MoveElevator(-1));
 
     hangLeftButton.whenPressed(new Level2Hang(Level2Hang.Side.LEFT));
-    hangLeftButton.whenReleased(new ManualPushDown());
-    hangRightButton.whenPressed(new Level2Hang(Level2Hang.Side.RIGHT));
-    hangRightButton.whenReleased(new ManualPushDown());
+    // hangLeftButton.whenReleased(new ManualPushDown());
+    // hangRightButton.whenPressed(new Level2Hang(Level2Hang.Side.RIGHT));
+    hangRightButton.whenPressed(new ManualPushDown());
   }
 
   public static boolean isOverriding()

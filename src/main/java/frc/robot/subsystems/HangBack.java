@@ -78,12 +78,13 @@ public class HangBack extends Subsystem {
 
   public double getEnc()
   {
-    return pushDownEnc.getPosition();
+    return -pushDownEnc.getPosition();
   }
 
   public void report()
   {
     SmartDashboard.putNumber("Back Hang Current", pushDown.getOutputCurrent());
+    SmartDashboard.putNumber("PushDown Main Back Enc", getEnc());
   }
 
   @Override
