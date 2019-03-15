@@ -13,19 +13,23 @@ import frc.robot.subsystems.HangFront;
 import frc.robot.subsystems.HangBack;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import frc.robot.autocommandgroups.DriveForwardScoreHatchAuto;
 import frc.robot.autocommandgroups.LeftSide2HatchAuto;
 import frc.robot.autocommandgroups.LeftSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.autocommandgroups.RightSideCargo2HatchAuto;
+import frc.robot.autocommandgroups.SideHatchAuto;
 import frc.robot.autocommandgroups.PlatformDrop;
 import frc.robot.autocommandgroups.PlatformDropSideHatch;
 import frc.robot.commandgroups.AutoCommandGroup;
+import frc.robot.commandgroups.TestCommandGroup;
 import frc.robot.commands.Auto;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.TuneBaseEncPID;
 import frc.robot.commands.TuneBaseGyroPID;
 import frc.robot.commands.TuneElevatorPID;
+import frc.robot.commands.TunePushDownCorrectionPID;
 import frc.robot.commands.TunePushDownMainPID;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
@@ -78,6 +82,7 @@ public class Robot extends TimedRobot {
     
     testCommand = null;
     teleopCommand = new JoystickDrive();
+    // testCommand = new TunePushDownCorrectionPID();
     // testCommand = new TuneBaseGyroPID();
     
     selectedAuto = 4;
@@ -89,7 +94,11 @@ public class Robot extends TimedRobot {
                         new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.LEFT), "Left PlatformDropSideHatch", null),
                         new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.RIGHT), "Right PlatformDropSideHatch", null),
                         new Auto(new LeftSideCargo2HatchAuto(), "LeftSideCargo2HatchAuto", Auto.Side.CENTRE),
-                        new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE)
+                        new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE),
+                        new Auto(new DriveForwardScoreHatchAuto(), "DriveForwardScoreHatchAuto", Auto.Side.CENTRE),
+                        new Auto(new SideHatchAuto(SideHatchAuto.Side.LEFT), "Left SideHatchAuto", Auto.Side.CENTRE),
+                        new Auto(new SideHatchAuto(SideHatchAuto.Side.RIGHT), "Right SideHatchAuto", Auto.Side.CENTRE),
+                        new Auto(new TestCommandGroup(), "Test", null)
                         };
     autoCommand = autos[selectedAuto];
     

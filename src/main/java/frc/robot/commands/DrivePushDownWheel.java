@@ -7,14 +7,22 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class ManualPushDown extends Command {
-  public ManualPushDown() {
-    requires(Robot.hangFront);
-    requires(Robot.hangBack);
+/**
+ * Add your docs here.
+ */
+public class DrivePushDownWheel extends TimedCommand {
+
+  double power;
+
+  /**
+   * Add your docs here.
+   */
+  public DrivePushDownWheel(double power, double timeout) {
+    super(timeout);
+    this.power = power;
   }
 
   // Called just before this Command runs the first time
@@ -25,22 +33,13 @@ public class ManualPushDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
-    Robot.hangBack.drivePushDown(-OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
-    // Robot.hangBack.driveForward(OI.hangDriveForwardButton, OI.hangDriveBackButton);
+    Robot.hangBack.driveForward(power);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
-    Robot.hangFront.stop();
-    Robot.hangBack.stop();
+    Robot.hangBack.driveForward(0);
   }
 
   // Called when another command which requires one or more of the same

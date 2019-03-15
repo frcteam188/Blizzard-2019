@@ -14,14 +14,14 @@ import frc.robot.Robot;
 public class WaitOnHangFrontTarget extends Command {
   int iterationTheshold;
   int iterations;
-  int target;
+  double target;
 
-  public WaitOnHangFrontTarget(int target)
+  public WaitOnHangFrontTarget(double target)
   {
     this(target, 5);
   }
 
-  public WaitOnHangFrontTarget(int target, int iterationTheshold) {
+  public WaitOnHangFrontTarget(double target, int iterationTheshold) {
     this.target = target;
     this.iterationTheshold = iterationTheshold;    
   }

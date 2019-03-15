@@ -23,18 +23,23 @@ public class DriveSlow extends Command {
   int onTargetCount;
   int onTargetThreshold;
   boolean superSlow;
+  boolean ultraSlow;
   boolean stop;
 
   public DriveSlow(double setpoint, double angle, boolean superSlow) {
     this(setpoint, angle, superSlow, true);
   }
-
+  
   public DriveSlow(double setpoint, double angle, boolean superSlow, boolean stop) {
+    this(setpoint, angle, superSlow, false, stop);
+  }
+  public DriveSlow(double setpoint, double angle, boolean superSlow, boolean ultraSlow, boolean stop) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
     this.onTargetThreshold = 1;
     this.superSlow = superSlow;
+    this.ultraSlow = ultraSlow;
     this.stop = stop;
   }
 
@@ -46,7 +51,8 @@ public class DriveSlow extends Command {
     double relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
     double encPwr;
-    if(superSlow) encPwr = Constants.kBaseEncLowPIDPower;
+    if (ultraSlow) encPwr = Constants.kBaseEncTinyPIDPower;
+    else if(superSlow) encPwr = Constants.kBaseEncLowPIDPower;
     else encPwr = Constants.kBaseEncMidPIDPower;
     encPID = new BaseEncPID(Constants.baseEncLowPID[0], Constants.baseEncLowPID[1], Constants.baseEncLowPID[2],
                             relativeSetpoint, encPwr, true);
@@ -84,5 +90,6 @@ public class DriveSlow extends Command {
   @Override
   protected void interrupted() {
     end();
+    System.out.println("DriveSlow interrupted.");
   }
 }

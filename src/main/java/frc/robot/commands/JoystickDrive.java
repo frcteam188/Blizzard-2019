@@ -29,21 +29,21 @@ public class JoystickDrive extends Command {
   protected void execute() {
     double forward = OI.stick.getRawAxis(OI.fwdAxis);
     double turn = OI.stick.getRawAxis(OI.turnAxis);
-    // if (OI.slowButton.get())
-    // {
-    //   forward *= Constants.kBaseSlowPower;
-    //   turn *= Constants.kBaseSlowPower;
-    // }
-    // else if (OI.fastButton.get())
-    // {
-    //   forward *= Constants.kBaseFastPower;
-    //   turn *= Constants.kBaseFastPower;
-    // }
-    // else
-    // {
-    //   forward *= Constants.kBaseDefaultPower;
-    //   turn *= Constants.kBaseDefaultPower;
-    // }
+    if (OI.slowButton.get())
+    {
+      forward *= Constants.kBaseSlowPower;
+      turn *= Constants.kBaseSlowPower;
+    }
+    else if (OI.fastButton.get())
+    {
+      forward *= Constants.kBaseFastPower;
+      turn *= Constants.kBaseFastPower;
+    }
+    else
+    {
+      forward *= Constants.kBaseDefaultPower;
+      turn *= Constants.kBaseDefaultPower;
+    }
     Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
   }
 

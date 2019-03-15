@@ -157,7 +157,7 @@ public class Intake extends Subsystem {
 
   public void drive(double power)
   {
-    // intakeMotor.set(ControlMode.PercentOutput, power);
+    intakeMotor.set(ControlMode.PercentOutput, power);
   }
 
   public void setTrim(boolean on)

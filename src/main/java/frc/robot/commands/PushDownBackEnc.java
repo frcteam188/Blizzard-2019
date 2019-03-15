@@ -33,7 +33,7 @@ public class PushDownBackEnc extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangBack.drivePushDown(-power);
+    Robot.hangBack.drivePushDown(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()

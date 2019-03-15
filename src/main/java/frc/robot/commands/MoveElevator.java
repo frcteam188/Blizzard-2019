@@ -19,6 +19,7 @@ public class MoveElevator extends Command {
   int preset;
   double setpoint;
   Elevator.GamePiece gamePieceType;
+  boolean willEnd;
 
   public MoveElevator(int preset) {
     this(preset, Elevator.GamePiece.NONE);
@@ -26,9 +27,14 @@ public class MoveElevator extends Command {
 
   public MoveElevator(int preset, Elevator.GamePiece gamePieceType)
   {
+    this(preset, gamePieceType, true);
+  }
+  public MoveElevator(int preset, Elevator.GamePiece gamePieceType, boolean willEnd)
+  {
     requires(Robot.elevator);
     this.preset = preset;
     this.gamePieceType = gamePieceType;
+    this.willEnd = willEnd;
     System.out.println("Move elevator " + preset);
   }
 
@@ -49,14 +55,18 @@ public class MoveElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.runPID(setpoint);
+    if(Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1.5 && setpoint == Constants.bottomPreset && !willEnd) {
+      Robot.elevator.stopPID();
+      Robot.elevator.stop();
+    }
+    else Robot.elevator.runPID(setpoint);
     // System.out.println(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1.5 && setpoint == 1
+    return Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1.5 && setpoint == Constants.bottomPreset && willEnd
             || DriverStation.getInstance().isDisabled();
   }
 

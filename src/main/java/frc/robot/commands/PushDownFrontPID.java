@@ -9,16 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
 
 public class PushDownFrontPID extends Command {
 
   double setpoint;
 
-  public PushDownFrontPID(int setpoint) {
+  public PushDownFrontPID(double setpoint) {
+    requires(Robot.hangFront);
     this.setpoint = setpoint;
   }
 
@@ -26,28 +24,25 @@ public class PushDownFrontPID extends Command {
   @Override
   protected void initialize() {
     Robot.hangFront.flashPIDValues();
-    // Robot.hangFront.setPID(setpoint);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.hangFront.runPID(setpoint);
-    // System.out.println(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(setpoint - Robot.hangFront.getEnc()) < 5.0 || DriverStation.getInstance().isDisabled();
+    return setpoint == 0. && Robot.hangFront.getEnc() <= 1.0 || DriverStation.getInstance().isDisabled();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-      Robot.hangFront.stopPID();
-      Robot.hangFront.stop();
-    // System.out.println("FINISHED PID");
+    Robot.hangFront.stopPID();
+    System.out.println("PushDownFrontPID ended.");
   }
 
   // Called when another command which requires one or more of the same

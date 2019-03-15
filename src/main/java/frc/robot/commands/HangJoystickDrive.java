@@ -8,26 +8,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class ManualPushDown extends Command {
-  public ManualPushDown() {
-    requires(Robot.hangFront);
-    requires(Robot.hangBack);
+public class HangJoystickDrive extends Command {
+  public HangJoystickDrive() {
+    requires(Robot.base);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.base.setOpenLoopRampRate(0);
+    System.out.println("Hang Joystick Driving");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
-    Robot.hangBack.drivePushDown(-OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
-    // Robot.hangBack.driveForward(OI.hangDriveForwardButton, OI.hangDriveBackButton);
+    double forward = OI.stick.getRawAxis(OI.fwdAxis);
+    double turn = OI.stick.getRawAxis(OI.turnAxis);
+    Robot.hangBack.driveForward(-forward);
+    forward *= Constants.kHangJoystickDrivePower;
+    turn *= Constants.kHangJoystickDrivePower;
+    Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,8 +44,7 @@ public class ManualPushDown extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hangFront.stop();
-    Robot.hangBack.stop();
+    Robot.base.stop();
   }
 
   // Called when another command which requires one or more of the same

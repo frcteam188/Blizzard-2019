@@ -26,8 +26,8 @@ public class Constants {
     public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
-    public static final double[] mainHangPID = {0.02, 0, 0};
-    public static final double[] backHangPID = {0, 0, 0};
+    public static final double[] mainHangPID = {0.03, 0, 0};
+    public static final double[] backHangPID = {0.1, 0, 0}; //0.065
 
     // Ramp Rates
     public static final double kClosedLoopRampRate = 0.2;
@@ -47,6 +47,7 @@ public class Constants {
     public static final double kBaseEncHighPIDPower = 0.7;
     public static final double kBaseEncMidPIDPower = 0.3; //is 0.3
     public static final double kBaseEncLowPIDPower = 0.2; //meant to be 0.3
+    public static final double kBaseEncTinyPIDPower = 0.1;
     public static final double kGyroTurnPower = 0.5; // 0.75
     public static final double kGyroCorrectionPower = 0.3;
     public static final double kGyroCorrectionForwardPower = 0.2;
@@ -55,6 +56,7 @@ public class Constants {
     public static final double kPushDownFrontPower = 0.5;
     public static final double kPushDownBackPower = 1.0;
     public static final double kHangDrivePower = 0.4;
+    public static final double kHangJoystickDrivePower = 0.1;
 
     // Pneumatics Directions
     public static final Value kIntakePivotOut = Value.kForward;
@@ -76,6 +78,7 @@ public class Constants {
     public static final double kPushDownMainTolerance = 0.5;
     public static final double kPushDownCorrectionTolerance = 1.0;
     public static final double kFrontHangTolerance = 10.0;
+    public static final double kBackHangTolerance = 5.0;
 
     // Default PID Control Types
     public static final ControlType kBasePIDDefaultType = ControlType.kVelocity;
@@ -86,10 +89,12 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    //Make high presets back to 48.5 and 53
-    public static final double[] hatchPresets = {2.5, 26.5, 26.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
-    public static final double[] ballPresets = {14, 35, 35, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
+    //Make high presets back to 48.5 and 53 (DONE)
+    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    public static final double[] ballPresets = {14, 35, 53, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 1.0;
+    public static final double pushDownFrontPreset = 95;
+    public static final double pushDownBackPreset = 68;
 
     // Vision Constants
     public static final double kWidthThreshold = 210.0;

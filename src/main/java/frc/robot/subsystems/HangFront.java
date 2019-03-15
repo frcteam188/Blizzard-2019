@@ -34,6 +34,8 @@ public class HangFront extends Subsystem {
   CANEncoder leftEnc;
   CANEncoder rightEnc;
 
+  double activeSetpoint;
+
   public HangFront()
   {
     pushDownLeft = new CANSparkMax(RobotMap.pushDownLeft, MotorType.kBrushless);
@@ -48,6 +50,8 @@ public class HangFront extends Subsystem {
     rightEnc = pushDownRight.getEncoder();
     leftEnc.setPositionConversionFactor(Constants.kRevsToInches);
     rightEnc.setPositionConversionFactor(Constants.kRevsToInches);
+
+    activeSetpoint = 0.;
   }
 
   public void flashPIDValues()
@@ -63,12 +67,19 @@ public class HangFront extends Subsystem {
     // setP(Constants.elevatorDownPID[0], Constants.kElevatorDownPID);
     // setI(Constants.elevatorDownPID[1], Constants.kElevatorDownPID);
     // setD(Constants.elevatorDownPID[2], Constants.kElevatorDownPID);
+    
     setOutputRange(-0.7, 0.7);
+  }
+
+  public double getActiveSetpoint()
+  {
+    return activeSetpoint;
   }
 
   public void runPID(double setpoint)
   {
     setSetpoint(setpoint);
+    activeSetpoint = setpoint;
   }
 
   public void stopPID()
@@ -77,7 +88,7 @@ public class HangFront extends Subsystem {
     setI(0);
     setD(0);
     setFF(0);
-    setSetpoint(0);
+    // setSetpoint(0);
     // setSetpoint(0, ControlType.kDutyCycle);
     // stop();
   }
@@ -290,6 +301,6 @@ public class HangFront extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ManualPushDown());
+    // setDefaultCommand(new ManualPushDown());
   }
 }

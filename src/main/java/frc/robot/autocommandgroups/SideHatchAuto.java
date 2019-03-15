@@ -10,12 +10,10 @@ package frc.robot.autocommandgroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commandgroups.ScoreHatch;
 import frc.robot.commands.DriveSlow;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.GyroCorrect;
-import frc.robot.commands.GyroTurn;
-import frc.robot.commands.PushDownBack;
-import frc.robot.commands.PushDownFrontEnc;
 
-public class PlatformDropSideHatch extends CommandGroup {
+public class SideHatchAuto extends CommandGroup {
 
   public enum Side
   {
@@ -23,20 +21,28 @@ public class PlatformDropSideHatch extends CommandGroup {
     RIGHT
   }
 
-  public PlatformDropSideHatch(Side side) {
-    addSequential(new DriveSlow(-19, 0, true));
-    addSequential(new PushDownBack(1.0, 0.5));
-    addSequential(new DriveSlow(-20.5, 0, true));
-    addSequential(new PushDownFrontEnc(1.0, 35));
-    addSequential(new PushDownBack(-0.3, 0.8));
-    addSequential(new DriveSlow(-15.5, 0, true));
-    addSequential(new PushDownFrontEnc(-1.0, -32), 2.0);
-    addSequential(new DriveSlow(-176, 0, true));
+  /**
+   * Add your docs here.
+   */
+  public SideHatchAuto(Side side) {
+    // addSequential(new DriveSlow(176, 0, true));
+    addSequential(new DriveSlow(50, 0, true));
+    addSequential(new DriveStraight(125, 0));
     if (side == Side.LEFT)
-      addSequential(new GyroCorrect(-90, false, 5, 0));
-    if (side == Side.RIGHT)
       addSequential(new GyroCorrect(90, false, 5, 0));
-    addSequential(new DriveSlow(8, 0, true));
-    addSequential(new ScoreHatch(true));
+    if (side == Side.RIGHT)
+      addSequential(new GyroCorrect(-90, false, 5, 0));
+
+    // addSequential(new DriveSlow(3, 0, true), 3.0);
+    
+    // addSequential(new ScoreHatch(true));
+    // addSequential(new DriveSlow(-15, 0, false));
+    // if (side == Side.LEFT)
+    // addSequential(new GyroCorrect(90, false, 5, 0));
+    // if (side == Side.RIGHT)
+    // addSequential(new GyroCorrect(-90, false, 5, 0));
+    
+    // addSequential(new DriveStraight(127, 0));
+    
+    }
   }
-}

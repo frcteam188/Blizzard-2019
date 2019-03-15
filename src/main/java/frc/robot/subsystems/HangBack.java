@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -28,14 +29,16 @@ public class HangBack extends Subsystem {
   CANSparkMax pushDown;
   CANEncoder pushDownEnc;
   BackHangPID pushDownPID;
+  double activeSetpoint;
 
   TalonSRX drive;
 
   public HangBack() {
 
     pushDown = new CANSparkMax(RobotMap.pushDownBack, MotorType.kBrushless);
-    pushDown.setInverted(true);
-    pushDown.setOpenLoopRampRate(1.0);
+    pushDown.setInverted(false);
+    pushDown.setOpenLoopRampRate(0.2);
+    pushDown.setClosedLoopRampRate(0.2);
     // pushDownBack.enableVoltageCompensation(true);
 
     pushDownEnc = pushDown.getEncoder();
@@ -43,7 +46,10 @@ public class HangBack extends Subsystem {
                           Constants.backHangPID[2], 0, Constants.kPushDownBackPower);
 
     drive = new TalonSRX(RobotMap.hangDrive);
+    drive.setInverted(true);
     drive.configOpenloopRamp(0.2);
+
+    activeSetpoint = 0.;
   }
 
   public void drivePushDown(double power)
@@ -78,7 +84,7 @@ public class HangBack extends Subsystem {
 
   public double getEnc()
   {
-    return -pushDownEnc.getPosition();
+    return pushDownEnc.getPosition();
   }
 
   public void report()
@@ -87,9 +93,187 @@ public class HangBack extends Subsystem {
     SmartDashboard.putNumber("PushDown Main Back Enc", getEnc());
   }
 
+  public void flashPIDValues()
+  {
+    setP(Constants.backHangPID[0]);
+    setI(Constants.backHangPID[1]);
+    setD(Constants.backHangPID[2]);
+    // Flash up PID
+    // setIZone(Constants.elevatorUpIZone, Constants.kElevatorUpPID);
+    // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
+
+    // Flash down PID
+    // setP(Constants.elevatorDownPID[0], Constants.kElevatorDownPID);
+    // setI(Constants.elevatorDownPID[1], Constants.kElevatorDownPID);
+    // setD(Constants.elevatorDownPID[2], Constants.kElevatorDownPID);
+    // setOutputRange(-0.7, 0.7);
+  }
+
+  public double getActiveSetpoint()
+  {
+    return activeSetpoint;
+  }
+
+  public void runPID(double setpoint)
+  {
+    setSetpoint(setpoint);
+    activeSetpoint = setpoint;
+  }
+
+  public void stopPID()
+  {
+    setP(0);
+    setI(0);
+    setD(0);
+    setFF(0);
+    // setSetpoint(0);
+    // setSetpoint(0, ControlType.kDutyCycle);
+    // stop();
+  }
+
+  public void setSetpoint(double setpoint)
+  {
+    setSetpoint(setpoint, ControlType.kPosition);
+  }
+
+  public void setSetpoint(double setpoint, ControlType type)
+  {
+    pushDown.getPIDController().setReference(setpoint, type, 0);
+  }
+
+  public void setP(double p)
+  {
+    setP(p, 0);
+  }
+
+  public void setP(double p, int slotID)
+  {
+    pushDown.getPIDController().setP(p, slotID);
+  }
+
+  public void setI(double i)
+  {
+    setI(i, 0);
+  }
+
+  public void setI(double i, int slotID)
+  {
+    pushDown.getPIDController().setI(i, slotID);
+  }
+
+  public void setD(double d)
+  {
+    setD(d, 0);
+  }
+
+  public void setD(double d, int slotID)
+  {
+    pushDown.getPIDController().setD(d, slotID);
+  }
+
+  public void setFF(double f)
+  {
+    setFF(f, 0);
+  }
+
+  public void setFF(double f, int slotID)
+  {
+    pushDown.getPIDController().setFF(f, slotID);
+  }
+
+  public void setIAccum(double iAccum)
+  {
+    pushDown.getPIDController().setIAccum(iAccum);
+  }
+
+  public void setIZone(double IZone)
+  {
+    setIZone(IZone, 0);
+  }
+
+  public void setIZone(double IZone, int slotID)
+  {
+    pushDown.getPIDController().setIZone(IZone, slotID);
+  }
+
+  public void setIMaxAccum(double iMaxAccum)
+  {
+    setIMaxAccum(iMaxAccum, 0);
+  }
+
+  public void setIMaxAccum(double iMaxAccum, int slotID)
+  {
+    pushDown.getPIDController().setIMaxAccum(iMaxAccum, slotID);
+  }
+
+  public void setOutputRange(double min, double max)
+  {
+    setOutputRange(min, max, 0);
+  }
+
+  public void setOutputRange(double min, double max, int slotID)
+  {
+    pushDown.getPIDController().setOutputRange(min, max, slotID);
+  }
+
+  public double getP()
+  {
+    return pushDown.getPIDController().getP();
+  }
+  
+  public double getI()
+  {
+    return pushDown.getPIDController().getI();
+  }
+
+  public double getD()
+  {
+    return pushDown.getPIDController().getD();
+  }
+
+  public double getFF()
+  {
+    return pushDown.getPIDController().getFF();
+  }
+
+  public double getIAccum()
+  {
+    return pushDown.getPIDController().getIAccum();
+  }
+
+  public double getIZone()
+  {
+    return pushDown.getPIDController().getIZone();
+  }
+
+  public double getIMaxAccum()
+  {
+    return pushDown.getPIDController().getIMaxAccum(0);
+  }
+
+  public double getOutputMax()
+  {
+    return getOutputMax(0);
+  }
+
+  public double getOutputMax(int slotID)
+  {
+    return pushDown.getPIDController().getOutputMax(slotID);
+  }
+
+  public double getOutputMin()
+  {
+    return getOutputMin(0);
+  }
+
+  public double getOutputMin(int slotID)
+  {
+    return pushDown.getPIDController().getOutputMin(slotID);
+  }
+
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ManualPushDown());
+    // setDefaultCommand(new ManualPushDown());
   }
   
 }

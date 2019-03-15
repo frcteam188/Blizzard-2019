@@ -401,5 +401,6 @@ public class Elevator extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // setDefaultCommand(new JoystickElevator());
+    setDefaultCommand(new MoveElevator(-1, Elevator.GamePiece.NONE, false));
   }
 }
