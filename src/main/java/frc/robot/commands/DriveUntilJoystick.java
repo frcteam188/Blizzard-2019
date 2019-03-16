@@ -52,9 +52,10 @@ public class DriveUntilJoystick extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.base.getLeftEnc() - initialEnc <= -171.5
-            || (Math.abs(OI.stick.getRawAxis(OI.fwdAxis)) > 0.05 || Math.abs(OI.stick.getRawAxis(OI.fwdAxis)) > 0.05)
-            && Robot.base.getLeftEnc() - initialEnc < -overrideDistance;
+    return  (Math.abs(OI.stick.getRawAxis(OI.fwdAxis)) > 0.05 || Math.abs(OI.stick.getRawAxis(OI.turnAxis)) > 0.05)
+            // && Robot.base.getLeftEnc() - initialEnc < -overrideDistance
+            // || Robot.base.getLeftEnc() - initialEnc <= -171.5
+            ;
   }
 
   // Called once after isFinished returns true

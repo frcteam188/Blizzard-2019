@@ -20,16 +20,7 @@ public class TestCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public TestCommandGroup() {
-    addParallel(new PushDownFrontPID(95));
-    addSequential(new WaitOnHangFrontTarget(10));
-    addParallel(new PushDownBackPID(68));
-    addSequential(new WaitOnHangBackTarget(68));
-    addSequential(new DrivePushDownWheel(1.0, 1.2));
-    addSequential(new PushDownFrontPID(0));
-    addParallel(new DrivePushDownWheel(1.0, 100));
-    addSequential(new DriveSlow(19, 0, true));
-    addParallel(new DrivePushDownWheel(0, 0.01));
-    addSequential(new PushDownBackPID(0));
-    addSequential(new DriveSlow(12, 0, true));
+    addSequential(new DriveSlow(75, 0, true), 10.0);
+    // addSequential(new ScoreHatch(true));
   }
 }

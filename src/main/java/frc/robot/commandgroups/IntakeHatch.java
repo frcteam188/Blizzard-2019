@@ -33,6 +33,6 @@ public class IntakeHatch extends CommandGroup {
     if (drive) addParallel(new DriveUntilJoystick(-0.7, 0, 10));
     addSequential(new MoveHatch(Intake.Direction.IN));
     addSequential(new WaitCommand(0.5));
-    addSequential(new MoveElevator(-1));
+    addSequential(new MoveElevator(-1), 3.0);
   }
 }

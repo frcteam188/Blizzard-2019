@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Score;
 import frc.robot.commands.StopPID;
 import frc.robot.commands.TrimIntake;
+import frc.robot.commandgroups.BeginLevel2Hang;
 import frc.robot.commandgroups.BeginLevel3Hang;
 import frc.robot.commandgroups.FinishLevel3Hang;
 import frc.robot.commandgroups.IntakeBall;
@@ -48,6 +49,13 @@ public class OI {
   public static JoystickButton cameraCorrect;
   public static JoystickButton nextAuto;
   public static JoystickButton prevAuto;
+  public static JoystickButton hangLeftButton;
+  public static JoystickButton hangRightButton;
+  public static JoystickButton hangFrontResetButton;
+  public static JoystickButton hangBackResetButton;
+  public static JoystickButton hangKillButton;
+  public static JoystickButton hangDriveForwardButton;
+  public static JoystickButton hangDriveBackButton;
 
   // Buttons (Operator)
   public static JoystickButton[] elevatorButtons;
@@ -55,12 +63,6 @@ public class OI {
   public static JoystickButton intakeBall;
   public static JoystickButton intakeHumanBall;
   public static JoystickButton ballToggle;
-  public static JoystickButton hangLeftButton;
-  public static JoystickButton hangRightButton;
-  public static JoystickButton hangDriveForwardButton;
-  public static JoystickButton hangDriveBackButton;
-  public static JoystickButton hangFrontResetButton;
-  public static JoystickButton hangBackResetButton;
   
   // Axis Numbers (Driver)
   public static final int fwdAxis = 1;
@@ -86,6 +88,7 @@ public class OI {
     resetPushDownEnc = resetElevatorEnc;
     hangFrontResetButton = new JoystickButton(stick, 4);
     hangBackResetButton = new JoystickButton(stick, 3);
+    hangKillButton = new JoystickButton(stick, 2);
 
 
 
@@ -127,12 +130,13 @@ public class OI {
     hangLeftButton.whenPressed(new BeginLevel3Hang());
     // hangLeftButton.whenReleased(new ManualPushDown());
     // hangRightButton.whenPressed(new Level2Hang(Level2Hang.Side.RIGHT));
-    hangRightButton.whenPressed(new ManualPushDown());
-    hangRightButton.whenPressed(new JoystickDrive());
+    hangRightButton.whenPressed(new BeginLevel2Hang());
+    hangKillButton.whenPressed(new ManualPushDown());
+    hangKillButton.whenPressed(new JoystickDrive());
 
     hangFrontResetButton.whenPressed(new PushDownFrontPID(0));
     hangFrontResetButton.whenPressed(new HangJoystickDrive());
-    hangFrontResetButton.whenPressed(new PushDownBackPID(Constants.pushDownBackPreset));
+    hangFrontResetButton.whenPressed(new PushDownBackPID(true));
     hangBackResetButton.whenPressed(new SafetyRetractPushDownBack());
     hangBackResetButton.whenPressed(new HangJoystickDrive());
 

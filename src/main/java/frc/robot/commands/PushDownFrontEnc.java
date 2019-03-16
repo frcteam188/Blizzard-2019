@@ -16,18 +16,25 @@ public class PushDownFrontEnc extends Command {
   double setpoint;
   double initialEnc;
   double relativeSetpoint;
+  boolean absolute;
 
   public PushDownFrontEnc(double power, double setpoint) {
+    this(power, setpoint, false);
+  }
+
+  public PushDownFrontEnc(double power, double setpoint, boolean absolute) {
     requires(Robot.hangFront);
     this.power = power;
     this.setpoint = setpoint;
+    this.absolute = absolute;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     initialEnc = Robot.hangFront.getEnc();
-    relativeSetpoint = initialEnc + setpoint;
+    if (absolute) relativeSetpoint = setpoint;
+    else relativeSetpoint = initialEnc + setpoint;
   }
 
   // Called repeatedly when this Command is scheduled to run

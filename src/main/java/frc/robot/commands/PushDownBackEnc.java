@@ -16,18 +16,25 @@ public class PushDownBackEnc extends Command {
   double setpoint;
   double initialEnc;
   double relativeSetpoint;
+  boolean absolute;
 
   public PushDownBackEnc(double power, double setpoint) {
+    this(power, setpoint, false);
+  }
+
+  public PushDownBackEnc(double power, double setpoint, boolean absolute) {
     requires(Robot.hangBack);
     this.power = power;
     this.setpoint = setpoint;
+    this.absolute = absolute;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     initialEnc = Robot.hangBack.getEnc();
-    relativeSetpoint = initialEnc + setpoint;
+    if (absolute) relativeSetpoint = setpoint;
+    else relativeSetpoint = initialEnc + setpoint;
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -28,6 +28,6 @@ public class IntakeHatchDrive extends CommandGroup {
     addSequential(new MoveHatch(Intake.Direction.IN));
     addParallel(new DriveStraight(setpoint, angle));
     addSequential(new WaitCommand(0.3));
-    addSequential(new MoveElevator(-1));
+    addSequential(new MoveElevator(-1), 3.0);
   }
 }

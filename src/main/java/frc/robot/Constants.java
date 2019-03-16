@@ -93,8 +93,10 @@ public class Constants {
     public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
     public static final double[] ballPresets = {14, 35, 53, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 1.0;
-    public static final double pushDownFrontPreset = 95;
-    public static final double pushDownBackPreset = 68;
+    public static final double pushDownFrontLevel3Preset = 95;
+    public static final double pushDownBackLevel3Preset = 68;
+    public static final double pushDownFrontLevel2Preset = (pushDownFrontLevel3Preset * 6./19.) + 7.5;
+    public static final double pushDownBackLevel2Preset = (pushDownBackLevel3Preset * 6./19.) + 7.5;
 
     // Vision Constants
     public static final double kWidthThreshold = 210.0;

@@ -8,16 +8,21 @@
 package frc.robot.autocommandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commandgroups.AutoScore;
 import frc.robot.commandgroups.ScoreHatch;
 import frc.robot.commands.DriveSlow;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.MoveElevator;
+import frc.robot.subsystems.Elevator;
 
 public class DriveForwardScoreHatchAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
   public DriveForwardScoreHatchAuto() {
-    addSequential(new DriveSlow(127, 0, true), 10.0);
+    addParallel(new MoveElevator(0, Elevator.GamePiece.HATCH));
+    addSequential(new DriveSlow(122.5, 0, true), 10.0);
+    // addSequential(new AutoScore(0, Elevator.GamePiece.HATCH));
     addSequential(new ScoreHatch(true));
     // addSequential(new DriveStraight(-20, 0));
   }
