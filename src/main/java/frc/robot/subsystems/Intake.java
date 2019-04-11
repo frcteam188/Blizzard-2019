@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -24,33 +26,31 @@ import frc.robot.commands.TrimIntake;
 public class Intake extends Subsystem {
 
   TalonSRX intakeMotor;
+  CANSparkMax hatchIntakeMotor;
 
   DigitalInput sensor;
 
   DoubleSolenoid pivotPiston;
-  DoubleSolenoid innerPushPiston;
+  DoubleSolenoid pivotHatchPiston;
   DoubleSolenoid outerPushPiston;
-  DoubleSolenoid hangPiston;
 
   boolean trim;
   boolean wasIntaking;
 
   public enum Direction
   {
-    OUT(Constants.kIntakePivotOut, Constants.kInnerPushOut, Constants.kOuterPushOut, Constants.kHangOut),
-    IN(Constants.kIntakePivotIn, Constants.kInnerPushIn, Constants.kOuterPushIn, Constants.kHangIn);
+    OUT(Constants.kIntakePivotOut, Constants.kHatchPivotOut, Constants.kOuterPushOut),
+    IN(Constants.kIntakePivotIn, Constants.kHatchPivotIn, Constants.kOuterPushIn);
 
     private Value pivotDirection;
-    private Value innerPushDirection;
+    private Value pivotHatchDirection;
     private Value outerPushDirection;
-    private Value hangDirection;
 
-    private Direction(Value pivotDirection, Value innerPushDirection, Value outerPushDirection, Value hangDirection)
+    private Direction(Value pivotDirection, Value pivotHatchDirection, Value outerPushDirection)
     {
       this.pivotDirection = pivotDirection;
-      this.innerPushDirection = innerPushDirection;
+      this.pivotHatchDirection = pivotHatchDirection;
       this.outerPushDirection = outerPushDirection;
-      this.hangDirection = hangDirection;
     }
 
     public Value getPivotDirection()
@@ -58,19 +58,14 @@ public class Intake extends Subsystem {
       return pivotDirection;
     }
 
-    public Value getInnerPushDirection()
+    public Value getPivotHatchDirection()
     {
-      return innerPushDirection;
+      return pivotHatchDirection;
     }
 
     public Value getOuterPushDirection()
     {
       return outerPushDirection;
-    }
-
-    public Value getHangDirection()
-    {
-      return hangDirection;
     }
   }
 
@@ -79,17 +74,18 @@ public class Intake extends Subsystem {
   public Intake()
   {
     pivotPiston = new DoubleSolenoid(RobotMap.pivotPiston[0], RobotMap.pivotPiston[1]);
-    innerPushPiston = new DoubleSolenoid(RobotMap.innerPushPiston[0], RobotMap.innerPushPiston[1]);
+    pivotHatchPiston = new DoubleSolenoid(RobotMap.pivotHatchPiston[0], RobotMap.pivotHatchPiston[1]);
     outerPushPiston = new DoubleSolenoid(RobotMap.outerPushPiston[0], RobotMap.outerPushPiston[1]);
-    hangPiston = new DoubleSolenoid(RobotMap.hangPiston[0], RobotMap.hangPiston[1]);
     intakeMotor = new TalonSRX(RobotMap.intakeMotor);
-    intakeMotor.setInverted(true);
+    hatchIntakeMotor = new CANSparkMax(RobotMap.hatchIntakeMotor, MotorType.kBrushed);
+    intakeMotor.setInverted(false);
+    hatchIntakeMotor.setInverted(true);
     
     sensor = new DigitalInput(RobotMap.intakeSensor);
     trim = true;
     wasIntaking = false;
     pivotIntake(Direction.IN);
-    innerPush(Direction.IN);
+    pivotHatchIntake(Direction.IN);
     outerPush(Direction.IN);
 
     // solenoids = new Solenoid[] {new Solenoid(0), new Solenoid(1), new Solenoid(2), new Solenoid(3),
@@ -160,6 +156,11 @@ public class Intake extends Subsystem {
     intakeMotor.set(ControlMode.PercentOutput, power);
   }
 
+  public void driveHatchIntake(double power)
+  {
+    hatchIntakeMotor.set(power);
+  }
+
   public void setTrim(boolean on)
   {
     trim = on;
@@ -175,24 +176,19 @@ public class Intake extends Subsystem {
     outerPushPiston.set(direction.getOuterPushDirection());
   }
 
-  public void innerPush(Direction direction)
-  {
-    innerPushPiston.set(direction.getInnerPushDirection());
-  }
-
   public void pivotIntake(Direction direction)
   {
     pivotPiston.set(direction.getPivotDirection());
   }
 
+  public void pivotHatchIntake(Direction direction)
+  {
+    pivotHatchPiston.set(direction.getPivotHatchDirection());
+  }
+
   public void pivotIntake()
   {
     pivotPiston.set(pivotPiston.get() == Constants.kIntakePivotIn ? Constants.kIntakePivotOut : Constants.kIntakePivotIn);
-  }
-
-  public void hang(Direction direction)
-  {
-    hangPiston.set(direction.getHangDirection());
   }
 
   public void report()

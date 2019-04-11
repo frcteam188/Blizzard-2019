@@ -21,28 +21,33 @@ public class DriveStraight extends Command {
   double angle;
   int onTargetCount;
   int onTargetThreshold;
-  boolean stop;
+  boolean absoluteAngle;
   double rampValue;
   double rampCutoff;
   double relativeRampCutoff;
   double initialEnc;
 
   public DriveStraight(double setpoint, double angle) {
-    this(setpoint, angle, true);
+    this(setpoint, angle, false);
   }
 
-  public DriveStraight(double setpoint, double angle, boolean stop)
+  public DriveStraight(double setpoint, double angle, boolean absoluteAngle)
   {
-    this(setpoint, angle, stop, Constants.kBaseEncPIDRampRate, 0);
+    this(setpoint, angle, absoluteAngle, 5, Constants.kBaseEncPIDRampRate, 0);
   }
 
-  public DriveStraight(double setpoint, double angle, boolean stop, double rampValue, double rampCutoff)
+  public DriveStraight(double setpoint, double angle, boolean absoluteAngle, int onTargetThreshold)
+  {
+    this(setpoint, angle, absoluteAngle, onTargetThreshold, Constants.kBaseEncPIDRampRate, 0);
+  }
+
+  public DriveStraight(double setpoint, double angle, boolean absoluteAngle, int onTargetThreshold, double rampValue, double rampCutoff)
   {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
-    this.onTargetThreshold = 5;
-    this.stop = stop;
+    this.onTargetThreshold = onTargetThreshold;
+    this.absoluteAngle = absoluteAngle;
     this.rampValue = rampValue;
     this.rampCutoff = rampCutoff;
   }
@@ -54,7 +59,9 @@ public class DriveStraight extends Command {
     initialEnc = Robot.base.getLeftEnc();
     relativeRampCutoff = initialEnc + rampCutoff;
     double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
-    double relativeAngle = angle + Robot.base.getAngle();
+    double relativeAngle;
+    if (absoluteAngle) relativeAngle = angle;
+    else relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(rampValue);
     encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
                             relativeSetpoint, Constants.kBaseEncHighPIDPower, true);
@@ -89,7 +96,7 @@ public class DriveStraight extends Command {
   protected void end() {
     encPID.disable();
     gyroPID.disable();
-    if (stop) Robot.base.stop();
+    Robot.base.stop();
     System.out.println("DriveStraight ended.");
   }
 

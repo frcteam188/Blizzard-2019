@@ -13,12 +13,14 @@ import frc.robot.subsystems.HangFront;
 import frc.robot.subsystems.HangBack;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import frc.robot.autocommandgroups.CameraHandoffAuto;
 import frc.robot.autocommandgroups.DriveForwardScoreHatchAuto;
 import frc.robot.autocommandgroups.LeftSide2HatchAuto;
 import frc.robot.autocommandgroups.LeftSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.autocommandgroups.RightSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.SideHatchAuto;
+import frc.robot.autocommandgroups.SketchyHandoffAuto;
 import frc.robot.autocommandgroups.PlatformDrop;
 import frc.robot.autocommandgroups.PlatformDropSideHatch;
 import frc.robot.commandgroups.AutoCommandGroup;
@@ -73,7 +75,7 @@ public class Robot extends TimedRobot {
     vision = new Vision();
     oi = new OI();
 
-    // CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
 
 
     // NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -85,21 +87,30 @@ public class Robot extends TimedRobot {
     // testCommand = new TunePushDownCorrectionPID();
     // testCommand = new TuneBaseGyroPID();
     
-    selectedAuto = 4;
+    selectedAuto = 0;
     prevChangeAuto = false;
-    autos = new Auto[] {new Auto(new LeftSide2HatchAuto(),  "LeftSide2HatchAuto",  Auto.Side.LEFT),
-                        new Auto(new RightSide2HatchAuto(), "RightSide2HatchAuto", Auto.Side.RIGHT),
-                        new Auto(new PlatformDrop(PlatformDrop.Side.LEFT), "Left PlatformDrop", null),
-                        new Auto(new PlatformDrop(PlatformDrop.Side.RIGHT), "Right PlatformDrop", null),
-                        new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.LEFT), "Left PlatformDropSideHatch", null),
-                        new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.RIGHT), "Right PlatformDropSideHatch", null),
-                        new Auto(new LeftSideCargo2HatchAuto(), "LeftSideCargo2HatchAuto", Auto.Side.CENTRE),
-                        new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE),
-                        new Auto(new DriveForwardScoreHatchAuto(), "DriveForwardScoreHatchAuto", Auto.Side.CENTRE),
-                        new Auto(new SideHatchAuto(SideHatchAuto.Side.LEFT), "Left SideHatchAuto", Auto.Side.CENTRE),
-                        new Auto(new SideHatchAuto(SideHatchAuto.Side.RIGHT), "Right SideHatchAuto", Auto.Side.CENTRE),
-                        new Auto(new TestCommandGroup(), "Test", null)
-                        };
+    autos = new Auto[] {
+
+      new Auto(new CommandGroup(), "None",  Auto.Side.CENTRE),
+      new Auto(new LeftSide2HatchAuto(),  "LeftSide2HatchAuto",  Auto.Side.LEFT),
+      new Auto(new RightSide2HatchAuto(), "RightSide2HatchAuto", Auto.Side.RIGHT),
+      new Auto(new PlatformDrop(PlatformDrop.Side.LEFT), "Left PlatformDrop", null),
+      new Auto(new PlatformDrop(PlatformDrop.Side.RIGHT), "Right PlatformDrop", null),
+      new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.LEFT), "Left PlatformDropSideHatch", null),
+      new Auto(new PlatformDropSideHatch(PlatformDropSideHatch.Side.RIGHT), "Right PlatformDropSideHatch", null),
+      new Auto(new LeftSideCargo2HatchAuto(), "LeftSideCargo2HatchAuto", Auto.Side.CENTRE),
+      new Auto(new RightSideCargo2HatchAuto(), "RightSideCargo2HatchAuto", Auto.Side.CENTRE),
+      new Auto(new DriveForwardScoreHatchAuto(), "DriveForwardScoreHatchAuto", Auto.Side.CENTRE),
+      new Auto(new SideHatchAuto(SideHatchAuto.Side.LEFT), "Left SideHatchAuto", Auto.Side.CENTRE),
+      new Auto(new SideHatchAuto(SideHatchAuto.Side.RIGHT), "Right SideHatchAuto", Auto.Side.CENTRE),
+      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.LEFT), "Left CameraHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.RIGHT), "Right CameraHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new SketchyHandoffAuto(SketchyHandoffAuto.Side.LEFT), "Left SketchyHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new SketchyHandoffAuto(SketchyHandoffAuto.Side.RIGHT), "Right SketchyHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new TestCommandGroup(), "Test", null)
+      
+      };
+
     autoCommand = autos[selectedAuto];
     
     push();

@@ -29,7 +29,7 @@ public class ScoreBall extends CommandGroup {
       addSequential(new FlipIntake(Intake.Direction.OUT));
       addSequential(new WaitCommand(0.3));
     }
-    addSequential(new MoveIntake(1.0, 1.0));
+    addSequential(new MoveIntake(1.0, 1.4));
     if (pivotOut)
     {
       addParallel(new MoveIntake(1.0, 1.0));

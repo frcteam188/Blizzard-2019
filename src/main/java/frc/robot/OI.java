@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import frc.robot.commands.Score;
 import frc.robot.commands.StopPID;
 import frc.robot.commands.TrimIntake;
@@ -21,16 +22,19 @@ import frc.robot.commandgroups.IntakeHumanBall;
 import frc.robot.commandgroups.Level2Hang;
 import frc.robot.commandgroups.Level3Hang;
 import frc.robot.commands.CameraScore;
+import frc.robot.commands.FlipHatchIntake;
 import frc.robot.commands.FlipIntake;
 import frc.robot.commands.HangJoystickDrive;
 import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.ManualPushDown;
 import frc.robot.commands.MoveElevator;
+import frc.robot.commands.MoveHatchIntake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.PushDownBackEnc;
 import frc.robot.commands.PushDownBackPID;
 import frc.robot.commands.PushDownFrontPID;
 import frc.robot.commands.SafetyRetractPushDownBack;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
 public class OI {
@@ -56,6 +60,8 @@ public class OI {
   public static JoystickButton hangKillButton;
   public static JoystickButton hangDriveForwardButton;
   public static JoystickButton hangDriveBackButton;
+  public static JoystickButton autoHandoffButton;
+  public static JoystickButton bearingLockButton;
 
   // Buttons (Operator)
   public static JoystickButton[] elevatorButtons;
@@ -90,7 +96,8 @@ public class OI {
     hangBackResetButton = new JoystickButton(stick, 3);
     hangKillButton = new JoystickButton(stick, 2);
 
-
+    bearingLockButton = new JoystickButton(stick, 1);
+    autoHandoffButton = new JoystickButton(stick, 1);
 
     slowButton = new JoystickButton(stick, 5);
     fastButton = new JoystickButton(stick, 6);
@@ -112,14 +119,30 @@ public class OI {
 
     for (int i = 0; i < OI.elevatorButtons.length; ++i)
     {
+      int preset = i;
       elevatorButtons[i].whenPressed(new MoveElevator(i));
+      elevatorButtons[i].whenPressed(new ConditionalCommand(new FlipHatchIntake(Intake.Direction.OUT)) {
+        @Override
+        protected boolean condition()
+        {
+          return !OI.ballToggle.get();
+        }
+      }
+      );
       elevatorButtons[i].whenReleased(new Score());
     }
 
     // cameraCorrect.whenPressed(new CameraScore(0));
     // cameraCorrect.whenReleased(new StopPID());
 
-    intakeHatch.whenPressed(new IntakeHatch(true));
+    // intakeHatch.whenPressed(new IntakeHatch(true));
+    intakeHatch.whenPressed(new FlipHatchIntake(Intake.Direction.OUT));
+    intakeHatch.whenPressed(new MoveHatchIntake(-1.0, Double.POSITIVE_INFINITY));
+    intakeHatch.whenPressed(new MoveElevator(0, Elevator.GamePiece.HATCH));
+    intakeHatch.whenReleased(new FlipHatchIntake(Intake.Direction.IN));
+    intakeHatch.whenReleased(new MoveHatchIntake(0, 0));
+    intakeHatch.whenReleased(new MoveElevator(-1));
+    
     intakeBall.whenPressed(new IntakeBall());
     intakeBall.whenReleased(new FlipIntake(Intake.Direction.IN));
     intakeBall.whenReleased(new TrimIntake());

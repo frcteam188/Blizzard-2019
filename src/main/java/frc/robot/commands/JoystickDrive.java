@@ -11,16 +11,31 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.subsystems.BaseGyroPID;
 
 public class JoystickDrive extends Command {
-  public JoystickDrive() {
+
+  boolean handoff;
+  BaseGyroPID turnPID;
+  boolean prevBearingLocked;
+
+  public JoystickDrive()
+  {
+    this(false);
+  }
+
+  public JoystickDrive(boolean handoff) {
     requires(Robot.base);
+    this.handoff = handoff;
+    prevBearingLocked = false;
   }
   
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.base.setOpenLoopRampRate(0);
+    turnPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1], Constants.baseGyroCorrectionPID[2],
+    0, Constants.kGyroCorrectionPower, 0, true);
     System.out.println("Joystick Driving");
   }
 
@@ -44,13 +59,26 @@ public class JoystickDrive extends Command {
       forward *= Constants.kBaseDefaultPower;
       turn *= Constants.kBaseDefaultPower;
     }
-    Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
+    // boolean locked = OI.bearingLockButton.get();
+    boolean locked = false;
+    if (locked)
+    {
+      if (!prevBearingLocked) turnPID.enable();
+      Robot.base.encPIDPower = -forward;
+      Robot.base.driveStored();
+    }
+    else
+    {
+      if (prevBearingLocked) turnPID.disable();
+      Robot.base.driveArcade(forward, turn * Constants.kBaseTeleopTurnPower);
+    }
+    prevBearingLocked = locked;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return handoff && OI.autoHandoffButton.get();
   }
 
   // Called once after isFinished returns true

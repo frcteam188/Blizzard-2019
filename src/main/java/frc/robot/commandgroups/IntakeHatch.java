@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.commands.DriveUntilJoystick;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveHatch;
+import frc.robot.commands.MoveHatchIntake;
 import frc.robot.commands.WaitOnElevatorTarget;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -26,9 +27,11 @@ public class IntakeHatch extends CommandGroup {
   {
     addParallel(new MoveElevator(4, Elevator.GamePiece.HATCH));
     addSequential(new WaitOnElevatorTarget(1));
+    addParallel(new MoveHatchIntake(-1.0, 2.0));
     addSequential(new MoveHatch(Intake.Direction.OUT));
     addSequential(new WaitCommand(0.3));
-    addParallel(new MoveElevator(5, Elevator.GamePiece.HATCH));
+    addParallel(new MoveHatchIntake(0, 0.0));
+    // addParallel(new MoveElevator(5, Elevator.GamePiece.HATCH));
     addSequential(new WaitCommand(0.5));
     if (drive) addParallel(new DriveUntilJoystick(-0.7, 0, 10));
     addSequential(new MoveHatch(Intake.Direction.IN));

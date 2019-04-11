@@ -24,11 +24,18 @@ public class Auto extends Command {
   Side side;
   String name;
   CommandGroup auto;
+  boolean interruptible;
 
-  public Auto(CommandGroup auto, String name, Side side) {
+  public Auto (CommandGroup auto, String name, Side side)
+  {
+    this(auto, name, side, true);
+  }
+
+  public Auto(CommandGroup auto, String name, Side side, boolean interruptible) {
     this.auto = auto;
     this.name = name;
     this.side = side;
+    this.interruptible = interruptible;
   }
 
   // Called just before this Command runs the first time
@@ -45,7 +52,7 @@ public class Auto extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return auto.isCompleted() || OI.isOverriding();
+    return auto.isCompleted() || interruptible && OI.isOverriding();
   }
 
   // Called once after isFinished returns true

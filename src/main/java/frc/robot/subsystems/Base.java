@@ -25,10 +25,10 @@ public class Base extends Subsystem {
 
   public CANSparkMax frontLeft;
   public CANSparkMax midLeft;
-  public CANSparkMax backLeft;
+  // public CANSparkMax backLeft;
   public CANSparkMax frontRight;
   public CANSparkMax midRight;
-  public CANSparkMax backRight;
+  // public CANSparkMax backRight;
   
   private CANEncoder leftEncoder;
   private CANEncoder rightEncoder;
@@ -42,19 +42,19 @@ public class Base extends Subsystem {
     navx = new AHRS(RobotMap.navxPort);
     frontLeft = new CANSparkMax(RobotMap.frontLeft, MotorType.kBrushless);
     midLeft = new CANSparkMax(RobotMap.midLeft, MotorType.kBrushless);
-    backLeft = new CANSparkMax(RobotMap.backLeft, MotorType.kBrushless);
+    // backLeft = new CANSparkMax(RobotMap.backLeft, MotorType.kBrushless);
     frontRight = new CANSparkMax(RobotMap.frontRight, MotorType.kBrushless);
     midRight = new CANSparkMax(RobotMap.midRight, MotorType.kBrushless);
-    backRight = new CANSparkMax(RobotMap.backRight, MotorType.kBrushless);
+    // backRight = new CANSparkMax(RobotMap.backRight, MotorType.kBrushless);
     frontLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
     frontRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10);
 
     frontLeft.setInverted(false);
     midLeft.setInverted(false);
-    backLeft.setInverted(false);
+    // backLeft.setInverted(false);
     frontRight.setInverted(true);
     midRight.setInverted(true);
-    backRight.setInverted(true);
+    // backRight.setInverted(true);
     leftEncoder = frontLeft.getEncoder();
     rightEncoder = frontRight.getEncoder();
 
@@ -74,10 +74,10 @@ public class Base extends Subsystem {
   public void driveTank(double left, double right) {
     frontLeft.set(left);
     midLeft.set(left);
-    backLeft.set(left);
+    // backLeft.set(left);
     frontRight.set(right);
     midRight.set(right);
-    backRight.set(right);
+    // backRight.set(right);
   }
 
   public void driveStored()
@@ -89,10 +89,10 @@ public class Base extends Subsystem {
   {
     frontLeft.setOpenLoopRampRate(rate);
     midLeft.setOpenLoopRampRate(rate);
-    backLeft.setOpenLoopRampRate(rate);
+    // backLeft.setOpenLoopRampRate(rate);
     frontRight.setOpenLoopRampRate(rate);
     midRight.setOpenLoopRampRate(rate);
-    backRight.setOpenLoopRampRate(rate);
+    // backRight.setOpenLoopRampRate(rate);
 
   }
 
@@ -100,10 +100,10 @@ public class Base extends Subsystem {
   {
     frontLeft.setClosedLoopRampRate(rate);
     midLeft.setClosedLoopRampRate(rate);
-    backLeft.setClosedLoopRampRate(rate);
+    // backLeft.setClosedLoopRampRate(rate);
     frontRight.setClosedLoopRampRate(rate);
     midRight.setClosedLoopRampRate(rate);
-    backRight.setClosedLoopRampRate(rate);
+    // backRight.setClosedLoopRampRate(rate);
   }
 
   public void setCoast() {
@@ -205,54 +205,54 @@ public class Base extends Subsystem {
   {
     frontLeft.getPIDController().setReference(setpoint, type);
     midLeft.getPIDController().setReference(setpoint, type);
-    backLeft.getPIDController().setReference(setpoint, type);
+    // backLeft.getPIDController().setReference(setpoint, type);
   }
 
   public void setRightSetpoint(double setpoint, ControlType type)
   {
     frontRight.getPIDController().setReference(setpoint, type);
     midRight.getPIDController().setReference(setpoint, type);
-    backRight.getPIDController().setReference(setpoint, type);
+    // backRight.getPIDController().setReference(setpoint, type);
   }
 
   public void setP(double p)
   {
     frontLeft.getPIDController().setP(p);
     midLeft.getPIDController().setP(p);
-    backLeft.getPIDController().setP(p);
+    // backLeft.getPIDController().setP(p);
     frontRight.getPIDController().setP(p);
     midRight.getPIDController().setP(p);
-    backRight.getPIDController().setP(p);
+    // backRight.getPIDController().setP(p);
   }
 
   public void setI(double i)
   {
     frontLeft.getPIDController().setI(i);
     midLeft.getPIDController().setI(i);
-    backLeft.getPIDController().setI(i);
+    // backLeft.getPIDController().setI(i);
     frontRight.getPIDController().setI(i);
     midRight.getPIDController().setI(i);
-    backRight.getPIDController().setI(i);
+    // backRight.getPIDController().setI(i);
   }
 
   public void setD(double d)
   {
     frontLeft.getPIDController().setD(d);
     midLeft.getPIDController().setD(d);
-    backLeft.getPIDController().setD(d);
+    // backLeft.getPIDController().setD(d);
     frontRight.getPIDController().setD(d);
     midRight.getPIDController().setD(d);
-    backRight.getPIDController().setD(d);
+    // backRight.getPIDController().setD(d);
   }
 
   public void setFF(double f)
   {
     frontLeft.getPIDController().setFF(f);
     midLeft.getPIDController().setFF(f);
-    backLeft.getPIDController().setFF(f);
+    // backLeft.getPIDController().setFF(f);
     frontRight.getPIDController().setFF(f);
     midRight.getPIDController().setFF(f);
-    backRight.getPIDController().setFF(f);
+    // backRight.getPIDController().setFF(f);
   }
 
   public double getP()
@@ -278,10 +278,10 @@ public class Base extends Subsystem {
   public void stop() {
     frontLeft.set(0);
     midLeft.set(0);
-    backLeft.set(0);
+    // backLeft.set(0);
     frontRight.set(0);
     midRight.set(0);
-    backRight.set(0);    
+    // backRight.set(0);
   }
 
   @Override

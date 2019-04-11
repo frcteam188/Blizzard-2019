@@ -13,20 +13,22 @@ public class RobotMap {
 
   public static int frontLeft = 7; // 7
   public static int midLeft = 6; // 6
-  public static int backLeft = 5; // 5
+  // public static int backLeft = 5; // 5
   public static int frontRight = 3; // 3
   public static int midRight = 2; // 2
-  public static int backRight = 1; // 1
+  // public static int backRight = 1; // 1
 
   public static int elevatorLeft = 8;
   public static int elevatorRight = 4;
 
   public static int intakeMotor = 1;
+  public static int hatchIntakeMotor = 5;
 
-  public static int[] hangPiston = {2, 3}; // 0, 4
+  // public static int[] hangPiston = {2, 3}; // 0, 4
   public static int[] pivotPiston = {4, 7}; // 3, 7
-  public static int[] innerPushPiston = {0, 1};
-  public static int[] outerPushPiston = {5, 6};
+  public static int[] pivotHatchPiston = {5, 6};
+  public static int[] outerPushPiston = {0, 1}; // 5, 6
+  // public static int[] innerPushPiston = {0, 1};
 
   public static int intakeSensor = 2; // NOT ATTACHED
 

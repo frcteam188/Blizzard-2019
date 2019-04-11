@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class ManualPushDown extends Command {
   public ManualPushDown() {
-    requires(Robot.hangFront);
+    // requires(Robot.hangFront);
     requires(Robot.hangBack);
   }
 
@@ -25,8 +25,9 @@ public class ManualPushDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
-    Robot.hangBack.drivePushDown(-OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
+    // Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
+    // Robot.hangBack.drivePushDown(-OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
+    Robot.hangBack.drivePushDown(OI.stick.getRawAxis(OI.pushDownMainAxis) - OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
     // Robot.hangBack.driveForward(OI.hangDriveForwardButton, OI.hangDriveBackButton);
   }
 

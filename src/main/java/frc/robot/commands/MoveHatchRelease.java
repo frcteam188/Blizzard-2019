@@ -28,7 +28,9 @@ public class MoveHatchRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.innerPush(direction);
+    
+    // THERE IS NO MORE INNER PUSH
+    // Robot.intake.innerPush(direction);
   }
 
   // Make this return true when this Command no longer needs to run execute()

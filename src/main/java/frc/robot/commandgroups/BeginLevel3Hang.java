@@ -29,7 +29,6 @@ public class BeginLevel3Hang extends CommandGroup {
     addSequential(new WaitOnHangBackTarget(Constants.pushDownBackLevel3Preset));
     addSequential(new WaitCommand(1.0));
     addSequential(new DrivePushDownWheel(1.0, 1.2));
-    // addSequential(new PushDownFrontPID(0));
     addSequential(new HangJoystickDrive());
   }
 }
