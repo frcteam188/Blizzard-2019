@@ -147,8 +147,8 @@ public class Elevator extends Subsystem {
 
   public void runPID(double setpoint)
   {
-    if (activePID == Constants.kElevatorUpPID && getElevatorEnc() > setpoint && getIAccum() > 0)
-      setIAccum(0);
+    // if (activePID == Constants.kElevatorUpPID && getElevatorEnc() > setpoint && getIAccum() > 0)
+    //   setIAccum(0);
     setSetpoint(setpoint);
     activeSetpoint = setpoint;
   }
@@ -161,11 +161,11 @@ public class Elevator extends Subsystem {
   public void report()
   {
     SmartDashboard.putNumber("Elevator Enc", getElevatorEnc());
-    SmartDashboard.putNumber("Elevator PID Setpoint", getActiveSetpoint());
-    SmartDashboard.putString("Elevator Direction", direction.toString());
-    SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
-    SmartDashboard.putNumber("Elevator Left Raw Enc", elevatorLeftEncoder.getPosition());
-    SmartDashboard.putNumber("Elevator Right Raw Enc", elevatorRightEncoder.getPosition());
+    // SmartDashboard.putNumber("Elevator PID Setpoint", getActiveSetpoint());
+    // SmartDashboard.putString("Elevator Direction", direction.toString());
+    // SmartDashboard.putBoolean("Elevator Within Limits", withinLimits());
+    // SmartDashboard.putNumber("Elevator Left Raw Enc", elevatorLeftEncoder.getPosition());
+    // SmartDashboard.putNumber("Elevator Right Raw Enc", elevatorRightEncoder.getPosition());
     // SmartDashboard.putNumber("Elevator Active Preset", getCurrentPreset());
     // SmartDashboard.putNumber("Elevator Velocity", elevatorLeft.getEncoder().getVelocity());
   }

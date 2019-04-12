@@ -144,10 +144,10 @@ public class HangFront extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putNumber("PushDown Main Left Enc", leftEnc.getPosition());
-    SmartDashboard.putNumber("PushDown Main Right Enc", rightEnc.getPosition());
+    // SmartDashboard.putNumber("PushDown Main Left Enc", leftEnc.getPosition());
+    // SmartDashboard.putNumber("PushDown Main Right Enc", rightEnc.getPosition());
     // SmartDashboard.putNumber("Encoder Correction Enc", getCorrectionEnc());
-    SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll()); // NOSE UP = NEGATIVE ANGLE
+    // SmartDashboard.putNumber("Tilt Angle", Robot.base.getRoll()); // NOSE UP = NEGATIVE ANGLE
   }
 
   public void setSetpoint(double setpoint)

@@ -50,6 +50,10 @@ public class DriveStraight extends Command {
     this.absoluteAngle = absoluteAngle;
     this.rampValue = rampValue;
     this.rampCutoff = rampCutoff;
+    encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
+                            0, Constants.kBaseEncHighPIDPower, true);
+    gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
+                              Constants.baseGyroCorrectionPID[2], 0, Constants.kGyroCorrectionPower, true);
   }
 
   // Called just before this Command runs the first time
@@ -63,10 +67,8 @@ public class DriveStraight extends Command {
     if (absoluteAngle) relativeAngle = angle;
     else relativeAngle = angle + Robot.base.getAngle();
     Robot.base.setOpenLoopRampRate(rampValue);
-    encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
-                            relativeSetpoint, Constants.kBaseEncHighPIDPower, true);
-    gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
-                              Constants.baseGyroCorrectionPID[2], relativeAngle, Constants.kGyroCorrectionPower, true);
+    encPID.setSetpoint(relativeSetpoint);
+    gyroPID.setSetpoint(relativeAngle);
     encPID.enable();
     gyroPID.enable();
   }

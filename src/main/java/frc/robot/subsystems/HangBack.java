@@ -89,8 +89,8 @@ public class HangBack extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putNumber("Back Hang Current", pushDown.getOutputCurrent());
-    SmartDashboard.putNumber("PushDown Main Back Enc", getEnc());
+    // SmartDashboard.putNumber("Back Hang Current", pushDown.getOutputCurrent());
+    // SmartDashboard.putNumber("PushDown Main Back Enc", getEnc());
   }
 
   public void flashPIDValues()

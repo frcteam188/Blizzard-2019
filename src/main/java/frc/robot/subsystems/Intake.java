@@ -193,7 +193,7 @@ public class Intake extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putBoolean("Intake Sensor", sensor.get());
+    // SmartDashboard.putBoolean("Intake Sensor", sensor.get());
   }
 
   public void stop()

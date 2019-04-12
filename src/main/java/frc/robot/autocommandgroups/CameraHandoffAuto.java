@@ -24,18 +24,16 @@ public class CameraHandoffAuto extends CommandGroup {
   }
 
   public CameraHandoffAuto(Side side) {
-    int s = (side == Side.RIGHT ? 1 : -1);
+    int s = (side == Side.LEFT ? 1 : -1);
     // addSequential(new DriveStraight(150, 0));
     addSequential(new JoystickDrive(true));
     // addSequential(new AutoScore(3, Elevator.GamePiece.HATCH));
     addSequential(new DriveStraight(-10, 0, false, 1));
-    addSequential(new GyroTurn(180*s, true));
-    addSequential(new DriveStraight(150, 180, true, 1));
-    // addSequential(new GyroCorrect(90*s, false, 5, 0));
-    // addSequential(new DriveStraight(180, 0));
-    // addSequential(new JoystickDrive(true));
-    // addSequential(new DriveStraight(-210, 0));
-    // addSequential(new GyroCorrect(90*s, false, 5, 0));
+    addSequential(new GyroTurn(180*s, true, false));
+    addSequential(new DriveStraight(123, 180, true, 1));
+    addSequential(new JoystickDrive(true));
+    addSequential(new DriveStraight(-219, 186*s, true, 1), 4.0);
+    addSequential(new JoystickDrive(true));
 
   }
 }

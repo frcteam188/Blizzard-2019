@@ -23,8 +23,9 @@ public class Constants {
     public static final double[] baseGyroTurnPID = {0.015, 0, 0.015}; // 100 percent power, 4 neos
     public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
-    public static final double[] elevatorUpPID = {0.06, 0.0004, 0};
-    public static final double elevatorUpIZone = 8.5; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
+    // public static final double[] elevatorUpPID = {0.06, 0.0004, 0};
+    public static final double[] elevatorUpPID = {0.062, 0.00012, 0.005};
+    public static final double elevatorUpIZone = 3.0; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
     public static final double[] mainHangPID = {0.03, 0, 0};
@@ -69,11 +70,12 @@ public class Constants {
     
     // Trim
     public static final double kIntakeTrim = 0.2;
+    public static final double kHatchIntakeTrim = 0.3;
     
     // Tolerances
     public static final double kElevatorPIDTolerance = 1.0;
     public static final double kBaseEncPIDTolerance = 1.0;
-    public static final double kBaseGyroPIDTolerance = 2.0;
+    public static final double kBaseGyroPIDTolerance = 5.0;
     public static final double kPushDownMainTolerance = 0.5;
     public static final double kPushDownCorrectionTolerance = 1.0;
     public static final double kFrontHangTolerance = 10.0;
@@ -88,7 +90,7 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 26.5, 48.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    public static final double[] hatchPresets = {2.5, 25.5, 47.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
     public static final double[] ballPresets = {12.5, 35, 54, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 1.0;
     public static final double pushDownFrontLevel3Preset = 95;

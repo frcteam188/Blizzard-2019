@@ -55,7 +55,7 @@ public class MoveElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1.5 && setpoint == Constants.bottomPreset && !willEnd) {
+    if(Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 3.0 && setpoint == Constants.bottomPreset && !willEnd) {
       Robot.elevator.stopPID();
       Robot.elevator.stop();
     }
@@ -66,7 +66,7 @@ public class MoveElevator extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 1.5 && setpoint == Constants.bottomPreset && willEnd
+    return Math.abs(setpoint - Robot.elevator.getElevatorEnc()) < 3.0 && setpoint == Constants.bottomPreset && willEnd
             || DriverStation.getInstance().isDisabled();
   }
 

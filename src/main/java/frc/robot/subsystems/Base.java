@@ -35,6 +35,8 @@ public class Base extends Subsystem {
 
   AHRS navx;
 
+  private double currentOpenLoopRampRate;
+
   public double encPIDPower;
   public double gyroPIDPower;
 
@@ -63,6 +65,8 @@ public class Base extends Subsystem {
 
     encPIDPower = 0;
     gyroPIDPower = 0;
+
+    currentOpenLoopRampRate = -1;
   }
 
   public void driveArcade(double y, double x) {
@@ -87,6 +91,7 @@ public class Base extends Subsystem {
 
   public void setOpenLoopRampRate(double rate)
   {
+    if (rate == currentOpenLoopRampRate) return;
     frontLeft.setOpenLoopRampRate(rate);
     midLeft.setOpenLoopRampRate(rate);
     // backLeft.setOpenLoopRampRate(rate);
@@ -94,6 +99,7 @@ public class Base extends Subsystem {
     midRight.setOpenLoopRampRate(rate);
     // backRight.setOpenLoopRampRate(rate);
 
+    currentOpenLoopRampRate = rate;
   }
 
   public void setClosedLoopRampRate(double rate)
@@ -112,8 +118,8 @@ public class Base extends Subsystem {
 
   public void report()
   {
-    SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
-    SmartDashboard.putNumber("Base Right Enc", getRightEnc());
+    // SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
+    // SmartDashboard.putNumber("Base Right Enc", getRightEnc());
     SmartDashboard.putNumber("Base Gyro", getAngle());
     // SmartDashboard.putNumber("Base Left Velocity", getLeftVel());
     // SmartDashboard.putNumber("Base Right Velocity", getRightVel());

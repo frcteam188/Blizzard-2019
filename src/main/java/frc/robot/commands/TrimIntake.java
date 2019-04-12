@@ -26,6 +26,7 @@ public class TrimIntake extends Command {
   @Override
   protected void execute() {
     Robot.intake.drive(-Constants.kIntakeTrim);
+    // Robot.intake.driveHatchIntake(-Constants.kHatchIntakeTrim);
   }
 
   // Make this return true when this Command no longer needs to run execute()

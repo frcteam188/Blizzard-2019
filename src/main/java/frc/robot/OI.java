@@ -138,9 +138,9 @@ public class OI {
     // intakeHatch.whenPressed(new IntakeHatch(true));
     intakeHatch.whenPressed(new FlipHatchIntake(Intake.Direction.OUT));
     intakeHatch.whenPressed(new MoveHatchIntake(-1.0, Double.POSITIVE_INFINITY));
-    intakeHatch.whenPressed(new MoveElevator(0, Elevator.GamePiece.HATCH));
+    intakeHatch.whenPressed(new MoveElevator(4, Elevator.GamePiece.HATCH));
     intakeHatch.whenReleased(new FlipHatchIntake(Intake.Direction.IN));
-    intakeHatch.whenReleased(new MoveHatchIntake(0, 0));
+    intakeHatch.whenReleased(new MoveHatchIntake(-Constants.kHatchIntakeTrim, 1.0));
     intakeHatch.whenReleased(new MoveElevator(-1));
     
     intakeBall.whenPressed(new IntakeBall());
