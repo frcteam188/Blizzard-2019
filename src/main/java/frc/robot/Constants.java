@@ -24,7 +24,7 @@ public class Constants {
     public static final double[] baseGyroCorrectionPID = {0.045, 0, 0.06}; // 30 percent power (0.045, 0, 0.04)
     // public static final double elevatorPIDRamp = 0.2;
     // public static final double[] elevatorUpPID = {0.06, 0.0004, 0};
-    public static final double[] elevatorUpPID = {0.062, 0.00012, 0.005};
+    public static final double[] elevatorUpPID = {0.067, 0.00012, 0.0};
     public static final double elevatorUpIZone = 3.0; // MAKE SURE TO ZERO IACCUM IF ABOVE SETPOINT AND IACCUM < 0
     public static final double[] elevatorDownPID = {0.08, 0, 0.0001};
     public static final double[] elevatorDownPIDOutputRange = {-0.5, 1.0};
@@ -93,7 +93,7 @@ public class Constants {
     // public static final double[] hatchPresets = {2.5, 25.5, 47.5, 2.5, 1.0, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
     public static final double[] hatchPresets = {0.0, 23.0, 46.5, 0.0, 1.0, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
     // public static final double[] ballPresets = {12.5, 35, 54, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
-    public static final double[] ballPresets = {10.0, 32.5, 54, 22, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
+    public static final double[] ballPresets = {10.0, 33.0, 54, 22, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
     public static final double bottomPreset = 0.5;
     public static final double pushDownFrontLevel3Preset = 95;
     public static final double pushDownBackLevel3Preset = 68;
