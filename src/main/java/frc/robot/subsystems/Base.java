@@ -118,8 +118,8 @@ public class Base extends Subsystem {
 
   public void report()
   {
-    // SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
-    // SmartDashboard.putNumber("Base Right Enc", getRightEnc());
+    SmartDashboard.putNumber("Base Left Enc", getLeftEnc());
+    SmartDashboard.putNumber("Base Right Enc", getRightEnc());
     SmartDashboard.putNumber("Base Gyro", getAngle());
     // SmartDashboard.putNumber("Base Left Velocity", getLeftVel());
     // SmartDashboard.putNumber("Base Right Velocity", getRightVel());

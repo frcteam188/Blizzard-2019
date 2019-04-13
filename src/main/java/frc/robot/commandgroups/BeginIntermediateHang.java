@@ -17,18 +17,15 @@ import frc.robot.commands.PushDownFrontPID;
 import frc.robot.commands.WaitOnHangBackTarget;
 import frc.robot.commands.WaitOnHangFrontTarget;
 
-public class BeginLevel2Hang extends CommandGroup {
+public class BeginIntermediateHang extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public BeginLevel2Hang() {
-    addParallel(new PushDownFrontPID(Constants.pushDownFrontLevel2Preset));
-    // addParallel(new PushDownFrontPID(45.0));
+  public BeginIntermediateHang() {
+    addParallel(new PushDownFrontPID(Constants.pushDownFrontIntermediatePreset));
     addSequential(new WaitOnHangFrontTarget(2));
-    addParallel(new PushDownBackPID(Constants.pushDownBackLevel2Preset));
-    addSequential(new WaitOnHangBackTarget(Constants.pushDownBackLevel2Preset));
-    // addParallel(new PushDownBackPID(37.0));
-    // addSequential(new WaitOnHangBackTarget(37.0));
+    addParallel(new PushDownBackPID(Constants.pushDownBackIntermediatePreset));
+    addSequential(new WaitOnHangBackTarget(Constants.pushDownBackIntermediatePreset));
     addSequential(new WaitCommand(1.0));
     addSequential(new DrivePushDownWheel(1.0, 1.2));
     addSequential(new HangJoystickDrive());

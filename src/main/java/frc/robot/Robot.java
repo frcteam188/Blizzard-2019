@@ -269,9 +269,9 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putString("Selected Auto", autoCommand.toString());
     base.report();
     elevator.report();
-    // intake.report();
-    // hangFront.report();
-    // hangBack.report();
+    intake.report();
+    hangFront.report();
+    hangBack.report();
     // vision.report();
     // SmartDashboard.putNumberArray("hsv:lower", 
     //   new double[]{SmartDashboard.getNumber("h:lo", 0), SmartDashboard.getNumber("s:lo", 0), SmartDashboard.getNumber("v:lo", 0)});

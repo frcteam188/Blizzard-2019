@@ -22,6 +22,8 @@ import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commandgroups.BeginIntermediateHang;
+import frc.robot.commandgroups.WaitOnButtonCommand;
 import frc.robot.commands.Auto;
 import frc.robot.commands.ManualPushDown;
 
@@ -302,5 +304,6 @@ public class HangFront extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // setDefaultCommand(new ManualPushDown());
+    // setDefaultCommand(new WaitOnButtonCommand(OI.stick, OI.intermediateHangPOV, new BeginIntermediateHang()));
   }
 }

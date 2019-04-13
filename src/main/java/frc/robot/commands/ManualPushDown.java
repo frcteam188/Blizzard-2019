@@ -27,8 +27,17 @@ public class ManualPushDown extends Command {
   protected void execute() {
     // Robot.hangFront.drive(OI.stick.getRawAxis(OI.pushDownMainAxis));
     // Robot.hangBack.drivePushDown(-OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
-    Robot.hangBack.drivePushDown(OI.stick.getRawAxis(OI.pushDownMainAxis) - OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
+    // Robot.hangBack.drivePushDown(OI.stick.getRawAxis(OI.pushDownMainAxis) - OI.stick.getRawAxis(OI.pushDownCorrectionAxis));
     // Robot.hangBack.driveForward(OI.hangDriveForwardButton, OI.hangDriveBackButton);
+    // switch (OI.stick.getPOV())
+    // {
+    //   case OI.bothPushDown:
+    //     break;
+    //   case OI.leftPushDown:
+    //     break;
+    //   case OI.rightPushDown:
+    //     break;
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()

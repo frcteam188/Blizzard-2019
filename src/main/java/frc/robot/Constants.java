@@ -90,13 +90,17 @@ public class Constants {
     public static final double kElevatorLowerLimit = 0.;
 
     // Presets
-    public static final double[] hatchPresets = {2.5, 25.5, 47.5, 2.5, 2, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
-    public static final double[] ballPresets = {12.5, 35, 54, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
-    public static final double bottomPreset = 1.0;
+    // public static final double[] hatchPresets = {2.5, 25.5, 47.5, 2.5, 1.0, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    public static final double[] hatchPresets = {0.0, 23.0, 46.5, 0.0, 1.0, 11}; // Bottom, mid, top rocket; Cargo ship; Bottom, top hatch pickup
+    // public static final double[] ballPresets = {12.5, 35, 54, 23, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
+    public static final double[] ballPresets = {10.0, 32.5, 54, 22, 38}; // Bottom, mid, top rocket; Cargo ship; Human load pickup
+    public static final double bottomPreset = 0.5;
     public static final double pushDownFrontLevel3Preset = 95;
     public static final double pushDownBackLevel3Preset = 68;
     public static final double pushDownFrontLevel2Preset = (pushDownFrontLevel3Preset * 6./19.) + 7.5;
     public static final double pushDownBackLevel2Preset = (pushDownBackLevel3Preset * 6./19.) + 7.5;
+    public static final double pushDownFrontIntermediatePreset = 50;
+    public static final double pushDownBackIntermediatePreset = 38;
 
     // Vision Constants
     public static final double kWidthThreshold = 210.0;

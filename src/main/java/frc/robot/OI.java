@@ -83,6 +83,9 @@ public class OI {
   public static final int hangArmAxis = 1;
   public static final int intakeAxis = 1;
 
+  // D-Pad (Driver)
+  public static final int intermediateHangPOV = 180;
+
 
   public OI() {
     stick = new Joystick(0);
