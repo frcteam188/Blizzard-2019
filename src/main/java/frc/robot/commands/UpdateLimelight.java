@@ -7,44 +7,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.TimedCommand;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-/**
- * Add your docs here.
- */
-public class MoveHatchIntake extends TimedCommand {
-  
-  double power;
-  boolean stop;
-
-  public MoveHatchIntake(double power, double timeout) {
-    this(power, timeout, true);
-  }
-
-  public MoveHatchIntake(double power, double timeout, boolean stop) {
-    super(timeout);
-    requires(Robot.intake);
-    this.power = power;
-    this.stop = stop;
+public class UpdateLimelight extends Command {
+  public UpdateLimelight() {
+    requires(Robot.limelight);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.driveHatchIntake(power);
+    Robot.limelight.update();
   }
 
-  // Called once after timeout
+  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  protected boolean isFinished() {
+    return false;
+  }
+
+  // Called once after isFinished returns true
   @Override
   protected void end() {
-    if (stop) Robot.intake.driveHatchIntake(0);
   }
 
   // Called when another command which requires one or more of the same

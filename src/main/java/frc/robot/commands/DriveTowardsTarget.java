@@ -13,7 +13,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.BaseEncPID;
 import frc.robot.subsystems.BaseGyroPID;
 
-public class DriveStraight extends Command {
+public class DriveTowardsTarget extends Command {
 
   BaseEncPID encPID;
   BaseGyroPID gyroPID;
@@ -22,65 +22,42 @@ public class DriveStraight extends Command {
   int onTargetCount;
   int onTargetThreshold;
   boolean absoluteAngle;
-  double rampValue;
-  double rampCutoff;
-  double relativeRampCutoff;
-  double initialEnc;
+  long lastUpdateTime;
 
-  public DriveStraight(double setpoint, double angle) {
-    this(setpoint, angle, false);
-  }
-
-  public DriveStraight(double setpoint, double angle, boolean absoluteAngle)
-  {
-    this(setpoint, angle, absoluteAngle, 5, Constants.kBaseEncPIDRampRate, 0);
-  }
-
-  public DriveStraight(double setpoint, double angle, boolean absoluteAngle, int onTargetThreshold)
-  {
-    this(setpoint, angle, absoluteAngle, onTargetThreshold, Constants.kBaseEncPIDRampRate, 0);
-  }
-
-  public DriveStraight(double setpoint, double angle, boolean absoluteAngle, int onTargetThreshold, double rampValue, double rampCutoff)
-  {
+  public DriveTowardsTarget(double setpoint, double angle, boolean absoluteAngle, int onTargetThreshold) {
     requires(Robot.base);
     this.setpoint = setpoint;
     this.angle = angle;
-    this.onTargetThreshold = onTargetThreshold;
     this.absoluteAngle = absoluteAngle;
-    this.rampValue = rampValue;
-    this.rampCutoff = rampCutoff;
+    this.onTargetThreshold = onTargetThreshold;
     encPID = new BaseEncPID(Constants.baseEncHighPID[0], Constants.baseEncHighPID[1], Constants.baseEncHighPID[2],
                             0, Constants.kBaseEncHighPIDPower, true);
     gyroPID = new BaseGyroPID(Constants.baseGyroCorrectionPID[0], Constants.baseGyroCorrectionPID[1],
                               Constants.baseGyroCorrectionPID[2], 0, Constants.kGyroCorrectionPower, true);
   }
-
+  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
     onTargetCount = 0;
-    initialEnc = Robot.base.getLeftEnc();
-    relativeRampCutoff = initialEnc + rampCutoff;
-    double relativeSetpoint = setpoint + Robot.base.getLeftEnc();
-    double relativeAngle;
-    if (absoluteAngle) relativeAngle = angle;
-    else relativeAngle = angle + Robot.base.getAngle();
-    Robot.base.setOpenLoopRampRate(rampValue);
-    encPID.setSetpoint(relativeSetpoint);
-    gyroPID.setSetpoint(relativeAngle);
+    encPID.setSetpoint(setpoint + Robot.base.getLeftEnc());
+    gyroPID.setSetpoint(angle + (absoluteAngle ? 0 : Robot.base.getAngle()));
     encPID.enable();
     gyroPID.enable();
+    lastUpdateTime = 0;
+    System.out.println("DriveTowardsTarget started.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (rampCutoff > 0 && Robot.base.getLeftEnc() > relativeRampCutoff ||
-        rampCutoff < 0 && Robot.base.getLeftEnc() < relativeRampCutoff)
+    long currentTime = System.currentTimeMillis();
+    if (Robot.limelight.hasTarget() && currentTime - lastUpdateTime >= 10)
     {
-      Robot.base.setOpenLoopRampRate(Constants.kBaseEncPIDRampRate);
-      rampCutoff = 0;
+      if (lastUpdateTime <= 0) System.out.println("Target acquired.");
+      gyroPID.setSetpoint(Robot.base.getAngle() + Robot.limelight.getAngle());
+      lastUpdateTime = currentTime;
     }
     Robot.base.driveStored();
     if (encPID.onTarget() && gyroPID.onTarget()) onTargetCount++;
@@ -99,7 +76,7 @@ public class DriveStraight extends Command {
     encPID.disable();
     gyroPID.disable();
     Robot.base.stop();
-    System.out.println("DriveStraight ended.");
+    System.out.println("DriveTowardsTarget ended.");
   }
 
   // Called when another command which requires one or more of the same

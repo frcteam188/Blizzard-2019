@@ -12,11 +12,13 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.HangFront;
 import frc.robot.subsystems.HangBack;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Vision;
 import frc.robot.autocommandgroups.CameraHandoffAuto;
 import frc.robot.autocommandgroups.DriveForwardScoreHatchAuto;
 import frc.robot.autocommandgroups.LeftSide2HatchAuto;
 import frc.robot.autocommandgroups.LeftSideCargo2HatchAuto;
+import frc.robot.autocommandgroups.Limelight2HatchAuto;
 import frc.robot.autocommandgroups.RightSide2HatchAuto;
 import frc.robot.autocommandgroups.RightSideCargo2HatchAuto;
 import frc.robot.autocommandgroups.SideHatchAuto;
@@ -61,7 +63,10 @@ public class Robot extends TimedRobot {
   public static HangFront hangFront;
   public static HangBack hangBack;
   // public static Vision vision;
+  public static Limelight limelight;
   public static OI oi;
+
+
   NetworkTableEntry goalEntry;
 
   static boolean alwaysReset = true;
@@ -77,6 +82,7 @@ public class Robot extends TimedRobot {
     hangFront = new HangFront();
     hangBack = new HangBack();
     // vision = new Vision();
+    limelight = new Limelight();
     oi = new OI();
 
     // UsbCamera cam0 = new UsbCamera("USB Camera 0", 0);
@@ -106,6 +112,10 @@ public class Robot extends TimedRobot {
     autos = new Auto[] {
 
       new Auto(new CommandGroup(), "None",  Auto.Side.CENTRE),
+      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.LEFT), "Left CameraHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.RIGHT), "Right CameraHandOffAuto", Auto.Side.CENTRE, false),
+      new Auto(new Limelight2HatchAuto(Limelight2HatchAuto.Side.LEFT), "Left Limelight2HatchAuto", Auto.Side.CENTRE),
+      new Auto(new Limelight2HatchAuto(Limelight2HatchAuto.Side.RIGHT), "Right Limelight2HatchAuto", Auto.Side.CENTRE),
       new Auto(new LeftSide2HatchAuto(),  "LeftSide2HatchAuto",  Auto.Side.LEFT),
       new Auto(new RightSide2HatchAuto(), "RightSide2HatchAuto", Auto.Side.RIGHT),
       // new Auto(new PlatformDrop(PlatformDrop.Side.LEFT), "Left PlatformDrop", null),
@@ -117,8 +127,6 @@ public class Robot extends TimedRobot {
       new Auto(new DriveForwardScoreHatchAuto(), "DriveForwardScoreHatchAuto", Auto.Side.CENTRE),
       new Auto(new SideHatchAuto(SideHatchAuto.Side.LEFT), "Left SideHatchAuto", Auto.Side.CENTRE),
       new Auto(new SideHatchAuto(SideHatchAuto.Side.RIGHT), "Right SideHatchAuto", Auto.Side.CENTRE),
-      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.LEFT), "Left CameraHandOffAuto", Auto.Side.CENTRE, false),
-      new Auto(new CameraHandoffAuto(CameraHandoffAuto.Side.RIGHT), "Right CameraHandOffAuto", Auto.Side.CENTRE, false),
       new Auto(new SketchyHandoffAuto(SketchyHandoffAuto.Side.LEFT), "Left SketchyHandOffAuto", Auto.Side.CENTRE, false),
       new Auto(new SketchyHandoffAuto(SketchyHandoffAuto.Side.RIGHT), "Right SketchyHandOffAuto", Auto.Side.CENTRE, false),
       new Auto(new TestCommandGroup(), "Test", null)

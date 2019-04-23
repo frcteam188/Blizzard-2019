@@ -53,6 +53,7 @@ public class Constants {
     public static final double kGyroTurnPower = 0.5; // 0.75
     public static final double kGyroCorrectionPower = 0.3;
     public static final double kGyroCorrectionForwardPower = 0.2;
+    public static final double kBaseCrawlPower = 0.2;
     public static final double kElevatorPower = 0.65;
     public static final double kHangArmPower = 0.4;
     public static final double kPushDownFrontPower = 0.5;
@@ -103,6 +104,7 @@ public class Constants {
     public static final double pushDownBackIntermediatePreset = 38;
 
     // Vision Constants
+    public static final double kTargetAreaThreshold = 8.50;
     public static final double kWidthThreshold = 210.0;
     public static final int kRollingAverageSize = 3;
     public static final int kStaleSampleThreshold = 5;
